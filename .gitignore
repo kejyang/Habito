@@ -1,0 +1,22 @@
+# Xcode build products
+build/
+DerivedData/
+*.xcworkspace/
+*.xcuserstate
+
+# Xcode project user-specific settings
+*.xcuserdatad*
+*.xccheckout
+*.moved-aside
+*.xcscmblueprint
+
+# Logs and temporary files
+*.log
+*.swp
+*.DS_Store
+*.lock
+
+# macOS generated files
+*.pbxuser
+*.mode1v3
+*.mode2v3
