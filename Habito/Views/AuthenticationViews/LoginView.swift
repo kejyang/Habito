@@ -8,11 +8,57 @@
 import SwiftUI
 
 struct LoginView: View {
+    @State var emailTextFieldText: String = ""
+    @State var passwordTextFieldText: String = ""
+    @State var isRememberMe: Bool = true
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+                    
+            Text("Welcome Back!")
+                .font(.headline)
+                .padding()
+            
+            Text("Log in to continue building your healthy habits")
+                .foregroundColor(Color.brandPrimary)
+                .font(.subheadline.bold())
+                .padding(.bottom)
+            
+            TextFieldGeneralView(heading: "E-mail", textFieldText: emailTextFieldText)
+                .padding(.bottom)
+            
+            SecureFieldGeneralView(heading: "Password", textFieldText: passwordTextFieldText)
+
+            HStack {
+                Toggle("", isOn: $isRememberMe)
+                    .toggleStyle(CheckboxToggleStyle())
+                    .frame(maxWidth: 40, alignment: .leading)
+                Text("Remember me?")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding()
+            
+            NavigationLink(destination: HomeView(), label: {
+                Button("Login") {
+                    
+                }
+                .frame(width: SizeStandards.widthGeneral, height: SizeStandards.actionButtonHeight, alignment: .center)
+                .modifier(ActionButtonModifier())
+            })
+            
+            HStack {
+                Text("Don't have an account?")
+                NavigationLink("Sign up here!", destination: SignUpView())
+                    .foregroundColor(Color.brandPrimary)
+            }
+            .padding()
+
+        }
     }
 }
 
 #Preview {
-    LoginView()
+    NavigationView {
+        LoginView()
+    }
 }
