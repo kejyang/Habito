@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct AddGoalView: View {
+struct AddHabitView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("Add Habit View")
     }
 }
 
 #Preview {
-    AddGoalView()
+    AddHabitView()
 }
