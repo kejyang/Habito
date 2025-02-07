@@ -10,6 +10,7 @@ import SwiftUI
 
 struct TabBarItemView: View {
     let iconName: String
+    let iconNameNotSelected: String
     let label: String
     let index: Int
     @Binding var selectedTab: Int
@@ -19,10 +20,12 @@ struct TabBarItemView: View {
             selectedTab = index
         }) {
             VStack {
-                Image(systemName: iconName)
+                Image(systemName: selectedTab == index ? iconName : iconNameNotSelected)
                     .font(.system(size: 24))
+                    .foregroundColor(.brandPrimary)
                 Text(label)
                     .font(.caption)
+                    .foregroundColor(.brandBlack)
             }
             .padding()
             .foregroundColor(selectedTab == index ? .blue : .gray)

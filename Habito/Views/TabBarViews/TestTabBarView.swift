@@ -28,11 +28,6 @@ struct TestTabBarView: View {
                             .shadow(color: Color.black.opacity(0.4), radius: 2, x: 0, y: -1)
                             .overlay(
                                 AddHabitButtonView()
-                                    .font(.system(size: 28, weight: .bold))
-                                    .foregroundColor(.white)
-                                    .frame(width: 70, height: 70)
-                                    .background(Color.blue)
-                                    .cornerRadius(60)
                                     .offset(x: 0, y: -45)
                             )
                         
@@ -83,20 +78,20 @@ struct TabBarItems: View {
         HStack(alignment: .bottom) {
             Spacer().frame(width: 5)
             // First Tab Button
-            TabBarItemView(iconName: "house.fill", label: "Home", index: 0, selectedTab: $selectedTab)
+            TabBarItemView(iconName: "house.fill", iconNameNotSelected: "house", label: "Home", index: 0, selectedTab: $selectedTab)
 
             // Second Tab Button
-            TabBarItemView(iconName: "book", label: "Guides", index: 1, selectedTab: $selectedTab)
+            TabBarItemView(iconName: "book.fill", iconNameNotSelected: "book", label: "Guides", index: 1, selectedTab: $selectedTab)
 
             Spacer().frame(width: 110)
 
             // Third Tab Button
-            TabBarItemView(iconName: "clipboard", label: "Data", index: 2, selectedTab: $selectedTab)
+            TabBarItemView(iconName: "clipboard.fill", iconNameNotSelected: "clipboard", label: "Data", index: 2, selectedTab: $selectedTab)
 
             Spacer()
 
             // Fourth Tab Button
-            TabBarItemView(iconName: "person.fill", label: "Profile", index: 3, selectedTab: $selectedTab)
+            TabBarItemView(iconName: "person.fill", iconNameNotSelected: "person", label: "Profile", index: 3, selectedTab: $selectedTab)
         }
         .frame(height: 90)
     }
