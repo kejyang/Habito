@@ -20,7 +20,7 @@ struct CustomTabBarView: View {
             Spacer()
             
             // Custom Tab Bar
-            HStack {
+            /*HStack {
                 Spacer().frame(width: 5)
                 // First Tab Button
                 TabBarItemView(iconName: "house.fill", label: "Home", index: 0, selectedTab: $selectedTab)
@@ -38,7 +38,7 @@ struct CustomTabBarView: View {
                 // Fourth Tab Button
                 TabBarItemView(iconName: "person.fill", label: "Profile", index: 3, selectedTab: $selectedTab)
                 
-            }
+            }*/
             .frame(height: 90)
             .background(Color.white) // Background for the tab bar
             .cornerRadius(10) // Optional: adds rounded corners to the tab bar
