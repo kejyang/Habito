@@ -80,7 +80,7 @@ struct TabBarItems: View {
     @Binding var selectedTab: Int
 
     var body: some View {
-        HStack {
+        HStack(alignment: .bottom) {
             Spacer().frame(width: 5)
             // First Tab Button
             TabBarItemView(iconName: "house.fill", label: "Home", index: 0, selectedTab: $selectedTab)
