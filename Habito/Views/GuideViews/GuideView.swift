@@ -9,7 +9,14 @@ import SwiftUI
 
 struct GuideView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ZStack {
+            // Green background (fills entire screen)
+            Color.green
+                .ignoresSafeArea() // Ignore safe area edges
+            
+            // Your content on top of the background
+            Text("Guide View")
+        }
     }
 }
 

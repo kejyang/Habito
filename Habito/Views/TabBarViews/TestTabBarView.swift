@@ -8,31 +8,44 @@
 import SwiftUI
 
 struct TestTabBarView: View {
-
+    @State private var selectedTab = 0
+    
     var body: some View {
-        VStack {
-            Spacer()
-            TabBarShape()
-                .fill(Color.white)
-                .frame(height: 80)
-                .shadow(color: Color.black.opacity(0.4), radius: 2, x: 0, y: -1)
-                .overlay(
-                    Button(action: {}, label: {
-                        Image(systemName: "plus") // System plus icon
-                            .font(.system(size: 28, weight: .bold))
-                            .foregroundColor(.white)
-                            .frame(width: 70, height: 70)
-                            .background(Color.blue)
-                            .cornerRadius(60)
-                    })
-                    .offset(x: 0, y: -36)
-                )
-        }.ignoresSafeArea()
+        NavigationView {
+            ZStack { // Use ZStack for layering
+                // Centered TabContentView behind the tab bar
+                TabContentView(selectedTab: $selectedTab)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(Color.clear) // Add background if needed
+                
+                // Tab bar overlay at the bottom
+                VStack {
+                    Spacer() // Push content to the bottom
+                    ZStack {
+                        TabBarShape()
+                            .fill(Color.white)
+                            .frame(height: 100)
+                            .shadow(color: Color.black.opacity(0.4), radius: 2, x: 0, y: -1)
+                            .overlay(
+                                AddHabitButtonView()
+                                    .font(.system(size: 28, weight: .bold))
+                                    .foregroundColor(.white)
+                                    .frame(width: 70, height: 70)
+                                    .background(Color.blue)
+                                    .cornerRadius(60)
+                                    .offset(x: 0, y: -45)
+                            )
+                        
+                        TabBarItems(selectedTab: $selectedTab)
+                    }
+                }
+            }
+            .ignoresSafeArea() // Extend to edges
+        }
     }
 }
 
 struct TabBarShape: Shape {
-
     private enum Constants {
         static let cornerRadius: CGFloat = 20
         static let buttonRadius: CGFloat = 45
@@ -62,6 +75,33 @@ struct TabBarShape: Shape {
         return Path(path.cgPath)
     }
 }
+
+struct TabBarItems: View {
+    @Binding var selectedTab: Int
+
+    var body: some View {
+        HStack {
+            Spacer().frame(width: 5)
+            // First Tab Button
+            TabBarItemView(iconName: "house.fill", label: "Home", index: 0, selectedTab: $selectedTab)
+
+            // Second Tab Button
+            TabBarItemView(iconName: "book", label: "Guides", index: 1, selectedTab: $selectedTab)
+
+            Spacer().frame(width: 110)
+
+            // Third Tab Button
+            TabBarItemView(iconName: "clipboard", label: "Data", index: 2, selectedTab: $selectedTab)
+
+            Spacer()
+
+            // Fourth Tab Button
+            TabBarItemView(iconName: "person.fill", label: "Profile", index: 3, selectedTab: $selectedTab)
+        }
+        .frame(height: 90)
+    }
+}
+
 
 #Preview {
     TestTabBarView()
