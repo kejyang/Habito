@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct GuideView: View {
+    let items = Array(1...10)
+
     var body: some View {
-        ZStack {
-            // Green background (fills entire screen)
-            Color.green
-                .ignoresSafeArea() // Ignore safe area edges
-            
-            // Your content on top of the background
-            Text("Guide View")
+        List(items, id: \.self) { item in
+            GuideRowView(title: "Card \(item)")
+                .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0)) //adjust spacing between cards
+                .listRowSeparator(.hidden)
         }
+        .scrollContentBackground(.hidden)
     }
 }
 

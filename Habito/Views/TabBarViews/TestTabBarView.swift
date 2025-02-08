@@ -17,6 +17,7 @@ struct TestTabBarView: View {
                 TabContentView(selectedTab: $selectedTab)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.clear) // Add background if needed
+                    .offset(y: 40) 
                 
                 // Tab bar overlay at the bottom
                 VStack {

@@ -8,11 +8,22 @@
 import SwiftUI
 
 struct GuideRowView: View {
+    var title: String
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text(title)
+                .font(.title)
+                .padding()
+        }
+        .frame(maxWidth: SizeStandards.widthGeneral)
+        .background(Color.white)
+        .cornerRadius(10)
+        .padding(.horizontal)
+        .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 0)
     }
 }
 
 #Preview {
-    GuideRowView()
+    GuideRowView(title: "test")
 }
