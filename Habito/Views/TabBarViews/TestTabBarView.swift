@@ -12,16 +12,14 @@ struct TestTabBarView: View {
     
     var body: some View {
         NavigationView {
-            ZStack { // Use ZStack for layering
-                // Centered TabContentView behind the tab bar
+            ZStack {
                 TabContentView(selectedTab: $selectedTab)
-                    //.frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.clear) // Add background if needed
-                    //.offset(y: 40) 
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 
-                // Tab bar overlay at the bottom
+                // Ensure the tab bar sticks to the bottom
                 VStack {
-                    Spacer() // Push content to the bottom
+                    Spacer()
+                    
                     ZStack {
                         TabBarShape()
                             .fill(Color.white)
@@ -34,12 +32,15 @@ struct TestTabBarView: View {
                         
                         TabBarItemsView(selectedTab: $selectedTab)
                     }
+                    .frame(maxWidth: .infinity) // Ensure full width
                 }
+                .frame(maxHeight: .infinity, alignment: .bottom) // Stick VStack to bottom
             }
-            .ignoresSafeArea() // Extend to edges
+            .ignoresSafeArea(.container, edges: .bottom) // Only ignore bottom safe area
         }
     }
 }
+
 
 
 

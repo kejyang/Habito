@@ -11,18 +11,25 @@ struct GuideView: View {
     let items = Array(1...3)
 
     var body: some View {
-        VStack{
-            Text("Your Guide to Wellness")
-                .font(.title)
-                .bold()
-            List(items, id: \.self) { item in
-                GuideRowView(title: "Card \(item)")
-                    .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0)) //adjust spacing between cards
-                    .listRowSeparator(.hidden)
+        ZStack {
+            Color.brandWhite
+                .ignoresSafeArea()
+            
+            VStack(spacing: 0) { // Set the spacing to 0 to reduce the space
+                Text("Your Guide to Wellness")
+                    .font(.title)
+                    .bold()
+                    .padding(.top, 20)
+
+                List(items, id: \.self) { item in
+                    GuideRowView(title: "Card \(item)", description: "test description", img: "sleepingWoman")
+                        .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.brandWhite)
+                }
+                .scrollContentBackground(.hidden)
             }
-            .scrollContentBackground(.hidden)
         }
-        
     }
 }
 
