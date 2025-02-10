@@ -26,19 +26,21 @@ struct BarGraphView: View {
                 ForEach(0..<data.count, id: \.self) { index in
                     BarMark(
                         x: .value("Label", labels[index]),
-                        y: .value("Value", data[index])
+                        y: .value("Value", data[index]),
+                        width: .ratio(0.8)
                     )
                     .foregroundStyle(Color.brandPrimary)
+                    .cornerRadius(8)
                     .annotation(position: .overlay) {
-                        Text("\(Int(data[index]))")
+                        Text("\(Int(data[index]))hr")
                             .font(.caption)
                             .foregroundColor(.white)
                             .bold()
                     }
+                    
                 }
             }
-            .frame(height: 300)
-            .padding()
+            .frame(height: 200)
             // Customize axes to remove lines
             .chartXAxis {
                 AxisMarks(position: .bottom) { _ in
@@ -51,15 +53,18 @@ struct BarGraphView: View {
                     
                 }
             }
+            .chartXScale(
+                
+            )
         }
         .background(Color.brandWhite)
-        .cornerRadius(SizeStandards.cornerRadiusGeneral)
+        .cornerRadius(20)
     }
 }
 
 #Preview {
     BarGraphView(
-        data: [10, 20, 30, 40, 50, 60, 70],
+        data: [5, 2, 4, 3, 5, 1, 5],
         labels: ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
         
     )
