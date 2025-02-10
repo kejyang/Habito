@@ -8,15 +8,21 @@
 import SwiftUI
 
 struct GuideView: View {
-    let items = Array(1...10)
+    let items = Array(1...3)
 
     var body: some View {
-        List(items, id: \.self) { item in
-            GuideRowView(title: "Card \(item)")
-                .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0)) //adjust spacing between cards
-                .listRowSeparator(.hidden)
+        VStack{
+            Text("Your Guide to Wellness")
+                .font(.title)
+                .bold()
+            List(items, id: \.self) { item in
+                GuideRowView(title: "Card \(item)")
+                    .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0)) //adjust spacing between cards
+                    .listRowSeparator(.hidden)
+            }
+            .scrollContentBackground(.hidden)
         }
-        .scrollContentBackground(.hidden)
+        
     }
 }
 

@@ -15,9 +15,9 @@ struct TestTabBarView: View {
             ZStack { // Use ZStack for layering
                 // Centered TabContentView behind the tab bar
                 TabContentView(selectedTab: $selectedTab)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    //.frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color.clear) // Add background if needed
-                    .offset(y: 40) 
+                    //.offset(y: 40) 
                 
                 // Tab bar overlay at the bottom
                 VStack {
