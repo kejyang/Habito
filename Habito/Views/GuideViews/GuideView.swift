@@ -8,14 +8,27 @@
 import SwiftUI
 
 struct GuideView: View {
+    let items = Array(1...3)
+
     var body: some View {
         ZStack {
-            // Green background (fills entire screen)
-            Color.green
-                .ignoresSafeArea() // Ignore safe area edges
+            Color.brandWhite
+                .ignoresSafeArea()
             
-            // Your content on top of the background
-            Text("Guide View")
+            VStack(spacing: 0) { // Set the spacing to 0 to reduce the space
+                Text("Your Guide to Wellness")
+                    .font(.title)
+                    .bold()
+                    .padding(.top, 20)
+
+                List(items, id: \.self) { item in
+                    GuideRowView(title: "Sleeping \(item)", description: "test description", img: "sleepingWoman")
+                        .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color.brandWhite)
+                }
+                .scrollContentBackground(.hidden)
+            }
         }
     }
 }

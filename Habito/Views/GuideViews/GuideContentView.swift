@@ -7,12 +7,39 @@
 
 import SwiftUI
 
-struct ViewGuideView: View {
+struct GuideContentView: View {
+    var title: String
+    var description: String
+    var img: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading) {
+            Image(img)
+                .resizable()
+                .scaledToFit()
+                .padding(.bottom)
+            ZStack {
+                RoundedRectangle(cornerRadius: 50)
+                    .fill(Color.brandWhite)
+                VStack(alignment: .leading) {
+                    Text(title)
+                        .font(.title)
+                    Text(description)
+                        .font(.body)
+                }
+                .frame(maxHeight: .infinity, alignment: .top)
+            }
+            .ignoresSafeArea(edges: .bottom)
+        }
+        .ignoresSafeArea(edges: .top)
     }
 }
 
 #Preview {
-    ViewGuideView()
+    GuideContentView(
+        title: "test title",
+        description: "test description",
+        img: "sleepingWoman"
+    
+    )
 }
