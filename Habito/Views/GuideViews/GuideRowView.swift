@@ -36,7 +36,7 @@ struct GuideRowView: View {
 
 #Preview {
     GuideRowView(
-        title: "test title",
+        title: "Sleeping is good",
         description: "description",
         img: "sleepingWoman"
     )

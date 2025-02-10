@@ -22,7 +22,7 @@ struct GuideView: View {
                     .padding(.top, 20)
 
                 List(items, id: \.self) { item in
-                    GuideRowView(title: "Card \(item)", description: "test description", img: "sleepingWoman")
+                    GuideRowView(title: "Sleeping \(item)", description: "test description", img: "sleepingWoman")
                         .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
                         .listRowSeparator(.hidden)
                         .listRowBackground(Color.brandWhite)
