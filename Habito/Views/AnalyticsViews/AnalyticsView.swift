@@ -24,7 +24,7 @@ struct AnalyticsView: View {
                 SleepProgressView(sleepProgress: 8/8)
                     .frame(width: 225)
                     .shadow(color: Color.black.opacity(0.4), radius: 1)
-                StepsView()
+                StepsView(steps: 5000)
                     .shadow(color: Color.black.opacity(0.4), radius: 1)
                 
             }

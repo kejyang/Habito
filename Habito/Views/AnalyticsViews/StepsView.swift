@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct StepsView: View {
-    var steps = 5000
+    @State var steps : Int
     var body: some View {
         VStack{
             Image(systemName: "figure.walk")
@@ -31,5 +31,5 @@ struct StepsView: View {
 }
 
 #Preview {
-    StepsView()
+    StepsView(steps : 5000)
 }
