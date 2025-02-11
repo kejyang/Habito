@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct TestTabBarView: View {
+struct TabBarView: View {
     @State private var selectedTab = 0
     
     var body: some View {
-        NavigationView {
+        
             ZStack {
                 TabContentView(selectedTab: $selectedTab)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -37,7 +37,6 @@ struct TestTabBarView: View {
                 .frame(maxHeight: .infinity, alignment: .bottom) // Stick VStack to bottom
             }
             .ignoresSafeArea(.container, edges: .bottom) // Only ignore bottom safe area
-        }
     }
 }
 
@@ -48,5 +47,8 @@ struct TestTabBarView: View {
 
 
 #Preview {
-    TestTabBarView()
-}
+    NavigationView {
+        TabBarView()
+    }
+    .environmentObject(CalendarDayViewModel())
+    .environmentObject(TimeOfDayViewModel())}

@@ -15,7 +15,7 @@ struct TabContentView: View {
         
         switch selectedTab {
         case 0:
-            HomeView()
+            HabitView()
         case 1:
             GuideView()
         case 2:
