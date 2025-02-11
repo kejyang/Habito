@@ -8,8 +8,18 @@
 import SwiftUI
 
 struct AnalyticsView: View {
+    var data = [5, 2, 4, 3, 5, 1, 5]
+    var labels = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack{
+            TodayProgressView(todayProgress: 0.73)
+                .frame(width: SizeStandards.widthGeneral)
+                .shadow(color: Color.black.opacity(0.4), radius: 1)
+            BarGraphView(data: data, labels: labels)
+                .frame(width:SizeStandards.widthGeneral)
+                .shadow(color: Color.black.opacity(0.4), radius: 1)
+        }
+        
     }
 }
 

@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 
 struct BarGraphView: View {
-    let data: [Double]
+    let data: [Int]
     let labels: [String]
 
     var body: some View {
