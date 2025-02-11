@@ -8,11 +8,43 @@
 import SwiftUI
 
 struct ProfileView: View {
+    var profileImageString : String = "sleepingWoman"
+    var username : String = "test username"
+    var email : String = "test email"
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            ProfileHeaderView(profileImage: profileImageString, username: username, email: email)
+            
+            List {
+                NavigationLink(destination: ProfileEditView(), label: {
+                    Text("Personal data")
+                })
+                NavigationLink(destination: HomeView(), label: {
+                    Text("Help")
+                })
+                NavigationLink(destination: HomeView(), label: {
+                    Text("Delete account")
+                })
+                NavigationLink(destination: LoginView(), label: {
+                    Text("Log out")
+                        .foregroundColor(.red)
+                })
+            }
+            .scrollContentBackground(.hidden)
+            //.cornerRadius(<#T##radius: CGFloat##CGFloat#>)
+            .shadow(color: Color.black.opacity(0.2), radius: 5)            /*.overlay {
+                RoundedRectangle(cornerSize: CGSize(width: 40, height: 40)).stroke(Color.brandGray, lineWidth: 1)
+            }*/
+        }
+        .modifier(NavigationTitleGeneralModifier(text: "Your Profile"))
     }
 }
 
 #Preview {
-    ProfileView()
+    NavigationView {
+        ProfileView()
+    }
 }
+
+
