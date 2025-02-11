@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct HabitDailyTaskModel: Identifiable {
+    var id: ObjectIdentifier
+    
+    
+}
