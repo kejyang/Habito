@@ -24,8 +24,10 @@ struct GuideContentView: View {
                 VStack(alignment: .leading) {
                     Text(title)
                         .font(.title)
+                        .bold()
                     Text(description)
                         .font(.body)
+                        .bold()
                 }
                 .frame(maxHeight: .infinity, alignment: .top)
             }
