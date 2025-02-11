@@ -40,6 +40,8 @@ struct BarGraphView: View {
                     
                 }
             }
+            .padding(.horizontal, 5)
+            .padding(.bottom, 5)
             .frame(height: 200)
             // Customize axes to remove lines
             .chartXAxis {

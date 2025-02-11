@@ -14,10 +14,10 @@ struct TodayProgressView: View {
             Text("Today's Progress!")
                 .bold()
                 .font(.title2)
-            CircleGraphView(progress: $todayProgress, size: 100)
+            CircleGraphView(progress: $todayProgress, size: 80)
+            Image(systemName: "")
         }
         .frame(maxWidth: .infinity)
-        .padding(.horizontal, 20)
         .background(Color.brandWhite)
         .cornerRadius(20)
     }

@@ -6,7 +6,7 @@ import SwiftUI
 
 struct CircleGraphView: View {
     @Binding var progress: CGFloat
-    var lineWidth: CGFloat { size * 0.1 }
+    var lineWidth: CGFloat { size * 0.15 }
     let size: CGFloat
     
     var body: some View {
@@ -76,6 +76,6 @@ struct PercentageText: View {
     let size: CGFloat
     var body: some View {
         Text("\(Int(progress * 100))%")
-            .font(.system(size: size * 0.22, weight: .bold))
+            .font(.system(size: size * 0.25, weight: .bold))
     }
 }
