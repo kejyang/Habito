@@ -38,7 +38,7 @@ struct LoginView: View {
             }
             .padding()
             
-            NavigationLink(destination: HomeView(), label: {
+            NavigationLink(destination: TabBarView(), label: {
                 Button("Login") {
                     
                 }
@@ -61,4 +61,6 @@ struct LoginView: View {
     NavigationView {
         LoginView()
     }
+    .environmentObject(CalendarDayViewModel())
+    .environmentObject(TimeOfDayViewModel())
 }
