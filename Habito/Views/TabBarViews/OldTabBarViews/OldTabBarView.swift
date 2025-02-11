@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TabBarView: View {
+struct OldTabBarView: View {
     @State private var selectedTab = 0 // Manage selected tab state internally
 
     var body: some View {
@@ -28,5 +28,5 @@ struct TabBarView: View {
 
 
 #Preview {
-    TabBarView()
+    OldTabBarView()
 }
