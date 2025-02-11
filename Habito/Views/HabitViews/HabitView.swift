@@ -27,15 +27,14 @@ struct HabitView: View {
             }
         
             List {
-                HabitRowView(
-                    dayString: "Day 1",
-                    title: "Sleeping is good",
-                    description: "Sleep 8 hours",
-                    img: "sleepingWoman"
-                )
-                .frame(width: SizeStandards.widthGeneral, height: 120)
-                .background(Color.brandSecondary)
-                .cornerRadius(SizeStandards.cornerRadiusGeneral)
+                
+                ZStack {
+                    HabitTaskRowView(
+                        title: "Drinking",
+                        description: "4/8 Glasses",
+                        img: "sleepingWoman"
+                    )
+                }
                 
             }
             .scrollContentBackground(.hidden)
