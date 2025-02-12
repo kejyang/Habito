@@ -24,10 +24,10 @@ struct LoginView: View {
                 .font(.subheadline.bold())
                 .padding(.bottom)
             
-            TextFieldGeneralView(heading: "E-mail", textFieldText: emailTextFieldText)
+            TextFieldGeneralView(heading: "E-mail", textFieldText: $emailTextFieldText)
                 .padding(.bottom)
             
-            SecureFieldGeneralView(heading: "Password", textFieldText: passwordTextFieldText)
+            SecureFieldGeneralView(heading: "Password", textFieldText: $passwordTextFieldText)
 
             HStack {
                 Toggle("", isOn: $isRememberMe)

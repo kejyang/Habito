@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+struct AccountModel: Identifiable {
+    var id = UUID()
+    var profilePicture: String = "default-picture.png"
+    var username: String
+    var email: String
+    var password: String
+    
+}

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SecureFieldGeneralView: View {
     var heading : String = ""
-    @State var textFieldText : String = ""
+    @Binding var textFieldText : String
     
     var body: some View {
         VStack {
@@ -28,5 +28,5 @@ struct SecureFieldGeneralView: View {
 }
 
 #Preview {
-    SecureFieldGeneralView()
+    //SecureFieldGeneralView()
 }
