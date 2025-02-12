@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct SignUpView: View {
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var accountViewModel: AccountViewModel
     @State var usernameTextFieldText: String = ""
     @State var emailTextFieldText: String = ""
-    @State var phoneTextFieldText: String = ""
     @State var passwordTextFieldText: String = ""
+    @State var confirmPasswordTextFieldText: String = ""
     @State var isAgreeTerms: Bool = false
     
     var body: some View {
@@ -26,16 +28,16 @@ struct SignUpView: View {
                 .font(.subheadline.bold())
                 .padding(.bottom)
             
-            TextFieldGeneralView(heading: "Username", textFieldText: usernameTextFieldText)
+            TextFieldGeneralView(heading: "Username", textFieldText: $usernameTextFieldText)
                 .padding(.bottom)
             
-            TextFieldGeneralView(heading: "E-mail", textFieldText: emailTextFieldText)
+            TextFieldGeneralView(heading: "E-mail", textFieldText: $emailTextFieldText)
                 .padding(.bottom)
             
-            TextFieldGeneralView(heading: "Phone Number", textFieldText: phoneTextFieldText)
+            SecureFieldGeneralView(heading: "Password", textFieldText: $passwordTextFieldText)
                 .padding(.bottom)
             
-            SecureFieldGeneralView(heading: "Password", textFieldText: passwordTextFieldText)
+            SecureFieldGeneralView(heading: "Confirm Password", textFieldText: $confirmPasswordTextFieldText)
             
             
             HStack {
@@ -52,16 +54,22 @@ struct SignUpView: View {
             .padding()
             
             
-            NavigationLink(destination: HomeView(), label: {
+            //NavigationLink(destination: HomeView(), label: {
                 Button("Sign Up") {
-                    
+                    //signup()
                 }
                 .frame(width: SizeStandards.widthGeneral, height: SizeStandards.actionButtonHeight, alignment: .center)
                 .modifier(ActionButtonModifier())
-            })
+            //})
             
         }
     }
+    
+    func signup() {
+        accountViewModel.signupAccount(username: usernameTextFieldText, email: emailTextFieldText, password: passwordTextFieldText)
+        presentationMode.wrappedValue.dismiss()
+    }
+    
 }
 
 #Preview {

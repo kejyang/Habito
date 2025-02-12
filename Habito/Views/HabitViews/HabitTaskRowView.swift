@@ -61,7 +61,7 @@ struct HabitTaskRowView: View {
             .frame(width: SizeStandards.widthGeneral, height: 120)
             .background(Color.brandSecondary)
             .cornerRadius(SizeStandards.cornerRadiusGeneral)       .foregroundColor(Color.brandBlack)
-        .background(NavigationLink("", destination: HabitContentView()).opacity(0))
+            .background(NavigationLink("", destination: WaterTrackingView(value: 0)).opacity(0))
         
     }
 }

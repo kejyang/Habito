@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
+    @EnvironmentObject var accountViewModel: AccountViewModel
     @State var emailTextFieldText: String = ""
     @State var passwordTextFieldText: String = ""
     @State var isRememberMe: Bool = true
@@ -24,10 +25,10 @@ struct LoginView: View {
                 .font(.subheadline.bold())
                 .padding(.bottom)
             
-            TextFieldGeneralView(heading: "E-mail", textFieldText: emailTextFieldText)
+            TextFieldGeneralView(heading: "E-mail", textFieldText: $emailTextFieldText)
                 .padding(.bottom)
             
-            SecureFieldGeneralView(heading: "Password", textFieldText: passwordTextFieldText)
+            SecureFieldGeneralView(heading: "Password", textFieldText: $passwordTextFieldText)
 
             HStack {
                 Toggle("", isOn: $isRememberMe)
@@ -63,4 +64,5 @@ struct LoginView: View {
     }
     .environmentObject(CalendarDayViewModel())
     .environmentObject(TimeOfDayViewModel())
+    .environmentObject(AccountViewModel())
 }
