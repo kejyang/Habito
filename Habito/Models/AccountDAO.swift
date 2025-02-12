@@ -26,7 +26,7 @@ class AccountDAO {
     
     func createAccountTable() {
         
-        let sql = "CREATE TABLE IF NOT EXISTS account(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email TEXT, password TEXT"
+        let sql = "CREATE TABLE IF NOT EXISTS account(id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, email TEXT, password TEXT)"
         
         if sqlite3_exec(db,sql,nil,nil,nil) != SQLITE_OK {
             let err = String(cString: sqlite3_errmsg(db)!)
