@@ -24,8 +24,11 @@ class AccountViewModel: ObservableObject {
         return false
     }
     
-    func signupAccount(username: String, email: String, password: String, confirmPassword: String) {
-        
+    func signupAccount(username: String, email: String, password: String) {
+        //AccountDAO.shared.createDatabase()
+        //AccountDAO.shared.createAccountTable()
+        AccountDAO.shared.insertAccount(username: username as NSString, email: email.lowercased() as NSString, password: password as NSString)
+        print(AccountDAO.shared.fetchAccountByEmail(email: email.lowercased() as NSString))
     }
     
     func setSignedInAccount() {

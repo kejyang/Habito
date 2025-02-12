@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
+    @EnvironmentObject var accountViewModel: AccountViewModel
     @State var emailTextFieldText: String = ""
     @State var passwordTextFieldText: String = ""
     @State var isRememberMe: Bool = true
@@ -63,4 +64,5 @@ struct LoginView: View {
     }
     .environmentObject(CalendarDayViewModel())
     .environmentObject(TimeOfDayViewModel())
+    .environmentObject(AccountViewModel())
 }

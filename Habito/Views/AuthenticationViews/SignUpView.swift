@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SignUpView: View {
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var accountViewModel: AccountViewModel
     @State var usernameTextFieldText: String = ""
     @State var emailTextFieldText: String = ""
     @State var passwordTextFieldText: String = ""
@@ -52,16 +54,22 @@ struct SignUpView: View {
             .padding()
             
             
-            NavigationLink(destination: HomeView(), label: {
+            //NavigationLink(destination: HomeView(), label: {
                 Button("Sign Up") {
-                    
+                    //signup()
                 }
                 .frame(width: SizeStandards.widthGeneral, height: SizeStandards.actionButtonHeight, alignment: .center)
                 .modifier(ActionButtonModifier())
-            })
+            //})
             
         }
     }
+    
+    func signup() {
+        accountViewModel.signupAccount(username: usernameTextFieldText, email: emailTextFieldText, password: passwordTextFieldText)
+        presentationMode.wrappedValue.dismiss()
+    }
+    
 }
 
 #Preview {

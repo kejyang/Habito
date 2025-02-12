@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct AccountModel: Identifiable {
-    var id = UUID()
+struct AccountModel {
+    var id : Int32
     var profilePicture: String = "default-picture.png"
     var username: String
     var email: String

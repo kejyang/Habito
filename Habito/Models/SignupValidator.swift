@@ -15,10 +15,10 @@ class SignupValidator {
     
     enum ValidationResponse : String {
         case valid = ""
-        case usernameEmpty = "Email cannot be empty"
-        case usernameContainsSpace = "Email cannot contain spaces"
-        case invalidUsernameFormat = "Email must be in the format abc@xyz.com"
-        case usernameInUse = "An account already exists with this email"
+        case emailEmpty = "Email cannot be empty"
+        case emailContainsSpace = "Email cannot contain spaces"
+        case invalidEmailFormat = "Email must be in the format abc@xyz.com"
+        case emailInUse = "An account already exists with this email"
         case passwordNotMatching = "Passwords do not match"
         case passwordNotLong = "Password must be atleast 6 characters"
         case passwordNoSpecialCharacter = "Password must contain a special character"
@@ -29,25 +29,25 @@ class SignupValidator {
     
     
     func validate(username: String, email: String, password: String, confirmPassword: String) -> ValidationResponse {
-        guard username != "" else {
-            return ValidationResponse.usernameEmpty
+        guard email != "" else {
+            return ValidationResponse.emailEmpty
         }
         
         guard !username.contains(" ") else {
-            return ValidationResponse.usernameContainsSpace
+            return ValidationResponse.emailContainsSpace
         }
         
         let emailRegEx = "[A-Z0-9a-z._-]+@[A-Z0-9a-z.-]+\\.[A-Za-z]{2,3}"
         let emailPredicate = NSPredicate(format: "SELF MATCHES[c] %@", emailRegEx)
         
-        guard emailPredicate.evaluate(with: username) else {
-            return ValidationResponse.invalidUsernameFormat
+        guard emailPredicate.evaluate(with: email) else {
+            return ValidationResponse.invalidEmailFormat
         }
         
-        /*let acc = DBHelper.dbhelper.fetchAccountByEmail(email: username as NSString)
+        let acc = AccountDAO.shared.fetchAccountByEmail(email: email as NSString)
         guard acc == nil else {
-            return ValidationResponse.usernameInUse
-        }*/
+            return ValidationResponse.emailInUse
+        }
         
         /// Verify the password
         

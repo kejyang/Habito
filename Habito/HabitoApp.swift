@@ -11,7 +11,12 @@ import SwiftUI
 struct HabitoApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationView {
+                LoginView()
+            }
+            .environmentObject(CalendarDayViewModel())
+            .environmentObject(TimeOfDayViewModel())
+            .environmentObject(AccountViewModel())
         }
     }
 }
