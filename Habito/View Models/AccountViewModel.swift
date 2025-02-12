@@ -10,6 +10,11 @@ import Foundation
 class AccountViewModel: ObservableObject {
     @Published var account : AccountModel?
     
+    init() {
+        //AccountDAO.shared.createDatabase()
+        //AccountDAO.shared.createAccountTable()
+    }
+    
     func validateLogin(email: String, password: String) -> Bool {
         if LoginValidator.shared.validate(email: email, password: password) {
             return true
@@ -25,8 +30,6 @@ class AccountViewModel: ObservableObject {
     }
     
     func signupAccount(username: String, email: String, password: String) {
-        //AccountDAO.shared.createDatabase()
-        //AccountDAO.shared.createAccountTable()
         AccountDAO.shared.insertAccount(username: username as NSString, email: email.lowercased() as NSString, password: password as NSString)
         print(AccountDAO.shared.fetchAccountByEmail(email: email.lowercased() as NSString))
     }
