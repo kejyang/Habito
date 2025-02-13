@@ -56,7 +56,7 @@ struct SignUpView: View {
             
             //NavigationLink(destination: HomeView(), label: {
                 Button("Sign Up") {
-                    //signup()
+                    signup()
                 }
                 .frame(width: SizeStandards.widthGeneral, height: SizeStandards.actionButtonHeight, alignment: .center)
                 .modifier(ActionButtonModifier())

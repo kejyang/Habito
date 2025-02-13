@@ -9,10 +9,12 @@ import Foundation
 
 class AccountViewModel: ObservableObject {
     @Published var account : AccountModel?
+    let dbHelper = DBManager.dbhelper
     
     init() {
-        //AccountDAO.shared.createDatabase()
-        //AccountDAO.shared.createAccountTable()
+        dbHelper.createDatabase()
+        dbHelper.createAccountTable()
+
     }
     
     func validateLogin(email: String, password: String) -> Bool {
@@ -30,8 +32,8 @@ class AccountViewModel: ObservableObject {
     }
     
     func signupAccount(username: String, email: String, password: String) {
-        AccountDAO.shared.insertAccount(username: username as NSString, email: email.lowercased() as NSString, password: password as NSString)
-        print(AccountDAO.shared.fetchAccountByEmail(email: email.lowercased() as NSString))
+        dbHelper.insertAccount(username: username as NSString, email: email.lowercased() as NSString, password: password as NSString)
+        print(dbHelper.fetchAccountByEmail(email: email.lowercased() as NSString))
     }
     
     func setSignedInAccount() {

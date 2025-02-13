@@ -44,7 +44,8 @@ class SignupValidator {
             return ValidationResponse.invalidEmailFormat
         }
         
-        let acc = AccountDAO.shared.fetchAccountByEmail(email: email as NSString)
+        let acc = DBManager.dbhelper.fetchAccountByEmail(email: email as NSString)
+        //let acc = AccountDAO.shared.fetchAccountByEmail(email: email as NSString)
         guard acc == nil else {
             return ValidationResponse.emailInUse
         }
