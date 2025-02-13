@@ -18,6 +18,7 @@ struct HabitoApp: App {
             .environmentObject(TimeOfDayViewModel())
             .environmentObject(AccountViewModel())
             .environmentObject(HabitViewModel())
+            .environmentObject(HabitDailyTaskViewModel())
         }
     }
 }
