@@ -60,6 +60,8 @@ struct AddHabitView: View {
         .frame(maxHeight: .infinity)
         .modifier(NavigationTitleGeneralModifier(text: "Create New Habit"))
     }
+    
+    
 }
 
 #Preview {
