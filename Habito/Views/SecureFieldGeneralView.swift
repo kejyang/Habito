@@ -10,6 +10,7 @@ import SwiftUI
 struct SecureFieldGeneralView: View {
     var heading : String = ""
     @Binding var textFieldText : String
+    @State var isRed = false
     
     var body: some View {
         VStack {
@@ -21,7 +22,7 @@ struct SecureFieldGeneralView: View {
                 .overlay {
                     RoundedRectangle(cornerRadius: SizeStandards.cornerRadiusGeneral)
                         .stroke(style: StrokeStyle(lineWidth: SizeStandards.borderWidthGeneral))
-                        .foregroundColor(Color.brandPrimary)
+                        .foregroundColor(isRed ? .red : Color.brandPrimary)
                 }
         }
     }
