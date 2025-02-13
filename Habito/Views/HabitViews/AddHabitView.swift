@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct AddHabitView: View {
-    @State var habitTitle : String = ""
-    @State var habitDetails : String = ""
-    @State var selectedActivityType : Int = 0
-    @EnvironmentObject var accountViewModel : AccountViewModel
-    @EnvironmentObject var habitViewModel : HabitViewModel
+    @State var habitTitle: String = ""
+    @State var habitDetails: String = ""
+    @State var selectedActivityType: ActivityType = .sleep // Use the enum
+    @EnvironmentObject var accountViewModel: AccountViewModel
+    @EnvironmentObject var habitViewModel: HabitViewModel
     
     var body: some View {
         VStack {
@@ -22,7 +22,7 @@ struct AddHabitView: View {
                     .ignoresSafeArea()
                     .frame(maxHeight: .infinity, alignment: .top)
                 
-                VStack (alignment: .center){
+                VStack(alignment: .center) {
                     Spacer()
                     TextField("Habit Title", text: $habitTitle)
                         .font(.title)
@@ -41,7 +41,7 @@ struct AddHabitView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             
-            ActivityTypeSelectorView(selectedActivityIndex: selectedActivityType)
+            ActivityTypeSelectorView(selectedActivityType: $selectedActivityType) // Pass the binding
 
             Text("Choose Time in a Day")
                 .font(.headline)
@@ -57,7 +57,6 @@ struct AddHabitView: View {
             }
             .frame(width: SizeStandards.widthGeneral, height: SizeStandards.actionButtonHeight)
             .modifier(ActionButtonModifier())
-            
         }
         .frame(maxHeight: .infinity)
         .modifier(NavigationTitleGeneralModifier(text: "Create New Habit"))
@@ -68,7 +67,7 @@ struct AddHabitView: View {
             habitViewModel.addHabit(
                 title: habitTitle,
                 habitDetails: habitDetails,
-                activityType: "Water",
+                activityType: selectedActivityType.rawValue,
                 timeOfTheDay: "morning",
                 accountId: Int(accountId)
             )
