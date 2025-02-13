@@ -9,20 +9,25 @@
 import SwiftUI
 
 struct ActivityTypeSelectorView: View {
-    @State var selectedActivityIndex = 0
-    var icons : [String] = ["person", "drop", "bicycle", "shoe"]
+    @Binding var selectedActivityType: ActivityType
+    let activityIcons: [ActivityType: String] = [
+        .sleep: "moon",
+        .drinkingWater: "drop",
+        .biking: "bicycle",
+        .running: "shoe"
+    ]
     
     var body: some View {
         HStack(spacing: 30) {
-            ForEach(0..<icons.count, id: \.self) { index in
+            ForEach(ActivityType.allCases, id: \.self) { activity in
                 Button(action: {
-                    selectedActivityIndex = index
+                    selectedActivityType = activity
                 }, label: {
-                    Image(systemName: icons[index])
+                    Image(systemName: activityIcons[activity] ?? "questionmark")
                         .font(.title)
                         .frame(width: 70, height: 70)
                         .foregroundColor(Color.brandWhite)
-                        .background(selectedActivityIndex == index ? Color.brandPrimary : Color.brandGray)
+                        .background(selectedActivityType == activity ? Color.brandPrimary : Color.brandGray)
                         .cornerRadius(SizeStandards.cornerRadiusGeneral)
                 })
             }
