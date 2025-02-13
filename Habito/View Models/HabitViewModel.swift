@@ -14,7 +14,7 @@ class HabitViewModel: ObservableObject {
     init() {
         dbHelper.createDatabase()
         dbHelper.createHabitTable()
-
+        print(dbHelper.fetchHabitById(id: 1))
     }
     
     func addHabit(title: String, habitDetails: String, activityType: String, timeOfTheDay: String, accountId: Int) {
