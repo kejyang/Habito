@@ -28,7 +28,7 @@ struct AddHabitView: View {
                         .font(.title)
                         .offset(x: 4)
 
-                    TextEditorWithPlaceholderView(placeholderText: "Add your habit details", text: habitDetails)
+                    TextEditorWithPlaceholderView(placeholderText: "Add your habit details", text: $habitDetails)
                 }
                 .cornerRadius(SizeStandards.cornerRadiusGeneral)
                 .padding()

@@ -10,7 +10,7 @@ import SwiftUI
 
 struct TextEditorWithPlaceholderView: View {
     var placeholderText: String = ""
-    @State var text: String = ""
+    @Binding var text: String // Use a binding instead of @State
     
     var body: some View {
         ZStack {
@@ -19,12 +19,10 @@ struct TextEditorWithPlaceholderView: View {
                     .disabled(true)
                     .scrollContentBackground(.hidden)
                     .opacity(0.25)
-
             }
             
             TextEditor(text: $text)
                 .scrollContentBackground(.hidden)
-                //.opacity(text.isEmpty ? 0.25 : 1)
         }
     }
 }
