@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
+    @EnvironmentObject var accountViewModel: AccountViewModel
     var profileImageString : String = "sleepingWoman"
     var username : String = "test username"
     var email : String = "test email"
@@ -26,10 +27,21 @@ struct ProfileView: View {
                 NavigationLink(destination: HomeView(), label: {
                     Text("Delete account")
                 })
+                Button("Log out") {
+                    accountViewModel.isLoggedIn = false
+                    accountViewModel.account = nil
+                }
+                .foregroundColor(.red)
+                /*
                 NavigationLink(destination: LoginView(), label: {
                     Text("Log out")
                         .foregroundColor(.red)
                 })
+                .onTapGesture {
+                    accountViewModel.isLoggedIn = false
+                    accountViewModel.account = nil
+                }*/
+                
             }
             .scrollContentBackground(.hidden)
             //.cornerRadius(<#T##radius: CGFloat##CGFloat#>)
