@@ -28,54 +28,58 @@ class SignupValidator {
     
     
     
-    func validate(username: String, email: String, password: String, confirmPassword: String) -> ValidationResponse {
-        guard email != "" else {
-            return ValidationResponse.emailEmpty
+    func validate(username: String, email: String, password: String, confirmPassword: String) -> [ValidationResponse] {
+        var validationResponses: [ValidationResponse] = []
+        
+        if email.isEmpty {
+            validationResponses.append(ValidationResponse.emailEmpty)
         }
         
-        guard !username.contains(" ") else {
-            return ValidationResponse.emailContainsSpace
+        if email.contains(" ") {
+            validationResponses.append(ValidationResponse.emailContainsSpace)
         }
         
         let emailRegEx = "[A-Z0-9a-z._-]+@[A-Z0-9a-z.-]+\\.[A-Za-z]{2,3}"
         let emailPredicate = NSPredicate(format: "SELF MATCHES[c] %@", emailRegEx)
         
-        guard emailPredicate.evaluate(with: email) else {
-            return ValidationResponse.invalidEmailFormat
+        if !emailPredicate.evaluate(with: email) {
+            validationResponses.append(ValidationResponse.invalidEmailFormat)
         }
         
         let acc = AccountDAO.shared.fetchAccountByEmail(email: email as NSString)
-        guard acc == nil else {
-            return ValidationResponse.emailInUse
+        if acc != nil {
+            validationResponses.append(ValidationResponse.emailInUse)
         }
         
         /// Verify the password
         
-        guard password.count >= 6 else {
-            return ValidationResponse.passwordNotLong
+        if password.count < 6 {
+            validationResponses.append(ValidationResponse.passwordNotLong)
         }
         
         let specialCharacters = CharacterSet(charactersIn: "!@#$%^&*()_+-=<>?,./:\";'[]{}|\\")
-        guard let _ = password.rangeOfCharacter(from: specialCharacters) else {
-            return ValidationResponse.passwordNoSpecialCharacter
+        if let _ = password.rangeOfCharacter(from: specialCharacters) {
+        } else {
+            validationResponses.append(ValidationResponse.passwordNoSpecialCharacter)
         }
         
         let numericCharacters = CharacterSet(charactersIn: "1234567890")
-        guard let _ = password.rangeOfCharacter(from: numericCharacters) else {
-            return ValidationResponse.passwordNoNumber
+        if let _ = password.rangeOfCharacter(from: numericCharacters) {
+        } else {
+            validationResponses.append(ValidationResponse.passwordNoNumber)
         }
         
         let capitalCharacters = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-        guard let _ = password.rangeOfCharacter(from: capitalCharacters) else {
-            return ValidationResponse.passwordNoCapital
+        if let _ = password.rangeOfCharacter(from: capitalCharacters) {
+        } else {
+            validationResponses.append(ValidationResponse.passwordNoCapital)
         }
         
-        guard password == confirmPassword else {
-            return ValidationResponse.passwordNotMatching
+        if password != confirmPassword {
+            validationResponses.append(ValidationResponse.passwordNotMatching)
         }
         
-        
-        return ValidationResponse.valid
+        return validationResponses
     }
     
     

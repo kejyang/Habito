@@ -97,6 +97,41 @@ class AccountDAO {
         return fetchedAccount
     }
     
+    func fetchAccountByEmailAndPassword(email: NSString, password: NSString) -> AccountModel? {
+        var fetchedAccount : AccountModel?
+        var stmt : OpaquePointer?
+        let query = "SELECT * FROM account WHERE email = ? AND password = ?"
+        
+        if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_text(stmt, 1, email.utf8String, -1, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_text(stmt, 2, password.utf8String, -1, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_step(stmt) == SQLITE_ROW {
+            let id = sqlite3_column_int(stmt, 0)
+            let fetchedUsername = String(cString: sqlite3_column_text(stmt, 1))
+            let fetchedEmail = String(cString: sqlite3_column_text(stmt, 2))
+            let fetchedPassword = String(cString: sqlite3_column_text(stmt, 3))
+            
+            fetchedAccount = AccountModel(id: id, username: fetchedUsername, email: fetchedEmail, password: fetchedPassword)
+        } else {
+            print("Could not get account")
+        }
+        
+        sqlite3_finalize(stmt)
+        
+        return fetchedAccount
+    }
     
     func deleteAccountByID(id: Int32) {
         var stmt : OpaquePointer?
