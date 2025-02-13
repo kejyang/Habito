@@ -77,6 +77,7 @@ class AccountViewModel: ObservableObject {
         }
         
         if let account = signupAccount(username: username, email: email, password: password) {
+            saveToKeyChain(email: email, password: password)
             setSignedInAccount(accountModel: account)
         } else {
             responseDictionary[ValidationResponse.valid] = false
@@ -87,5 +88,31 @@ class AccountViewModel: ObservableObject {
     
     func setSignedInAccount(accountModel: AccountModel) {
         account = accountModel
+    }
+    
+    func getRememberedEmail() -> String {
+        let remembered = AccountKeyChain.shared.getRememberAccount()
+        
+        if remembered.1 {
+            return remembered.0
+        }
+        return ""
+    }
+    
+    func rememberEmail(email: String, isRememberMe: Bool) {
+        AccountKeyChain.shared.saveRememberAccount(email: email, isRememberMe: isRememberMe)
+    }
+    
+    func getPasswordFromKeyChain(email: String) -> String {
+        let keyChainResult = AccountKeyChain.shared.getKey(email: email)
+        
+        if let password = keyChainResult.1 {
+            return password
+        }
+        return ""
+    }
+    
+    func saveToKeyChain(email: String, password: String) {
+        AccountKeyChain.shared.saveKey(email: email, password: password)
     }
 }

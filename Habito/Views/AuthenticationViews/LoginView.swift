@@ -72,11 +72,24 @@ struct LoginView: View {
                 }
                 .padding()
             }
+            .onAppear(perform: getRememberedData)
+        }
+    }
+    
+    func getRememberedData() {
+        let email = accountViewModel.getRememberedEmail()
+        if !email.isEmpty {
+            emailTextFieldText = email
+            passwordTextFieldText = accountViewModel.getPasswordFromKeyChain(email: email)
+            isRememberMe = true
+        } else {
+            isRememberMe = false
         }
     }
     
     func login() -> Bool {
         if accountViewModel.attemptLogin(email: emailTextFieldText, password: passwordTextFieldText) {
+            accountViewModel.rememberEmail(email: emailTextFieldText, isRememberMe: isRememberMe)
             return true
         }
         isError = true
