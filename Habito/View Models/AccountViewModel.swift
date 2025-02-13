@@ -9,6 +9,7 @@ import Foundation
 
 class AccountViewModel: ObservableObject {
     @Published var account : AccountModel?
+
     @Published var isLoggedIn = false
     
     enum ValidationResponse {

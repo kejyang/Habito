@@ -46,6 +46,7 @@ class SignupValidator {
             validationResponses.append(ValidationResponse.invalidEmailFormat)
         }
         
+
         let acc = AccountDAO.shared.fetchAccountByEmail(email: email as NSString)
         if acc != nil {
             validationResponses.append(ValidationResponse.emailInUse)

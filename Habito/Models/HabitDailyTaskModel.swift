@@ -8,7 +8,11 @@
 import Foundation
 
 struct HabitDailyTaskModel: Identifiable {
-    var id: ObjectIdentifier
-    
-    
+    let id : Int?
+    var day: String
+    var month: String
+    var year: String
+    var completionValue: Int
+    var completed: Bool
+    var habitId: Int?
 }
