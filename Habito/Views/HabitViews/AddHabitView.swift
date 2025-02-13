@@ -11,6 +11,8 @@ struct AddHabitView: View {
     @State var habitTitle : String = ""
     @State var habitDetails : String = ""
     @State var selectedActivityType : Int = 0
+    @EnvironmentObject var accountViewModel : AccountViewModel
+    @EnvironmentObject var habitViewModel : HabitViewModel
     
     var body: some View {
         VStack {
@@ -51,7 +53,7 @@ struct AddHabitView: View {
             Spacer()
             
             Button("Create") {
-                
+                addHabit()
             }
             .frame(width: SizeStandards.widthGeneral, height: SizeStandards.actionButtonHeight)
             .modifier(ActionButtonModifier())
@@ -59,6 +61,20 @@ struct AddHabitView: View {
         }
         .frame(maxHeight: .infinity)
         .modifier(NavigationTitleGeneralModifier(text: "Create New Habit"))
+    }
+    
+    func addHabit() {
+        if let accountId = accountViewModel.account?.id {
+            habitViewModel.addHabit(
+                title: habitTitle,
+                habitDetails: habitDetails,
+                activityType: "Water",
+                timeOfTheDay: "morning",
+                accountId: Int(accountId)
+            )
+        } else {
+            print("Error: Account ID is nil.")
+        }
     }
     
     

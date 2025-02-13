@@ -9,7 +9,7 @@ import Foundation
 import SQLite3
 extension DBManager{
     func createHabitDailyTaskTable() {
-        let sql = "create table if not exists habit_daily_tasks(id integer primary key autoincrement, day text, month text, year text, completion_value integer, completed integer, FOREIGN KEY (habit_id) REFERENCES habits(id))"
+        let sql = "create table if not exists habit_daily_tasks(id integer primary key autoincrement, day text, month text, year text, completion_value integer, completed integer, habit_id, FOREIGN KEY (habit_id) REFERENCES habits(id))"
         if sqlite3_exec(db,sql,nil,nil,nil) != SQLITE_OK {
             let err = String(cString: sqlite3_errmsg(db)!)
             print("there is an error \(err)")

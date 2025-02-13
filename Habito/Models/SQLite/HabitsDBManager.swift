@@ -4,7 +4,7 @@ import Foundation
 import SQLite3
 extension DBManager{
     func createHabitTable() {
-        let sql = "create table if not exists habits(id integer primary key autoincrement,title text, habit_details text, activity_type text, time_of_the_day text, FOREIGN KEY (account_id) REFERENCES account(id))"
+        let sql = "create table if not exists habits(id integer primary key autoincrement,title text, habit_details text, activity_type text, time_of_the_day text, account_id INTEGER, FOREIGN KEY (account_id) REFERENCES account(id))"
         if sqlite3_exec(db,sql,nil,nil,nil) != SQLITE_OK {
             let err = String(cString: sqlite3_errmsg(db)!)
             print("there is an error \(err)")
