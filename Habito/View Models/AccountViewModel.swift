@@ -36,6 +36,14 @@ class AccountViewModel: ObservableObject {
         return false
     }
     
+    func attemptLogin(email: String, password: String) -> Bool {
+        if let account = AccountDAO.shared.fetchAccountByEmailAndPassword(email: email.lowercased() as NSString, password: password as NSString) {
+            setSignedInAccount(accountModel: account)
+            return true
+        }
+        return false
+    }
+    
     func validateSignup(username: String, email: String, password: String, confirmPassword: String) -> Bool {
         if SignupValidator.shared.validate(username: username, email: email, password: password, confirmPassword: confirmPassword).isEmpty {
             return true
