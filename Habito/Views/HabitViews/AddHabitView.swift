@@ -76,8 +76,6 @@ struct AddHabitView: View {
             print("Error: Account ID is nil.")
         }
     }
-    
-    
 }
 
 #Preview {
