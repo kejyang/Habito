@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HabitView: View {
     @EnvironmentObject var calendarDayViewModel : CalendarDayViewModel
+    @EnvironmentObject var habitViewModel: HabitViewModel
     @State var dayIndex = 3
     
     var body: some View {
@@ -28,13 +29,18 @@ struct HabitView: View {
         
             List {
                 
-                ZStack {
+                ForEach(habitViewModel.accountHabits) { habit in
+
+                    HabitTaskRowView(title: habit.title, description: habit.habitDetails, img: "sleepingWoman")
+                    
+                }
+                /*ZStack {
                     HabitTaskRowView(
                         title: "Drinking",
                         description: "4/8 Glasses",
                         img: "sleepingWoman"
                     )
-                }
+                }*/
                 
             }
             .scrollContentBackground(.hidden)

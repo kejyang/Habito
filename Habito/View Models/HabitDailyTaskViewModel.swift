@@ -9,6 +9,7 @@ import Foundation
 
 class HabitDailyTaskViewModel: ObservableObject {
     @Published var habitDailyTask : HabitDailyTaskModel?
+    @Published var accountDailytasks : [HabitDailyTaskModel] = []
     let dbHelper = DBManager.dbhelper
     
     init() {

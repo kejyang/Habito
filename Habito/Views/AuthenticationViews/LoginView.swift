@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     @EnvironmentObject var accountViewModel: AccountViewModel
+    @EnvironmentObject var habitViewModel: HabitViewModel
     @State var emailTextFieldText: String = ""
     @State var passwordTextFieldText: String = ""
     @State var isRememberMe: Bool = true
@@ -90,6 +91,10 @@ struct LoginView: View {
     func login() -> Bool {
         if accountViewModel.attemptLogin(email: emailTextFieldText, password: passwordTextFieldText) {
             accountViewModel.rememberEmail(email: emailTextFieldText, isRememberMe: isRememberMe)
+            if let id = accountViewModel.account?.id {
+                habitViewModel.accountHabits = habitViewModel.getHabitsByAccountId(id: Int(id))
+            }
+            
             return true
         }
         isError = true
