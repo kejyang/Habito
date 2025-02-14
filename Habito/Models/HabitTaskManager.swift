@@ -26,7 +26,7 @@ class HabitTaskManager {
     func generateHabitDailyTasksByHabitId(id: Int) {
         let tasks = DBManager.dbhelper.fetchHabitDailyTaskByHabitId(id: id)
         
-        let threeDaysAgo = Date(timeInterval: 259200, since: .now)
+        let threeDaysAgo = Date(timeInterval: -259200, since: .now)
         
         for i in 0..<5 {
             let date = Date(timeInterval: 86400*Double(i), since: threeDaysAgo)
