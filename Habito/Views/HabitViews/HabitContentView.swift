@@ -9,19 +9,20 @@ import SwiftUI
 
 struct HabitContentView: View {
     var value: Int
+    var task: HabitDailyTaskModel
     var habit: HabitModel?
     var activityType: String = ""
     
     var body: some View {
         switch activityType {
         case ActivityType.sleep.rawValue:
-            SleepTrackingView(habit: habit, value: value)
+            SleepTrackingView(dailyTask: task, habit: habit, value: value)
         case ActivityType.drinkingWater.rawValue:
-            WaterTrackingView(habit: habit, value: value)
+            WaterTrackingView(dailyTask: task, habit: habit, value: value)
         case ActivityType.biking.rawValue:
-            ExerciseTrackingView(habit: habit, minutesValue: Double(value))
+            ExerciseTrackingView(dailyTask: task, habit: habit, minutesValue: Double(value))
         case ActivityType.running.rawValue:
-            StepTrackingView(habit: habit, stepsValue: Double(value))
+            StepTrackingView(dailyTask: task, habit: habit, stepsValue: Double(value))
         default:
             Text("Failed to load")
         }

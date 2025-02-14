@@ -56,5 +56,9 @@ class HabitDailyTaskViewModel: ObservableObject {
         HabitTaskManager.shared.generateHabitDailyTasksForAccountId(accountId: accountId)
     }
     
+    func updateDailyTaskById(completionValue: Int, activityType: String, taskId: Int) {
+        HabitTaskManager.shared.updateDailyTaskById(completionValue: completionValue, activityType: activityType, taskId: taskId)
+    }
+    
 }
 

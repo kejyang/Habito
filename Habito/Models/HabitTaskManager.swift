@@ -62,13 +62,37 @@ class HabitTaskManager {
     }
     
     func getHabitDailyTasksOnCalendarDay(calendarDay: CalendarDayModel, accountId: Int) -> [HabitDailyTaskModel] {
-        var aggregatedTasks = getHabitDailyTasksByAccountId(accountId: accountId)
+        let aggregatedTasks = getHabitDailyTasksByAccountId(accountId: accountId)
         
-        var filteredAggregatedTasks = aggregatedTasks.filter { (task: HabitDailyTaskModel) -> Bool in
+        let filteredAggregatedTasks = aggregatedTasks.filter { (task: HabitDailyTaskModel) -> Bool in
             return calendarDay.day == task.day && calendarDay.month == task.month && calendarDay.year == task.year
         }
         
         return filteredAggregatedTasks
     }
     
+    func updateDailyTaskById(completionValue: Int, activityType: String, taskId: Int) {
+        var isCompleted = false
+        if completionValue == getActivityTypeMaxValue(activityType: activityType) {
+            isCompleted = true
+        }
+        
+        DBManager.dbhelper.updateHabitDailyTaskById(completionValue: completionValue, completed: isCompleted, taskId: taskId)
+    }
+    
+    
+    func getActivityTypeMaxValue(activityType: String) -> Int? {
+        switch activityType {
+        case ActivityType.sleep.rawValue:
+            return 8
+        case ActivityType.drinkingWater.rawValue:
+            return 8
+        case ActivityType.biking.rawValue:
+            return 30
+        case ActivityType.running.rawValue:
+            return 10
+        default:
+            return nil
+        }
+    }
 }

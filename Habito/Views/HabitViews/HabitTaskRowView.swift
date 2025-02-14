@@ -80,7 +80,7 @@ struct HabitTaskRowView: View {
                     }
                 }
             }
-            .background(NavigationLink("", destination: HabitContentView(value: habitdailyTask.completionValue, habit: habitModel, activityType: habitModel?.activityType ?? "")).opacity(0))
+            .background(NavigationLink("", destination: HabitContentView(value: habitdailyTask.completionValue, task: habitdailyTask, habit: habitModel, activityType: habitModel?.activityType ?? "")).opacity(0))
             
         
     }

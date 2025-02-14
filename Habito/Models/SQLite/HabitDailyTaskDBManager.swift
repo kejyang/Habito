@@ -194,6 +194,40 @@ extension DBManager{
         return habitDailyTaskList
     }
     
+    
+    func updateHabitDailyTaskById(completionValue: Int, completed: Bool, taskId: Int) {
+        var stmt : OpaquePointer?
+        let query = "UPDATE habit_daily_tasks SET completion_value = ?, completed = ? WHERE id = ?"
+        if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_int(stmt, 1, Int32(completionValue)) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_int(stmt, 2, completed ? 1 : 0) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_int(stmt, 3, Int32(taskId)) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_step(stmt) == SQLITE_DONE {
+            print("Daily Task updated")
+        } else {
+            print("Failed to update daily task")
+        }
+        
+        sqlite3_finalize(stmt)
+    }
+    
+    
     func deleteHabitDailyTaskById(id: Int) -> Bool {
         var stmt: OpaquePointer?
         let query = "DELETE FROM habit_daily_tasks WHERE id = ?"
