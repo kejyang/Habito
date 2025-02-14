@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct WaterTrackingView: View {
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var habitDailyTaskViewModel: HabitDailyTaskViewModel
+    var dailyTask : HabitDailyTaskModel
+    var habit: HabitModel?
     @State var value : Int
     
     var body: some View {
@@ -39,7 +43,12 @@ struct WaterTrackingView: View {
                 .padding()
             
             Button("Done") {
-                
+                if let h = habit {
+                    if let id = dailyTask.id {
+                        habitDailyTaskViewModel.updateDailyTaskById(completionValue: value, activityType: h.activityType, taskId: id)
+                    }
+                }
+                presentationMode.wrappedValue.dismiss()
             }
             .frame(width: 160, height: SizeStandards.actionButtonHeight)
             .modifier(ActionButtonModifier())
@@ -52,6 +61,6 @@ struct WaterTrackingView: View {
 
 #Preview {
     NavigationView {
-        WaterTrackingView(value: 0)
+        //WaterTrackingView(value: 0)
     }
 }

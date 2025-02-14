@@ -17,7 +17,7 @@ struct HabitRowView: View {
     
     var body: some View {
         NavigationLink {
-            HabitContentView()
+            //HabitContentView()
         } label: {
             HStack {
                 Image(img)

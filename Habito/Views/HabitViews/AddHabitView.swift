@@ -76,7 +76,9 @@ struct AddHabitView: View {
             )
             habitViewModel.accountHabits = habitViewModel.getHabitsByAccountId(id: Int(accountId))
             if let newHabit = habitViewModel.accountHabits.last {
-                
+                if let habitId = newHabit.id {
+                    habitDailyTaskViewModel.generateHabitDailyTasksByHabitId(habitId: habitId)
+                }
             }
             presentationMode.wrappedValue.dismiss()
         } else {
