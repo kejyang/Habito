@@ -110,6 +110,11 @@ extension DBManager{
             return habitList
         }
         
+        if sqlite3_bind_int(stmt, 1, Int32(id)) != SQLITE_OK {
+            print("Error binding id parameter: \(String(cString: sqlite3_errmsg(db)!))")
+            return []
+        }
+        
         while sqlite3_step(stmt) == SQLITE_ROW {
             let id = sqlite3_column_int(stmt, 0)
             let title = String(cString: sqlite3_column_text(stmt, 1))

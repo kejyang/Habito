@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct AddHabitView: View {
+    @Environment(\.presentationMode) var presentationMode
     @State var habitTitle: String = ""
     @State var habitDetails: String = ""
     @State var selectedActivityType: ActivityType = .sleep // Use the enum
     @EnvironmentObject var accountViewModel: AccountViewModel
     @EnvironmentObject var habitViewModel: HabitViewModel
+    @EnvironmentObject var habitDailyTaskViewModel: HabitDailyTaskViewModel
     
     var body: some View {
         VStack {
@@ -54,6 +56,7 @@ struct AddHabitView: View {
             
             Button("Create") {
                 addHabit()
+                
             }
             .frame(width: SizeStandards.widthGeneral, height: SizeStandards.actionButtonHeight)
             .modifier(ActionButtonModifier())
@@ -71,6 +74,11 @@ struct AddHabitView: View {
                 timeOfTheDay: "morning",
                 accountId: Int(accountId)
             )
+            habitViewModel.accountHabits = habitViewModel.getHabitsByAccountId(id: Int(accountId))
+            if let newHabit = habitViewModel.accountHabits.last {
+                
+            }
+            presentationMode.wrappedValue.dismiss()
         } else {
             print("Error: Account ID is nil.")
         }
