@@ -28,7 +28,7 @@ extension DBManager{
         let completionValueInt32 = Int32(completionValue)
         let habitIdValueInt32 = Int32(habitId)
         
-        let query = "INSERT INTO habit_daily_tasks(day, month, year, completionValue, completed, habit_id) VALUES (?, ?, ?, ?, ?, ?)"
+        let query = "INSERT INTO habit_daily_tasks(day, month, year, completion_value, completed, habit_id) VALUES (?, ?, ?, ?, ?, ?)"
         
         // Prepare the statement
         if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
@@ -58,7 +58,7 @@ extension DBManager{
         
         if sqlite3_bind_int(stmt, 4, completionValueInt32) != SQLITE_OK {
             let err = String(cString: sqlite3_errmsg(db)!)
-            print("There is an error binding completionValue: \(err)")
+            print("There is an error binding completion_value: \(err)")
             return
         }
         
@@ -157,23 +157,23 @@ extension DBManager{
         return habitDailyTaskModel
     }
     
-    func fetchHabitDailyTaskByHabitId(id: Int) -> HabitDailyTaskModel? {
+    func fetchHabitDailyTaskByHabitId(id: Int) -> [HabitDailyTaskModel] {
         var stmt: OpaquePointer?
-        var habitDailyTaskModel: HabitDailyTaskModel? = nil
+        var habitDailyTaskList = [HabitDailyTaskModel]()
         let query = "SELECT * FROM habit_daily_tasks WHERE habit_id = ?"
         
         if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
             print("Error preparing fetch query: \(String(cString: sqlite3_errmsg(db)!))")
-            return nil
+            return []
         }
         
         // Bind the id parameter to the statement
         if sqlite3_bind_int(stmt, 1, Int32(id)) != SQLITE_OK {
             print("Error binding id parameter: \(String(cString: sqlite3_errmsg(db)!))")
-            return nil
+            return []
         }
         
-        if sqlite3_step(stmt) == SQLITE_ROW {
+        while sqlite3_step(stmt) == SQLITE_ROW {
             let id = sqlite3_column_int(stmt, 0)
             let day = String(cString: sqlite3_column_text(stmt, 1))
             let month = String(cString: sqlite3_column_text(stmt, 2))
@@ -182,7 +182,8 @@ extension DBManager{
             let completed = sqlite3_column_int(stmt, 5)
             let habitId = sqlite3_column_int(stmt, 6)
             
-            habitDailyTaskModel = HabitDailyTaskModel(id: Int(id), day: day, month: month, year: year, completionValue: Int(completionValue), completed: (Int(completed) != 0), habitId: Int(habitId))
+            let habitDailyTaskModel = HabitDailyTaskModel(id: Int(id), day: day, month: month, year: year, completionValue: Int(completionValue), completed: (Int(completed) != 0), habitId: Int(habitId))
+            habitDailyTaskList.append(habitDailyTaskModel)
         }
         
         if sqlite3_finalize(stmt) != SQLITE_OK {
@@ -190,7 +191,7 @@ extension DBManager{
             print("Error finalizing fetch query: \(err)")
         }
         
-        return habitDailyTaskModel
+        return habitDailyTaskList
     }
     
     func deleteHabitDailyTaskById(id: Int) -> Bool {

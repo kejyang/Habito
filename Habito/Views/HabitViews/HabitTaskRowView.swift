@@ -9,8 +9,12 @@ import SwiftUI
 
 struct HabitTaskRowView: View {
     //var dayString: String
-    var title: String
-    var description: String
+    @EnvironmentObject var habitViewModel: HabitViewModel
+    @EnvironmentObject var habitDailyTaskViewModel: HabitDailyTaskViewModel
+    
+    @State var title: String = ""
+    @State var description: String = ""
+    var habitdailyTask: HabitDailyTaskModel
     var img: String
     
     @State var isCompleted: Bool = false
@@ -60,12 +64,17 @@ struct HabitTaskRowView: View {
     //    })
             .frame(width: SizeStandards.widthGeneral, height: 120)
             .background(Color.brandSecondary)
-            .cornerRadius(SizeStandards.cornerRadiusGeneral)       .foregroundColor(Color.brandBlack)
+            .cornerRadius(SizeStandards.cornerRadiusGeneral)
+            .foregroundColor(Color.brandBlack)
             .background(NavigationLink("", destination: WaterTrackingView(value: 0)).opacity(0))
+            .onAppear {
+                if let habitId = habitdailyTask.habitId {
+                    if let habit = habitViewModel.getHabit(id: habitId) {
+                        title = habit.title
+                        description = habit.habitDetails
+                    }
+                }
+            }
         
     }
-}
-
-#Preview {
-    HabitTaskRowView(title: "Drinking", description: "3/8 Glasses", img: "sleepingWoman")
 }

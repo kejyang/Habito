@@ -29,10 +29,13 @@ class HabitDailyTaskViewModel: ObservableObject {
         return dbHelper.fetchHabitDailyTaskById(id: id)
     }
     
-    func getHabitDailyTasksByHabitId(habitId: Int) -> HabitDailyTaskModel? {
+    func getHabitDailyTasksByHabitId(habitId: Int) -> [HabitDailyTaskModel] {
         return dbHelper.fetchHabitDailyTaskByHabitId(id: habitId)
     }
     
+    func getHabitDailyTasksByAccountId(accountId: Int) -> [HabitDailyTaskModel] {
+        return HabitTaskManager.shared.getHabitDailyTasksByAccountId(accountId: accountId)
+    }
     
     func deleteHabitDailyTask(id: Int) throws {
         let success = dbHelper.deleteHabitDailyTaskById(id: id)
@@ -40,5 +43,18 @@ class HabitDailyTaskViewModel: ObservableObject {
             throw HabitError.deletionFailed
         }
     }
+    
+    func getHabitDailyTasksByCalendarDay(calendarDay: CalendarDayModel, accountId: Int) -> [HabitDailyTaskModel] {
+        return HabitTaskManager.shared.getHabitDailyTasksOnCalendarDay(calendarDay: calendarDay, accountId: accountId)
+    }
+    
+    func generateHabitDailyTasksByHabitId(habitId: Int) {
+        return HabitTaskManager.shared.generateHabitDailyTasksByHabitId(id: habitId)
+    }
+    
+    func generateHabitDailyTasksForAccountId(accountId: Int) {
+        HabitTaskManager.shared.generateHabitDailyTasksForAccountId(accountId: accountId)
+    }
+    
 }
 
