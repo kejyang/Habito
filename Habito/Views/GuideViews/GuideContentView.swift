@@ -34,13 +34,12 @@ struct GuideContentView: View {
                             .bold()
                     }
                     .frame(maxHeight: .infinity, alignment: .top)
-                    .padding(.horizontal)
-                    .padding(.bottom)
+                    .padding()
                 }
                 .ignoresSafeArea(edges: .bottom)
             }
-            .ignoresSafeArea(edges: .top)
         }
+        .ignoresSafeArea(edges: .top)
     }
 }
 

@@ -24,10 +24,12 @@ struct GuideRowView: View {
                     .font(.body)
                     .lineLimit(2)
                     .truncationMode(.tail)
+                    .padding(.bottom, 10)
                 
                 Image(img)
                     .resizable()
                     .scaledToFit()
+                    .clipShape(RoundedRectangle(cornerRadius: SizeStandards.cornerRadiusGeneral))
             }
             .padding()
             .frame(maxWidth: SizeStandards.widthGeneral, alignment: .leading)
