@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ExerciseTrackingView: View {
+    @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var habitDailyTaskViewModel: HabitDailyTaskViewModel
+    var dailyTask : HabitDailyTaskModel
+    var habit : HabitModel?
     @State var minutesValue: Double
     
     var body: some View {
@@ -43,7 +47,12 @@ struct ExerciseTrackingView: View {
             
             
             Button("Done") {
-                
+                if let h = habit {
+                    if let id = dailyTask.id {
+                        habitDailyTaskViewModel.updateDailyTaskById(completionValue: Int(minutesValue), activityType: h.activityType, taskId: id)
+                    }
+                }
+                presentationMode.wrappedValue.dismiss()
             }
             .frame(width: 160, height: SizeStandards.actionButtonHeight)
             .modifier(ActionButtonModifier())
@@ -56,6 +65,6 @@ struct ExerciseTrackingView: View {
 
 #Preview {
     NavigationView {
-        ExerciseTrackingView(minutesValue: 0)
+        //ExerciseTrackingView(minutesValue: 0)
     }
 }

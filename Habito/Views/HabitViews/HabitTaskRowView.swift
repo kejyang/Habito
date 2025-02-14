@@ -9,8 +9,14 @@ import SwiftUI
 
 struct HabitTaskRowView: View {
     //var dayString: String
-    var title: String
-    var description: String
+    @EnvironmentObject var habitViewModel: HabitViewModel
+    @EnvironmentObject var habitDailyTaskViewModel: HabitDailyTaskViewModel
+    
+    @State var title: String = ""
+    @State var description: String = ""
+    @State var progress = 0.0
+    var habitdailyTask: HabitDailyTaskModel
+    @State var habitModel: HabitModel? = nil
     var img: String
     
     @State var isCompleted: Bool = false
@@ -34,7 +40,7 @@ struct HabitTaskRowView: View {
                         .font(.body)
                         .padding(.bottom)
                     
-                    ProgressView(value: /*@START_MENU_TOKEN@*/0.5/*@END_MENU_TOKEN@*/)
+                    ProgressView(value: progress)
                         .progressViewStyle(.linear)
                         .tint(Color.brandPrimary)
                         //.foregroundColor(Color.brandPrimary)
@@ -60,12 +66,22 @@ struct HabitTaskRowView: View {
     //    })
             .frame(width: SizeStandards.widthGeneral, height: 120)
             .background(Color.brandSecondary)
-            .cornerRadius(SizeStandards.cornerRadiusGeneral)       .foregroundColor(Color.brandBlack)
-            .background(NavigationLink("", destination: WaterTrackingView(value: 0)).opacity(0))
+            .cornerRadius(SizeStandards.cornerRadiusGeneral)
+            .foregroundColor(Color.brandBlack)
+            .onAppear {
+                if let habitId = habitdailyTask.habitId {
+                    if let habit = habitViewModel.getHabit(id: habitId) {
+                        title = habit.title
+                        description = habit.habitDetails
+                        if let maxVal = habitViewModel.getActivityTypeMaxValues(activityType: habit.activityType) {
+                            progress = Double(habitdailyTask.completionValue) / Double(maxVal)
+                        }
+                        habitModel = habit
+                    }
+                }
+            }
+            .background(NavigationLink("", destination: HabitContentView(value: habitdailyTask.completionValue, task: habitdailyTask, habit: habitModel, activityType: habitModel?.activityType ?? "")).opacity(0))
+            
         
     }
-}
-
-#Preview {
-    HabitTaskRowView(title: "Drinking", description: "3/8 Glasses", img: "sleepingWoman")
 }

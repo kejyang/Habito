@@ -45,6 +45,10 @@ class HabitViewModel: ObservableObject {
             throw HabitError.deletionFailed
         }
     }
+    
+    func getActivityTypeMaxValues(activityType: String) -> Int? {
+        return HabitTaskManager.shared.getActivityTypeMaxValue(activityType: activityType)
+    }
 }
 
 enum HabitError: Error {
