@@ -35,7 +35,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		E6F996362D5FDDB4004E8B83 /* Exceptions for "Habito" folder in "Habito" target */ = {
+		E6F996ED2D5FEC2F004E8B83 /* Exceptions for "Habito" folder in "Habito" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -48,7 +48,7 @@
 		E61BDF642D54F97A002CDAF2 /* Habito */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				E6F996362D5FDDB4004E8B83 /* Exceptions for "Habito" folder in "Habito" target */,
+				E6F996ED2D5FEC2F004E8B83 /* Exceptions for "Habito" folder in "Habito" target */,
 			);
 			path = Habito;
 			sourceTree = "<group>";
