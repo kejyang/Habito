@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SleepTrackingView: View {
-    var habitId : Int
+    var habit : HabitModel?
     @State var value : Int
     
     var body: some View {

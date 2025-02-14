@@ -45,6 +45,22 @@ class HabitViewModel: ObservableObject {
             throw HabitError.deletionFailed
         }
     }
+    
+    func getActivityTypeMaxValues(activityType: String) -> Int? {
+        
+        switch activityType {
+        case ActivityType.sleep.rawValue:
+            return 8
+        case ActivityType.drinkingWater.rawValue:
+            return 8
+        case ActivityType.biking.rawValue:
+            return 30
+        case ActivityType.running.rawValue:
+            return 10
+        default:
+            return nil
+        }
+    }
 }
 
 enum HabitError: Error {

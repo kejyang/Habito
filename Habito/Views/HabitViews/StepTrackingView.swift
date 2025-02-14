@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct StepTrackingView: View {
+    var habit : HabitModel?
     @State var stepsValue: Double
     
     var body: some View {
@@ -55,5 +56,5 @@ struct StepTrackingView: View {
 }
 
 #Preview {
-    StepTrackingView(stepsValue: 0)
+    //StepTrackingView(stepsValue: 0)
 }

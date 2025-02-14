@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct WaterTrackingView: View {
+    var habit: HabitModel?
     @State var value : Int
     
     var body: some View {
@@ -52,6 +53,6 @@ struct WaterTrackingView: View {
 
 #Preview {
     NavigationView {
-        WaterTrackingView(value: 0)
+        //WaterTrackingView(value: 0)
     }
 }
