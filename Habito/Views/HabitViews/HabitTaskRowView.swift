@@ -15,9 +15,10 @@ struct HabitTaskRowView: View {
     @State var title: String = ""
     @State var description: String = ""
     @State var progress = 0.0
-    var habitdailyTask: HabitDailyTaskModel
+    var habitDailyTask: HabitDailyTaskModel
     @State var habitModel: HabitModel? = nil
     var img: String
+    @State var backgroundColor = Color.brandBackgroundGradientGreen
     
     @State var isCompleted: Bool = false
     
@@ -41,20 +42,24 @@ struct HabitTaskRowView: View {
                         .padding(.bottom)
                     
                     ProgressView(value: progress)
-                        .progressViewStyle(.linear)
-                        .tint(Color.brandPrimary)
+                        .progressViewStyle(CustomLinearProgressViewStyle())
+                  //      .progressViewStyle(.linear)
+                  //      .tint(Color.brandPrimary)
                         //.foregroundColor(Color.brandPrimary)
-                        .background(Color.brandWhite)
+                        //.background(Color.brandWhite)
                         //.cornerRadius(SizeStandards.cornerRadiusGeneral)
-                        .scaleEffect(x: 1, y: 4)
+                    //    .scaleEffect(x: 1, y: 4)
 
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 
-                Image(systemName: "left.circle")
-                    .frame(alignment: .trailing)
-                    .foregroundColor(Color.brandPrimary)
-                    .padding()
+
+                Image(systemName: isCompleted ? "checkmark.circle" : "circle")
+                            //.frame(alignment: .trailing)
+                            .scaleEffect(2)
+                            .foregroundColor(isCompleted ? Color.brandPrimary : Color.brandSecondary)
+                            .padding()
+                    
                 
             }
             /*.padding()
@@ -65,22 +70,35 @@ struct HabitTaskRowView: View {
             .padding(.horizontal)*/
     //    })
             .frame(width: SizeStandards.widthGeneral, height: 120)
-            .background(Color.brandSecondary)
+            .background(LinearGradient(gradient: Gradient(colors: [backgroundColor, Color.brandBackgroundGradientEnd]), startPoint: .leading, endPoint: .trailing))
             .cornerRadius(SizeStandards.cornerRadiusGeneral)
             .foregroundColor(Color.brandBlack)
             .onAppear {
-                if let habitId = habitdailyTask.habitId {
+                if let habitId = habitDailyTask.habitId {
                     if let habit = habitViewModel.getHabit(id: habitId) {
                         title = habit.title
                         description = habit.habitDetails
                         if let maxVal = habitViewModel.getActivityTypeMaxValues(activityType: habit.activityType) {
-                            progress = Double(habitdailyTask.completionValue) / Double(maxVal)
+                            progress = Double(habitDailyTask.completionValue) / Double(maxVal)
                         }
                         habitModel = habit
+                        switch habit.activityType {
+                        case ActivityType.sleep.rawValue:
+                            backgroundColor = Color.brandBackgroundGradientGray
+                        case ActivityType.drinkingWater.rawValue:
+                            backgroundColor = Color.brandBackgroundGradientGreen
+                        case ActivityType.biking.rawValue:
+                            backgroundColor = Color.brandBackgroundGradientBlue
+                        case ActivityType.running.rawValue:
+                            backgroundColor = Color.brandBackgroundGradientYellow
+                        default:
+                            break
+                        }
                     }
                 }
+                isCompleted = habitDailyTask.completed
             }
-            .background(NavigationLink("", destination: HabitContentView(value: habitdailyTask.completionValue, task: habitdailyTask, habit: habitModel, activityType: habitModel?.activityType ?? "")).opacity(0))
+            .background(NavigationLink("", destination: HabitContentView(value: habitDailyTask.completionValue, task: habitDailyTask, habit: habitModel, activityType: habitModel?.activityType ?? "")).opacity(0))
             
         
     }
