@@ -12,6 +12,7 @@ struct AddHabitView: View {
     @State var habitTitle: String = ""
     @State var habitDetails: String = ""
     @State var selectedActivityType: ActivityType = .sleep // Use the enum
+    @State var selectedTimeOfDay: TimeOfDay = .Morning
     @EnvironmentObject var accountViewModel: AccountViewModel
     @EnvironmentObject var habitViewModel: HabitViewModel
     @EnvironmentObject var habitDailyTaskViewModel: HabitDailyTaskViewModel
@@ -50,7 +51,7 @@ struct AddHabitView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
 
-            TimeOfDaySelectorView()
+            TimeOfDaySelectorView(selected: $selectedTimeOfDay)
             
             Spacer()
             
@@ -71,7 +72,7 @@ struct AddHabitView: View {
                 title: habitTitle,
                 habitDetails: habitDetails,
                 activityType: selectedActivityType.rawValue,
-                timeOfTheDay: "morning",
+                timeOfTheDay: selectedTimeOfDay.rawValue,
                 accountId: Int(accountId)
             )
             habitViewModel.accountHabits = habitViewModel.getHabitsByAccountId(id: Int(accountId))

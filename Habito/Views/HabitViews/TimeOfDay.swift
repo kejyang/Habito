@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+enum TimeOfDay: String, CaseIterable {
+    case Morning = "Morning"
+    case Afternoon = "Afternoon"
+    case Evening = "Evening"
+    case Night = "Night"
+    case Anytime = "Anytime"
+}
