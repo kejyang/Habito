@@ -35,16 +35,9 @@ struct HabitView: View {
                 
                 ForEach(items) { habitTask in
 
-                    HabitTaskRowView(habitdailyTask: habitTask, img: "sleepingWoman")
+                    HabitTaskRowView(habitDailyTask: habitTask, img: "sleepingWoman")
                     
                 }
-                /*ZStack {
-                    HabitTaskRowView(
-                        title: "Drinking",
-                        description: "4/8 Glasses",
-                        img: "sleepingWoman"
-                    )
-                }*/
                 
             }
             .scrollContentBackground(.hidden)
