@@ -129,4 +129,17 @@ class AccountViewModel: ObservableObject {
         }
         
     }
+    
+    func deleteAccount() {
+        if let acc = account {
+            let rememberedEmail = getRememberedEmail()
+            if rememberedEmail == acc.email {
+                AccountKeyChain.shared.clearRememberAccount()
+            }
+            AccountDAO.shared.deleteAccountByID(id: acc.id)
+            AccountKeyChain.shared.deleteKey(email: acc.email)
+            
+        }
+        
+    }
 }
