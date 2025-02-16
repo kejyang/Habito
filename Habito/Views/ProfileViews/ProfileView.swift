@@ -11,9 +11,9 @@ import GoogleSignIn
 struct ProfileView: View {
     @EnvironmentObject var accountViewModel: AccountViewModel
     @EnvironmentObject var googleSignInHelper: GoogleSignInHelper
-    var profileImageString : String = "sleepingWoman"
-    var username : String = "test username"
-    var email : String = "test email"
+    @State var profileImageString : String = "sleepingWoman"
+    @State var username : String = ""
+    @State var email : String = ""
     
     var body: some View {
         VStack {
@@ -57,13 +57,13 @@ struct ProfileView: View {
                 RoundedRectangle(cornerSize: CGSize(width: 40, height: 40)).stroke(Color.brandGray, lineWidth: 1)
             }*/
         }
+        .onAppear {
+            if let account = accountViewModel.account {
+                username = account.username
+                email = account.email
+            }
+        }
         .modifier(NavigationTitleGeneralModifier(text: "Your Profile"))
-    }
-}
-
-#Preview {
-    NavigationView {
-        ProfileView()
     }
 }
 

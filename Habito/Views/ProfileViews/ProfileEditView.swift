@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct ProfileEditView: View {
+    @EnvironmentObject var accountViewModel: AccountViewModel
+    @EnvironmentObject var googleSignInHelper: GoogleSignInHelper
+    @State var profileImageString : String = "sleepingWoman"
+    @State var username = ""
+    @State var email = ""
     @State var usernameTextFieldText = ""
     @State var emailTextFieldText = ""
     @State var passwordTextFieldText = ""
@@ -15,12 +20,22 @@ struct ProfileEditView: View {
     
     var body: some View {
         VStack {
-            ProfileHeaderView()
+            ProfileHeaderView(profileImage: profileImageString, username: username, email: email)
             TextFieldGeneralView(heading: "Username", textFieldText: $usernameTextFieldText)
             TextFieldGeneralView(heading: "E-mail", textFieldText: $emailTextFieldText)
             SecureFieldGeneralView(heading: "Password", textFieldText: $passwordTextFieldText)
             SecureFieldGeneralView(heading: "Confirm Password", textFieldText: $confirmPasswordTextFieldText)
             Spacer()
+        }
+        .onAppear {
+            if let account = accountViewModel.account {
+                username = account.username
+                email = account.email
+                profileImageString = account.profilePicture
+                usernameTextFieldText = account.username
+                emailTextFieldText = account.email
+                passwordTextFieldText = account.password
+            }
         }
         .modifier(NavigationTitleGeneralModifier(text: "Personal Data"))
     }

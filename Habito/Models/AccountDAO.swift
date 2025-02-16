@@ -150,7 +150,8 @@ class AccountDAO {
             print("Account deleted")
         } else {
             print("Account could not be deleted")
-        }    }
+        }
+    }
     
     
 }
