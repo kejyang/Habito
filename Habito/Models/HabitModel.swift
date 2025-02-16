@@ -13,5 +13,8 @@ struct HabitModel: Identifiable {
     var habitDetails: String
     var activityType: String
     var timeOfTheDay: String
-    var accountId: Int? 
+    var accountId: Int?
+    var createdDay: Int?
+    var createdMonth: Int?
+    var createdYear: Int?
 }
