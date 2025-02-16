@@ -13,15 +13,17 @@ struct WaterTrackingView: View {
     var dailyTask : HabitDailyTaskModel
     var habit: HabitModel?
     @State var value : Int
+    @State var title = ""
+    @State var headline = ""
     
     var body: some View {
         VStack {
             Spacer()
             
-            Text("Almost there!")
+            Text(title)
                 .font(.title)
             
-            Text("Keep going, you're doing great!")
+            Text(headline)
                 .font(.subheadline)
             
             Spacer()
@@ -36,11 +38,20 @@ struct WaterTrackingView: View {
                     .font(.largeTitle.bold())
             }
             
-                Stepper(value: $value, in: 0...8) {
-                }
+            Spacer()
+            
+            Stepper(value: $value, in: 0...8) {
+            }
                 .labelsHidden()
                 .scaleEffect(1.4)
                 .padding()
+                .onChange(of: value) {
+                    let text = habitDailyTaskViewModel.getHabitTaskEditorStrings(progress: value, maxVal: 8)
+                    title = text.0
+                    headline = text.1
+                }
+            
+            Spacer()
             
             Button("Done") {
                 if let h = habit {
@@ -54,6 +65,11 @@ struct WaterTrackingView: View {
             .modifier(ActionButtonModifier())
             .padding()
             
+        }
+        .onAppear {
+            let text = habitDailyTaskViewModel.getHabitTaskEditorStrings(progress: value, maxVal: 8)
+            title = text.0
+            headline = text.1
         }
         .modifier(NavigationTitleGeneralModifier(text: "Water Details"))
     }

@@ -47,13 +47,16 @@ struct HabitTaskView: View {
                     HabitTaskRowView(habitDailyTask: habitTask, img: "sleepingWoman")
                         .disabled(dayIndex < 2 || dayIndex == 4)
                         .opacity(dayIndex < 2 || dayIndex == 4 ? 0.6 : 1)
+                        .padding()
                 }
                 
             }
+            .listStyle(PlainListStyle())
+            .listRowSeparator(.hidden)
             .scrollContentBackground(.hidden)
             .frame(maxWidth: .infinity, alignment: .leading)
             .cornerRadius(SizeStandards.cornerRadiusGeneral)
-            .zIndex(-1)
+            //.zIndex(-1)
             .onChange(of: dayIndex) {
                 if let id = accountViewModel.account?.id {
                     items = habitDailyTaskViewModel.getHabitDailyTasksByCalendarDay(calendarDay: calendarDayViewModel.items[dayIndex], accountId: Int(id))

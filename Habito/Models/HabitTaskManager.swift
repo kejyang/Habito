@@ -81,6 +81,27 @@ class HabitTaskManager {
     }
     
     
+    func getTaskProgressDescription(progress: Int, activityType: String) -> String {
+        let maxVal = getActivityTypeMaxValue(activityType: activityType) ?? 0
+        let description: String
+        
+        switch activityType {
+        case ActivityType.sleep.rawValue:
+            description = "\(progress)/\(maxVal) Hours"
+        case ActivityType.drinkingWater.rawValue:
+            description = "\(progress)/\(maxVal) Glasses"
+        case ActivityType.biking.rawValue:
+            description = "\(progress)/\(maxVal) Minutes"
+        case ActivityType.running.rawValue:
+            description = "\(progress)K/\(maxVal)K Steps"
+        default:
+            description = ""
+        }
+        
+        return description
+    }
+    
+    
     func getActivityTypeMaxValue(activityType: String) -> Int? {
         switch activityType {
         case ActivityType.sleep.rawValue:
