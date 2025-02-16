@@ -15,7 +15,7 @@ class HabitTaskManager {
     
     
     func generateHabitDailyTasksForAccountId(accountId: Int) {
-        var habits = DBManager.dbhelper.fetchHabitsByAccountId(id: accountId)
+        let habits = DBManager.dbhelper.fetchHabitsByAccountId(id: accountId)
         for habit in habits {
             if let id = habit.id {
                 generateHabitDailyTasksByHabitId(id: id)
@@ -25,11 +25,56 @@ class HabitTaskManager {
     
     func generateHabitDailyTasksByHabitId(id: Int) {
         let tasks = DBManager.dbhelper.fetchHabitDailyTaskByHabitId(id: id)
+        guard let habit = DBManager.dbhelper.fetchHabitById(id: id) else {
+            return
+        }
+        
+        var habitCreationDate = Date()
+        var dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: habitCreationDate)
+        
+        guard let d = habit.createdDay else {
+            return
+        }
+        guard let m = habit.createdMonth else {
+            return
+        }
+        guard let y = habit.createdYear else {
+            return
+        }
+        dateComponents.day = d
+        dateComponents.month = m
+        dateComponents.year = y
         
         let threeDaysAgo = Date(timeInterval: -259200, since: .now)
         
         for i in 0..<5 {
             let date = Date(timeInterval: 86400*Double(i), since: threeDaysAgo)
+            var components = Calendar.current.dateComponents([.day, .month, .year], from: date)
+            
+            // Only create tasks after or on the creation date
+            guard let taskDay = components.day else {
+                continue
+            }
+            guard let taskMonth = components.month else {
+                continue
+            }
+            guard let taskYear = components.year else {
+                continue
+            }
+            
+            if taskYear == y {
+                if taskMonth == m {
+                    if taskDay < d {
+                        continue
+                    }
+                } else if taskMonth < m{
+                    continue
+                }
+            } else if taskYear < y {
+                continue
+            }
+                
+                
             
             let day = date.formatted(.dateTime.day())
             let month = date.formatted(.dateTime.month())
@@ -46,7 +91,7 @@ class HabitTaskManager {
     }
     
     func getHabitDailyTasksByAccountId(accountId: Int) -> [HabitDailyTaskModel] {
-        var habits = DBManager.dbhelper.fetchHabitsByAccountId(id: accountId)
+        let habits = DBManager.dbhelper.fetchHabitsByAccountId(id: accountId)
                 
         var aggregatedTasks = [HabitDailyTaskModel]()
                 

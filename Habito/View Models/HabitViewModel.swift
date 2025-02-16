@@ -15,6 +15,7 @@ class HabitViewModel: ObservableObject {
     init() {
         dbHelper.createDatabase()
         dbHelper.createHabitTable()
+        dbHelper.appendCreationDateToHabitTable()
         print(dbHelper.fetchHabits())
     }
     
@@ -27,7 +28,7 @@ class HabitViewModel: ObservableObject {
     }
     
     func getHabitsByAccountId(id: Int) -> [HabitModel] {
-        var habits = dbHelper.fetchHabitsByAccountId(id: id)
+        let habits = dbHelper.fetchHabitsByAccountId(id: id)
         return habits
     }
     
