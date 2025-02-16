@@ -34,4 +34,12 @@ class DailyProgressViewModel: ObservableObject {
         sleepWeekProgress = dailyProgressManager.getSleepWeeklyProgress(accountId: accountId)
     }
     
+    func setWaterWeekProgress(accountId: Int) {
+        waterWeekProgress = dailyProgressManager.getWaterWeeklyProgress(accountId: accountId)
+    }
+    
+    func setBikingWeekProgress(accountId: Int) {
+        bikingWeekProgress = dailyProgressManager.getBikingWeeklyProgress(accountId: accountId)
+    }
+    
 }

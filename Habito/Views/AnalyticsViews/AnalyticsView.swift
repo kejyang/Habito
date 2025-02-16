@@ -34,17 +34,39 @@ struct AnalyticsView: View {
                 }
                 
                 // Sleep and Steps Views
-                HStack {
+                /*HStack {
                     SleepProgressView(sleepProgress: 8/8)
                         .frame(width: 225)
                         .shadow(color: Color.black.opacity(0.4), radius: 1)
                     StepsView()
                         .shadow(color: Color.black.opacity(0.4), radius: 1)
                 }
-                .frame(height: 215)
+                .frame(height: 215)*/
+                ZStack {
+                    // Background with corner radius and shadow
+                    RoundedRectangle(cornerRadius: 10) // Adjust the corner radius as needed
+                        .fill(Color.brandWhite) // Set the background color
+                        .shadow(color: Color.black.opacity(0.4), radius: 1) // Add shadow to the background
+                        .frame(height: 60) // Adjust the height to control the vertical size of the background
+
+                    // Text
+                    Text("This Week's Breakdown")
+                        .bold() // Make the text bold
+                        .font(.title2)
+                        .foregroundColor(.primary) // Set the text color
+                }
+                .frame(maxWidth: .infinity) // Ensure the ZStack takes the full width
+                HStack{
+                    StepsView()
+                    NewSleepView()
+                }
+                .shadow(color: Color.black.opacity(0.4), radius: 1)
+                HStack{
+                    WaterProgressView()
+                    BikingProgressView()
+                }
+                .shadow(color: Color.black.opacity(0.4), radius: 1)
                 
-                // New Sleep View
-                NewSleepView()
                 
                 // Add extra space at the bottom to allow scrolling further
                 Spacer(minLength: 100) // Adjust this value to control how much further you can scroll
@@ -57,6 +79,8 @@ struct AnalyticsView: View {
                     dailyProgressViewModel.setWeekProgress(accountId: Int(accountId))
                     dailyProgressViewModel.setStepsWeekProgress(accountId: Int(accountId))
                     dailyProgressViewModel.setSleepWeekProgress(accountId: Int(accountId))
+                    dailyProgressViewModel.setWaterWeekProgress(accountId: Int(accountId))
+                    dailyProgressViewModel.setBikingWeekProgress(accountId: Int(accountId))
                 }
             }
             .padding(.horizontal, 16)

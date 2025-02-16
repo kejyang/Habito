@@ -117,8 +117,11 @@ struct LoginView: View {
                             }
                         }
                     }
-                }){
-                    Text("Google Login")
+                }) {
+                    Image("googleLogo") // Replace with the name of your Google logo asset
+                        .resizable() // Make the image resizable
+                        .scaledToFit() // Maintain the aspect ratio
+                        .frame(width: 30, height: 30) // Set the desired size
                 }
                 .padding()
                 
@@ -169,4 +172,5 @@ struct LoginView: View {
     .environmentObject(CalendarDayViewModel())
     .environmentObject(TimeOfDayViewModel())
     .environmentObject(AccountViewModel())
+    .environmentObject(GoogleSignInHelper())
 }
