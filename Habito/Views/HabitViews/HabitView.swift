@@ -11,13 +11,25 @@ struct HabitView: View {
     @EnvironmentObject var habitViewModel: HabitViewModel
     @EnvironmentObject var accountViewModel: AccountViewModel
     @State var items = [HabitDailyTaskModel]()
-    
+    @State var dayIndex: Int = 3
     @State var tab: Int = 0
     
     var body: some View {
         if tab == 0 {
             
             VStack {
+                
+                ZStack (alignment: .top) {
+                    Spacer()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 100, alignment: .top)
+                        .background(Color.brandBackboard)
+                        .shadow(color: Color.black.opacity(0.2), radius: 5)
+                    CalendarWeekSelectionView(selectedIndex: $dayIndex)
+                        //.disabled(true)
+                }
+                //.background(Color.brandBackboard)
+                
                 Button("Start today's challenge") {
                     accountViewModel.habitTab = 1
                     tab = 1
@@ -38,7 +50,7 @@ struct HabitView: View {
                 
                 Spacer()
             }
-            .modifier(NavigationTitleGeneralModifier(text: "Habits"))
+            .modifier(NavigationTitleGeneralModifier(text: "Your Habits"))
             .onAppear {
                 if let id = accountViewModel.account?.id {
                     habitViewModel.accountHabits = habitViewModel.getHabitsByAccountId(id: Int(id))

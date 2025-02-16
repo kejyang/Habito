@@ -53,7 +53,7 @@ struct HabitTaskView: View {
             .scrollContentBackground(.hidden)
             .frame(maxWidth: .infinity, alignment: .leading)
             .cornerRadius(SizeStandards.cornerRadiusGeneral)
-            .zIndex(-1)
+            //.zIndex(-1)
             .onChange(of: dayIndex) {
                 if let id = accountViewModel.account?.id {
                     items = habitDailyTaskViewModel.getHabitDailyTasksByCalendarDay(calendarDay: calendarDayViewModel.items[dayIndex], accountId: Int(id))
