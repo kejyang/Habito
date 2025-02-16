@@ -39,10 +39,28 @@ class HabitViewModel: ObservableObject {
         }
     }
     
+    
+    func deleteHabit(indexSet: IndexSet) {
+        indexSet.sorted(by: > ).forEach{ (i) in
+            if let id = accountHabits[i].id {
+            let success = dbHelper.deleteHabitById(id: id)
+                if success {
+                    accountHabits.remove(atOffsets: indexSet)
+                    if dbHelper.deleteHabitDailyTaskByHabitId(habitId: id) {
+                        print("Habit deleted")
+                    }
+                }
+            }
+        }
+    }
+    
     func deleteHabit(id: Int) throws {
         let success = dbHelper.deleteHabitById(id: id)
         if !success {
             throw HabitError.deletionFailed
+        }
+        if !dbHelper.deleteHabitDailyTaskByHabitId(habitId: id) {
+            throw HabitError.tasksDeletionFailed
         }
     }
     
@@ -53,4 +71,5 @@ class HabitViewModel: ObservableObject {
 
 enum HabitError: Error {
     case deletionFailed
+    case tasksDeletionFailed
 }

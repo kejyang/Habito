@@ -8,17 +8,14 @@
 import SwiftUI
 
 struct HabitRowView: View {
-    var dayString: String
-    var title: String
-    var description: String
-    var img: String
+    var habit: HabitModel
+    var img: String = "sleepingWoman"
     
+    @State var backgroundColor = Color.brandBackgroundGradientGreen
     @State var isCompleted: Bool = false
     
     var body: some View {
-        NavigationLink {
-            //HabitContentView()
-        } label: {
+        
             HStack {
                 Image(img)
                     .resizable()
@@ -26,26 +23,38 @@ struct HabitRowView: View {
                     .scaledToFit()
                 
                 VStack(alignment: .center, spacing: 8) {
-                    Text(title)
+                    Text(habit.title)
                         .font(.title2)
                         .bold()
+                    HStack {
+                        Text("\(habit.timeOfTheDay) - \(habit.activityType)")
+                    }
+                    .font(.headline)
                     
-                    Text(description)
+                    Text(habit.habitDetails)
                         .font(.body)
                     
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
-                
-                /*Image(systemName: "checkmark")
-                    .frame(maxWidth: .infinity, alignment: .trailing)*/
-                
             }
-            /*.padding()
-            .frame(maxWidth: SizeStandards.widthGeneral, alignment: .leading)
-            .background(Color.brandSecondary)
+            .frame(width: SizeStandards.widthGeneral)
+            .background(LinearGradient(gradient: Gradient(colors: [backgroundColor, Color.brandBackgroundGradientEnd]), startPoint: .leading, endPoint: .trailing))
             .cornerRadius(SizeStandards.cornerRadiusGeneral)
-            .shadow(color: Color.black.opacity(0.2), radius: 5)
-            .padding(.horizontal)*/
+            .foregroundColor(Color.brandBlack)
+            .onAppear {
+                switch habit.activityType {
+                case ActivityType.sleep.rawValue:
+                    backgroundColor = Color.brandBackgroundGradientGray
+                case ActivityType.drinkingWater.rawValue:
+                    backgroundColor = Color.brandBackgroundGradientGreen
+                case ActivityType.biking.rawValue:
+                    backgroundColor = Color.brandBackgroundGradientBlue
+                case ActivityType.running.rawValue:
+                    backgroundColor = Color.brandBackgroundGradientYellow
+                default:
+                    break
+                }
+            
         }
         .foregroundColor(Color.brandBlack)
     }
@@ -53,9 +62,6 @@ struct HabitRowView: View {
 
 #Preview {
     HabitRowView(
-        dayString: "Day 1",
-        title: "Sleeping is good",
-        description: "Sleep 8 hours",
-        img: "sleepingWoman"
+        habit: HabitModel(id: nil, title: "This is a Title", habitDetails: "This is the habit's details", activityType: ActivityType.sleep.rawValue, timeOfTheDay: TimeOfDay.Evening.rawValue)
     )
 }
