@@ -27,8 +27,11 @@ class HabitViewModel: ObservableObject {
     }
     
     func getHabitsByAccountId(id: Int) -> [HabitModel] {
-        return dbHelper.fetchHabitsByAccountId(id: id)
+        var habits = dbHelper.fetchHabitsByAccountId(id: id)
+        return habits
     }
+    
+
     
     func getHabit(id: Int) -> HabitModel? {
         if let habit = dbHelper.fetchHabitById(id: id) {

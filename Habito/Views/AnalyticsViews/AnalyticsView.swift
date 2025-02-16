@@ -8,34 +8,56 @@
 import SwiftUI
 
 struct AnalyticsView: View {
-    var data = [5, 2, 4, 3, 5, 1, 5]
+    @EnvironmentObject var dailyProgressViewModel: DailyProgressViewModel
+    @EnvironmentObject var accountViewModel: AccountViewModel
+    
+    // Labels for the days of the week
     var labels = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
+
     var body: some View {
-        
-        VStack{
-            TodayProgressView(todayProgress: 0.73)
-                //.frame(width: SizeStandards.widthGeneral)
+        VStack {
+            // Today's Progress View
+            TodayProgressView(todayProgress: .constant(CGFloat(dailyProgressViewModel.dailyProgress ?? 0)))
                 .shadow(color: Color.black.opacity(0.4), radius: 1)
-            BarGraphView(data: data, labels: labels)
-                //.frame(width:SizeStandards.widthGeneral)
-                .padding(.bottom, 3)
-                .shadow(color: Color.black.opacity(0.4), radius: 1)
-            HStack{
+            
+            // Bar Graph View
+            if let weekProgress = dailyProgressViewModel.weekProgress {
+                BarGraphView(data: weekProgress, labels: labels)
+                    .padding(.bottom, 3)
+                    .shadow(color: Color.black.opacity(0.4), radius: 1)
+            } else {
+                // Placeholder if weekProgress is nil
+                BarGraphView(data: [0, 0, 0, 0, 0, 0, 0], labels: labels)
+                    .padding(.bottom, 3)
+                    .shadow(color: Color.black.opacity(0.4), radius: 1)
+            }
+            
+            // Sleep and Steps Views
+            HStack {
                 SleepProgressView(sleepProgress: 8/8)
                     .frame(width: 225)
                     .shadow(color: Color.black.opacity(0.4), radius: 1)
-                StepsView(steps: 5000)
+                StepsView()
                     .shadow(color: Color.black.opacity(0.4), radius: 1)
-                
             }
             .frame(height: 215)
-            //.padding()
+            
+            Spacer()
         }
         .frame(maxWidth: SizeStandards.widthGeneral)
-        
+        .onAppear {
+            if let accountId = accountViewModel.account?.id {
+                // Fetch daily and weekly progress
+                dailyProgressViewModel.setDailyProgress(accountId: Int(accountId))
+                dailyProgressViewModel.setWeekProgress(accountId: Int(accountId))
+                dailyProgressViewModel.setStepsWeekProgress(accountId: Int(accountId))
+            }
+        }
     }
 }
 
 #Preview {
     AnalyticsView()
+        .environmentObject(DailyProgressViewModel())
+        .environmentObject(AccountViewModel())
 }

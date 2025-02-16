@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct TodayProgressView: View {
-    @State var todayProgress : CGFloat
+    @Binding var todayProgress : CGFloat
+    @EnvironmentObject var dailyProgressViewModel : DailyProgressViewModel
     var body: some View {
         HStack{
             Text("Today's Progress!")
                 .bold()
                 .font(.title2)
             CircleGraphView(progress: $todayProgress, size: 80)
-            Image(systemName: "")
         }
         .frame(maxWidth: .infinity)
         .background(Color.brandWhite)
@@ -24,5 +24,5 @@ struct TodayProgressView: View {
 }
 
 #Preview {
-    TodayProgressView(todayProgress: 0.73)
+    //TodayProgressView(todayProgress: 0.73)
 }

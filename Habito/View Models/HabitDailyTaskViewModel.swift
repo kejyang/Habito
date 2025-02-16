@@ -10,11 +10,13 @@ import Foundation
 class HabitDailyTaskViewModel: ObservableObject {
     @Published var habitDailyTask : HabitDailyTaskModel?
     @Published var accountDailytasks : [HabitDailyTaskModel] = []
+    @Published var todaysDailyTasks : [HabitDailyTaskModel] = []
     let dbHelper = DBManager.dbhelper
     
     init() {
         dbHelper.createDatabase()
         dbHelper.createHabitDailyTaskTable()
+        print(dbHelper.fetchHabitDailyTasks())
     }
     
     func addHabitDailyTask(day: String, month: String, year: String, completionValue: Int, completed: Bool, habitId: Int) {
@@ -48,6 +50,10 @@ class HabitDailyTaskViewModel: ObservableObject {
         return HabitTaskManager.shared.getHabitDailyTasksOnCalendarDay(calendarDay: calendarDay, accountId: accountId)
     }
     
+    func setHabitDailyTasksByCalendarDay(calendarDay: CalendarDayModel, accountId: Int) {
+        todaysDailyTasks = HabitTaskManager.shared.getHabitDailyTasksOnCalendarDay(calendarDay: calendarDay, accountId: accountId)
+    }
+    
     func generateHabitDailyTasksByHabitId(habitId: Int) {
         return HabitTaskManager.shared.generateHabitDailyTasksByHabitId(id: habitId)
     }
@@ -61,4 +67,5 @@ class HabitDailyTaskViewModel: ObservableObject {
     }
     
 }
+
 

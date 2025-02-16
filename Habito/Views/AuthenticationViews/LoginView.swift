@@ -11,7 +11,9 @@ import GoogleSignIn
 struct LoginView: View {
     @EnvironmentObject var accountViewModel: AccountViewModel
     @EnvironmentObject var habitViewModel: HabitViewModel
-    @StateObject private var googleSignInHelper = GoogleSignInHelper()
+    @EnvironmentObject var dailyTaskViewModel: HabitDailyTaskViewModel
+    @EnvironmentObject var googleSignInHelper: GoogleSignInHelper
+    @EnvironmentObject var dailyProgressViewModel: DailyProgressViewModel
     
     @State var emailTextFieldText: String = ""
     @State var passwordTextFieldText: String = ""
@@ -57,6 +59,35 @@ struct LoginView: View {
                 Button("Login") {
                     if login() {
                         accountViewModel.isLoggedIn = true
+                        let today = Date()
+                        let weekday = String(Calendar.current.component(.weekday, from: today)) // Numeric weekday (1-7)
+                        let day = String(Calendar.current.component(.day, from: today)) // Numeric day (1-31)
+                        let month = String(Calendar.current.component(.month, from: today)) // Numeric month (1-12)
+                        let year = String(Calendar.current.component(.year, from: today)) // Numeric year (e.g., 2023)
+                        
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "MMM"
+                        let abbreviatedMonth = dateFormatter.string(from: today)
+
+                        let calendarDay = CalendarDayModel(
+                            weekday: weekday,
+                            day: day,
+                            month: abbreviatedMonth,
+                            year: year
+                        )
+
+                        if let accountId = accountViewModel.account?.id {
+                            dailyTaskViewModel.setHabitDailyTasksByCalendarDay(
+                                calendarDay: calendarDay,
+                                accountId: Int(accountId)
+                            )
+                            dailyProgressViewModel.setDailyProgress(accountId: Int(accountId))
+                        } else {
+                            print("Account ID is nil")
+                        }
+                        print(calendarDay)
+                        print("Todays daily tasks  \(dailyTaskViewModel.todaysDailyTasks)")
+                        
                     }
                 }
                 .frame(width: SizeStandards.widthGeneral, height: SizeStandards.actionButtonHeight, alignment: .center)
@@ -70,8 +101,23 @@ struct LoginView: View {
                 .padding()
                 
                 Button(action: {
-                    googleSignInHelper.signIn()
-                }) {
+                    // Call the updated signIn method with a completion handler
+                    googleSignInHelper.signIn { user, error in
+                        if let error = error {
+                            // Handle the error
+                            print("Google Sign-In failed: \(error.localizedDescription)")
+                            isError = true
+                            return
+                        }
+                        if let user = user {
+                            // Update the accountViewModel with Google user data
+                            if let email = user.profile?.email, let name = user.profile?.name {
+                                accountViewModel.handleGoogleSignIn(username: name, email: email)
+                                accountViewModel.isLoggedIn = true
+                            }
+                        }
+                    }
+                }){
                     Text("Google Login")
                 }
                 .padding()

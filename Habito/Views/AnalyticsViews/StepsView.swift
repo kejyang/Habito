@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct StepsView: View {
-    @State var steps : Int
+    //@State var steps : Int
+    @EnvironmentObject var dailyProgressViewModel: DailyProgressViewModel
     var body: some View {
         VStack{
             Image(systemName: "figure.walk")
@@ -19,7 +20,7 @@ struct StepsView: View {
             Text("Steps")
                 .font(.title)
                 .bold()
-            Text("\(steps)")
+            Text("\(dailyProgressViewModel.stepsWeekProgress ?? 0)")
                 .font(.title)
                 .bold()
         }
@@ -31,5 +32,5 @@ struct StepsView: View {
 }
 
 #Preview {
-    StepsView(steps : 5000)
+    //0StepsView(steps : 5000)
 }
