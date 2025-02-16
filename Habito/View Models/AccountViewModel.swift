@@ -11,6 +11,7 @@ class AccountViewModel: ObservableObject {
     @Published var account : AccountModel?
 
     @Published var isLoggedIn = false
+    @Published var habitTab: Int = 0
     
     enum ValidationResponse {
         case valid

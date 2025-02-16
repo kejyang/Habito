@@ -39,12 +39,16 @@ struct ExerciseTrackingView: View {
                 
             }
             
+            Spacer()
+            
             Slider(value: $minutesValue, in: 0...30, step: 1) {
                 
             }
-            .frame(height: 100)
+            .frame(width: SizeStandards.widthGeneral)
+            //.frame(height: 100)
             .tint(Color.brandPrimary)
             
+            Spacer()
             
             Button("Done") {
                 if let h = habit {
@@ -59,7 +63,7 @@ struct ExerciseTrackingView: View {
             .padding()
             
         }
-        .modifier(NavigationTitleGeneralModifier(text: "Exercise Details"))
+        .modifier(NavigationTitleGeneralModifier(text: "Biking Details"))
     }
 }
 

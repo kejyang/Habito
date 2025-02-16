@@ -17,11 +17,11 @@ class TimeOfDayViewModel: ObservableObject {
     
     func getItems() {
         let newItems: [TimeOfDayModel] = [
-            TimeOfDayModel(text: "Morning", isSelected: true),
-            TimeOfDayModel(text: "Afternoon"),
-            TimeOfDayModel(text: "Evening"),
-            TimeOfDayModel(text: "Night"),
-            TimeOfDayModel(text: "Anytime")
+            TimeOfDayModel(text: TimeOfDay.Morning.rawValue),
+            TimeOfDayModel(text: TimeOfDay.Afternoon.rawValue),
+            TimeOfDayModel(text: TimeOfDay.Evening.rawValue),
+            TimeOfDayModel(text: TimeOfDay.Night.rawValue),
+            TimeOfDayModel(text: TimeOfDay.Anytime.rawValue)
         ]
         items.append(contentsOf: newItems)
     }
