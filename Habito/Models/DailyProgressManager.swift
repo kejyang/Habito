@@ -143,6 +143,57 @@ class DailyProgressManager{
         return weeklySteps
     }
     
+    func getSleepWeeklyProgress(accountId: Int) -> Int {
+        let today = Date()
+        let calendar = Calendar.current
+        
+        // Get the start of the week (Sunday)
+        guard let startOfWeek = calendar.date(from: calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: today)) else {
+            return 0
+        }
+        var weeklySleep = 0
+        
+        // Loop through each day of the week (Sunday to Saturday)
+        for dayOffset in 0..<7 {
+            guard let currentDate = calendar.date(byAdding: .day, value: dayOffset, to: startOfWeek) else {
+                continue
+            }
+            
+            // Get the components for the current day
+            let weekday = String(calendar.component(.weekday, from: currentDate)) // Numeric weekday (1-7)
+            let day = String(calendar.component(.day, from: currentDate)) // Numeric day (1-31)
+            let month = String(calendar.component(.month, from: currentDate)) // Numeric month (1-12)
+            let year = String(calendar.component(.year, from: currentDate)) // Numeric year (e.g., 2023)
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MMM"
+            let abbreviatedMonth = dateFormatter.string(from: currentDate)
+            
+            let calendarDay = CalendarDayModel(
+                weekday: weekday,
+                day: day,
+                month: abbreviatedMonth,
+                year: year
+            )
+            
+            // Fetch tasks for the current day
+            let dailyTasks = HabitTaskManager.shared.getHabitDailyTasksOnCalendarDay(calendarDay: calendarDay, accountId: accountId)
+            
+            // Calculate progress for the current day
+            var rawTotal = 0
+            for task in dailyTasks {
+                let activityType = getHabitType(habitId: task.habitId!)
+                if activityType == "Sleep" {
+                    weeklySleep += task.completionValue
+                }
+                rawTotal += task.completionValue
+            }
+            
+        }
+        
+        return weeklySleep
+    }
+    
     func getHabitType(habitId: Int) -> String{
         let habit = dbHelper.fetchHabitById(id: habitId)
         return habit?.activityType ?? "nil"

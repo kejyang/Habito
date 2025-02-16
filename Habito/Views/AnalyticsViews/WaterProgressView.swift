@@ -1,14 +1,13 @@
 //
-//  StepsView.swift
+//  WaterProgressView.swift
 //  Habito
 //
-//  Created by Kenneth Yang on 2/11/25.
+//  Created by Kenneth Yang on 2/16/25.
 //
 
 import SwiftUI
 
-struct StepsView: View {
-    //@State var steps : Int
+struct WaterProgressView: View {
     @EnvironmentObject var dailyProgressViewModel: DailyProgressViewModel
     var body: some View {
         VStack{
@@ -32,6 +31,5 @@ struct StepsView: View {
 }
 
 #Preview {
-    StepsView()
-        .environmentObject(DailyProgressViewModel())
+    WaterProgressView()
 }

@@ -1,26 +1,25 @@
 //
-//  StepsView.swift
+//  NewSleepView.swift
 //  Habito
 //
-//  Created by Kenneth Yang on 2/11/25.
+//  Created by Kenneth Yang on 2/16/25.
 //
 
 import SwiftUI
 
-struct StepsView: View {
-    //@State var steps : Int
+struct NewSleepView: View {
     @EnvironmentObject var dailyProgressViewModel: DailyProgressViewModel
     var body: some View {
         VStack{
-            Image(systemName: "figure.walk")
+            Image(systemName: "moon.fill")
                 .resizable()
                 .scaledToFit()
                 .foregroundStyle(Color.brandPrimary)
                 .frame(width: 30)
-            Text("Steps")
+            Text("Hours Slept")
                 .font(.title)
                 .bold()
-            Text("\(dailyProgressViewModel.stepsWeekProgress ?? 0)")
+            Text("\(dailyProgressViewModel.sleepWeekProgress ?? 0)")
                 .font(.title)
                 .bold()
         }
@@ -32,6 +31,6 @@ struct StepsView: View {
 }
 
 #Preview {
-    StepsView()
+    NewSleepView()
         .environmentObject(DailyProgressViewModel())
 }
