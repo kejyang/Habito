@@ -33,22 +33,19 @@ struct HabitTaskRowView: View {
                     .scaledToFit()
                 
                 VStack(alignment: .leading, spacing: 8) {
+                    Spacer()
+                    
                     Text(title)
                         .font(.title2)
                         .bold()
                     
                     Text(description)
                         .font(.body)
-                        .padding(.bottom)
                     
                     ProgressView(value: progress)
                         .progressViewStyle(CustomLinearProgressViewStyle())
-                  //      .progressViewStyle(.linear)
-                  //      .tint(Color.brandPrimary)
-                        //.foregroundColor(Color.brandPrimary)
-                        //.background(Color.brandWhite)
-                        //.cornerRadius(SizeStandards.cornerRadiusGeneral)
-                    //    .scaleEffect(x: 1, y: 4)
+
+                    Spacer()
 
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -69,7 +66,7 @@ struct HabitTaskRowView: View {
             .shadow(color: Color.black.opacity(0.2), radius: 5)
             .padding(.horizontal)*/
     //    })
-            .frame(width: SizeStandards.widthGeneral, height: 120)
+            .frame(width: SizeStandards.widthGeneral)
             .background(LinearGradient(gradient: Gradient(colors: [backgroundColor, Color.brandBackgroundGradientEnd]), startPoint: .leading, endPoint: .trailing))
             .cornerRadius(SizeStandards.cornerRadiusGeneral)
             .foregroundColor(Color.brandBlack)
@@ -77,10 +74,10 @@ struct HabitTaskRowView: View {
                 if let habitId = habitDailyTask.habitId {
                     if let habit = habitViewModel.getHabit(id: habitId) {
                         title = habit.title
-                        description = habit.habitDetails
                         if let maxVal = habitViewModel.getActivityTypeMaxValues(activityType: habit.activityType) {
                             progress = Double(habitDailyTask.completionValue) / Double(maxVal)
                         }
+                        description = habitDailyTaskViewModel.getTaskProgressDescription(progress: habitDailyTask.completionValue, activityType: habit.activityType)
                         habitModel = habit
                         switch habit.activityType {
                         case ActivityType.sleep.rawValue:

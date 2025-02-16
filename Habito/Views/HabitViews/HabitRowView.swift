@@ -23,6 +23,8 @@ struct HabitRowView: View {
                     .scaledToFit()
                 
                 VStack(alignment: .center, spacing: 8) {
+                    Spacer()
+                    
                     Text(habit.title)
                         .font(.title2)
                         .bold()
@@ -34,6 +36,7 @@ struct HabitRowView: View {
                     Text(habit.habitDetails)
                         .font(.body)
                     
+                    Spacer()
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
             }

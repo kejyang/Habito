@@ -13,16 +13,18 @@ struct StepTrackingView: View {
     var dailyTask : HabitDailyTaskModel
     var habit : HabitModel?
     @State var stepsValue: Double
+    @State var title = ""
+    @State var headline = ""
     
     var body: some View {
         VStack {
             
             Spacer()
             
-            Text("Almost there!")
+            Text(title)
                 .font(.title)
             
-            Text("Keep going, you're doing great!")
+            Text(headline)
                 .font(.subheadline)
             
             Spacer()
@@ -39,12 +41,20 @@ struct StepTrackingView: View {
                 
             }
             
+            Spacer()
+            
             Slider(value: $stepsValue, in: 0...10, step: 1) {
                 
             }
             .frame(height: 100)
             .tint(Color.brandPrimary)
+            .onChange(of: stepsValue) {
+                let text = habitDailyTaskViewModel.getHabitTaskEditorStrings(progress: Int(stepsValue), maxVal: 10)
+                title = text.0
+                headline = text.1
+            }
             
+            Spacer()
             
             Button("Done") {
                 if let h = habit {
@@ -58,6 +68,11 @@ struct StepTrackingView: View {
             .modifier(ActionButtonModifier())
             .padding()
             
+        }
+        .onAppear {
+            let text = habitDailyTaskViewModel.getHabitTaskEditorStrings(progress: Int(stepsValue), maxVal: 10)
+            title = text.0
+            headline = text.1
         }
         .modifier(NavigationTitleGeneralModifier(text: "Steps Details"))
     }

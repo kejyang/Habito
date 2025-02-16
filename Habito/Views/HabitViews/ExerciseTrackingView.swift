@@ -13,16 +13,18 @@ struct ExerciseTrackingView: View {
     var dailyTask : HabitDailyTaskModel
     var habit : HabitModel?
     @State var minutesValue: Double
+    @State var title = ""
+    @State var headline = ""
     
     var body: some View {
         VStack {
             
             Spacer()
             
-            Text("Almost there!")
+            Text(title)
                 .font(.title)
             
-            Text("Keep going, you're doing great!")
+            Text(headline)
                 .font(.subheadline)
             
             Spacer()
@@ -47,6 +49,11 @@ struct ExerciseTrackingView: View {
             .frame(width: SizeStandards.widthGeneral)
             //.frame(height: 100)
             .tint(Color.brandPrimary)
+            .onChange(of: minutesValue) {
+                let text = habitDailyTaskViewModel.getHabitTaskEditorStrings(progress: Int(minutesValue), maxVal: 30)
+                title = text.0
+                headline = text.1
+            }
             
             Spacer()
             
@@ -62,6 +69,11 @@ struct ExerciseTrackingView: View {
             .modifier(ActionButtonModifier())
             .padding()
             
+        }
+        .onAppear {
+            let text = habitDailyTaskViewModel.getHabitTaskEditorStrings(progress: Int(minutesValue), maxVal: 30)
+            title = text.0
+            headline = text.1
         }
         .modifier(NavigationTitleGeneralModifier(text: "Biking Details"))
     }

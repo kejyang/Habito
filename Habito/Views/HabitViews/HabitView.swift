@@ -42,9 +42,12 @@ struct HabitView: View {
                 List {
                     ForEach(habitViewModel.accountHabits) { habit in
                         HabitRowView(habit: habit)
+                            .padding()
                     }
                     .onDelete(perform: habitViewModel.deleteHabit)
                 }
+                .listStyle(PlainListStyle())
+                .listRowSeparator(.hidden)
                 .frame(alignment: .leading)
                 .scrollContentBackground(.hidden)
                 
