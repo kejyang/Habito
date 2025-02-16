@@ -66,6 +66,27 @@ class HabitDailyTaskViewModel: ObservableObject {
         HabitTaskManager.shared.updateDailyTaskById(completionValue: completionValue, activityType: activityType, taskId: taskId)
     }
     
+    func getTaskProgressDescription(progress: Int, activityType: String) -> String {
+        return HabitTaskManager.shared.getTaskProgressDescription(progress: progress, activityType: activityType)
+    }
+    
+    func getHabitTaskEditorStrings(progress: Int, maxVal: Int) -> (String, String) {
+        let title: String
+        let headline: String
+        
+        if progress == 0 {
+            title = HabitTaskEditorTitle.NoProgress.rawValue
+            headline = HabitTaskEditorHeadline.NoProgress.rawValue
+        } else if progress < maxVal {
+            title = HabitTaskEditorTitle.Progress.rawValue
+            headline = HabitTaskEditorHeadline.Progress.rawValue
+        } else {
+            title = HabitTaskEditorTitle.Completed.rawValue
+            headline = HabitTaskEditorHeadline.Completed.rawValue
+        }
+        
+        return (title, headline)
+    }
 }
 
 
