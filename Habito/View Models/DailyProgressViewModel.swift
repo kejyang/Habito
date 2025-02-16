@@ -12,6 +12,9 @@ class DailyProgressViewModel: ObservableObject {
     @Published var dailyProgress : Double?
     @Published var weekProgress : [Double]?
     @Published var stepsWeekProgress : Int?
+    @Published var sleepWeekProgress : Int?
+    @Published var waterWeekProgress : Int?
+    @Published var bikingWeekProgress : Int?
     let dailyProgressManager = DailyProgressManager()
     
     
@@ -25,6 +28,10 @@ class DailyProgressViewModel: ObservableObject {
     
     func setStepsWeekProgress(accountId : Int) {
         stepsWeekProgress = dailyProgressManager.getStepsWeeklyProgress(accountId: accountId)
+    }
+    
+    func setSleepWeekProgress(accountId: Int) {
+        sleepWeekProgress = dailyProgressManager.getSleepWeeklyProgress(accountId: accountId)
     }
     
 }

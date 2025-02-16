@@ -15,44 +15,53 @@ struct AnalyticsView: View {
     var labels = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
 
     var body: some View {
-        VStack {
-            // Today's Progress View
-            TodayProgressView(todayProgress: .constant(CGFloat(dailyProgressViewModel.dailyProgress ?? 0)))
-                .shadow(color: Color.black.opacity(0.4), radius: 1)
-            
-            // Bar Graph View
-            if let weekProgress = dailyProgressViewModel.weekProgress {
-                BarGraphView(data: weekProgress, labels: labels)
-                    .padding(.bottom, 3)
+        ScrollView {
+            VStack {
+                // Today's Progress View
+                TodayProgressView(todayProgress: .constant(CGFloat(dailyProgressViewModel.dailyProgress ?? 0)))
                     .shadow(color: Color.black.opacity(0.4), radius: 1)
-            } else {
-                // Placeholder if weekProgress is nil
-                BarGraphView(data: [0, 0, 0, 0, 0, 0, 0], labels: labels)
-                    .padding(.bottom, 3)
-                    .shadow(color: Color.black.opacity(0.4), radius: 1)
+                
+                // Bar Graph View
+                if let weekProgress = dailyProgressViewModel.weekProgress {
+                    BarGraphView(data: weekProgress, labels: labels)
+                        .padding(.bottom, 3)
+                        .shadow(color: Color.black.opacity(0.4), radius: 1)
+                } else {
+                    // Placeholder if weekProgress is nil
+                    BarGraphView(data: [0, 0, 0, 0, 0, 0, 0], labels: labels)
+                        .padding(.bottom, 3)
+                        .shadow(color: Color.black.opacity(0.4), radius: 1)
+                }
+                
+                // Sleep and Steps Views
+                HStack {
+                    SleepProgressView(sleepProgress: 8/8)
+                        .frame(width: 225)
+                        .shadow(color: Color.black.opacity(0.4), radius: 1)
+                    StepsView()
+                        .shadow(color: Color.black.opacity(0.4), radius: 1)
+                }
+                .frame(height: 215)
+                
+                // New Sleep View
+                NewSleepView()
+                
+                // Add extra space at the bottom to allow scrolling further
+                Spacer(minLength: 100) // Adjust this value to control how much further you can scroll
             }
-            
-            // Sleep and Steps Views
-            HStack {
-                SleepProgressView(sleepProgress: 8/8)
-                    .frame(width: 225)
-                    .shadow(color: Color.black.opacity(0.4), radius: 1)
-                StepsView()
-                    .shadow(color: Color.black.opacity(0.4), radius: 1)
+            .frame(maxWidth: SizeStandards.widthGeneral)
+            .onAppear {
+                if let accountId = accountViewModel.account?.id {
+                    // Fetch daily and weekly progress
+                    dailyProgressViewModel.setDailyProgress(accountId: Int(accountId))
+                    dailyProgressViewModel.setWeekProgress(accountId: Int(accountId))
+                    dailyProgressViewModel.setStepsWeekProgress(accountId: Int(accountId))
+                    dailyProgressViewModel.setSleepWeekProgress(accountId: Int(accountId))
+                }
             }
-            .frame(height: 215)
-            
-            Spacer()
+            .padding(.horizontal, 16)
         }
-        .frame(maxWidth: SizeStandards.widthGeneral)
-        .onAppear {
-            if let accountId = accountViewModel.account?.id {
-                // Fetch daily and weekly progress
-                dailyProgressViewModel.setDailyProgress(accountId: Int(accountId))
-                dailyProgressViewModel.setWeekProgress(accountId: Int(accountId))
-                dailyProgressViewModel.setStepsWeekProgress(accountId: Int(accountId))
-            }
-        }
+        .frame(maxWidth: .infinity)
     }
 }
 
