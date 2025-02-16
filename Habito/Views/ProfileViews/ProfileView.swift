@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import GoogleSignIn
 
 struct ProfileView: View {
     @EnvironmentObject var accountViewModel: AccountViewModel
+    @EnvironmentObject var googleSignInHelper: GoogleSignInHelper
     var profileImageString : String = "sleepingWoman"
     var username : String = "test username"
     var email : String = "test email"
@@ -31,6 +33,11 @@ struct ProfileView: View {
                     accountViewModel.habitTab = 0
                     accountViewModel.isLoggedIn = false
                     accountViewModel.account = nil
+                    if GIDSignIn.sharedInstance.currentUser != nil {
+                        GIDSignIn.sharedInstance.signOut()
+                        googleSignInHelper.isLoggedIn = false
+                    }
+                    
                 }
                 .foregroundColor(.red)
                 /*

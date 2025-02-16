@@ -9,41 +9,42 @@ import SwiftUI
 import Charts
 
 struct BarGraphView: View {
-    let data: [Int]
+    var data: [Double]
     let labels: [String]
 
     var body: some View {
-        VStack{
-            HStack{
-                Text("Days")
+        VStack {
+            HStack {
+                Text("This week in review")
                     .bold()
                     .font(.title2)
                 Spacer()
-                Text("7 Days")
             }
             .padding()
+            
             Chart {
                 ForEach(0..<data.count, id: \.self) { index in
                     BarMark(
                         x: .value("Label", labels[index]),
                         y: .value("Value", data[index]),
-                        width: .ratio(0.8)
+                        width: .ratio(0.9)
                     )
                     .foregroundStyle(Color.brandPrimary)
                     .cornerRadius(8)
                     .annotation(position: .overlay) {
-                        Text("\(Int(data[index]))hr")
+                        Text("\(Int(data[index] * 100))%")
                             .font(.caption)
                             .foregroundColor(.white)
                             .bold()
                     }
-                    
                 }
             }
             .padding(.horizontal, 5)
             .padding(.bottom, 5)
             .frame(height: 200)
-            // Customize axes to remove lines
+            // Force y-axis to start at 0
+            .chartYScale(domain: 0...1) // Adjust the upper bound (1) as needed
+            // Customize axes
             .chartXAxis {
                 AxisMarks(position: .bottom) { _ in
                     AxisValueLabel()
@@ -51,13 +52,8 @@ struct BarGraphView: View {
                 }
             }
             .chartYAxis {
-                AxisMarks(position: .leading) { _ in
-                    
-                }
+                AxisMarks(position: .leading) { _ in }
             }
-            .chartXScale(
-                
-            )
         }
         .background(Color.brandWhite)
         .cornerRadius(20)
@@ -65,9 +61,9 @@ struct BarGraphView: View {
 }
 
 #Preview {
-    BarGraphView(
+    /*BarGraphView(
         data: [5, 2, 4, 3, 5, 1, 5],
         labels: ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"]
         
-    )
+    )*/
 }

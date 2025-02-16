@@ -116,4 +116,17 @@ class AccountViewModel: ObservableObject {
     func saveToKeyChain(email: String, password: String) {
         AccountKeyChain.shared.saveKey(email: email, password: password)
     }
+    
+    func handleGoogleSignIn(username: String, email: String){
+        if let account = AccountDAO.shared.fetchAccountByEmail(email: email as NSString){
+            setSignedInAccount(accountModel: account)
+        }
+        else{
+            AccountDAO.shared.insertAccount(username: username as NSString, email: email.lowercased() as NSString, password: "g" as NSString)
+            if let googleAccount = AccountDAO.shared.fetchAccountByEmail(email: email as NSString){
+                setSignedInAccount(accountModel: googleAccount)
+            }
+        }
+        
+    }
 }
