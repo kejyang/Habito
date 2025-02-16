@@ -1,5 +1,5 @@
 //
-//  WaterProgressView.swift
+//  BikingProgressView.swift
 //  Habito
 //
 //  Created by Kenneth Yang on 2/16/25.
@@ -7,19 +7,19 @@
 
 import SwiftUI
 
-struct WaterProgressView: View {
+struct BikingProgressView: View {
     @EnvironmentObject var dailyProgressViewModel: DailyProgressViewModel
     var body: some View {
         VStack{
-            Image(systemName: "drop.fill")
+            Image(systemName: "bicycle")
                 .resizable()
                 .scaledToFit()
                 .foregroundStyle(Color.brandPrimary)
-                .frame(width: 30)
-            Text("Glasses")
+                .frame(width: 80)
+            Text("Minutes")
                 .font(.title)
                 .bold()
-            Text("\(dailyProgressViewModel.waterWeekProgress ?? 0)")
+            Text("\(dailyProgressViewModel.bikingWeekProgress ?? 0)")
                 .font(.title)
                 .bold()
         }
@@ -31,6 +31,6 @@ struct WaterProgressView: View {
 }
 
 #Preview {
-    WaterProgressView()
+    BikingProgressView()
         .environmentObject(DailyProgressViewModel())
 }
