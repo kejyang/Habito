@@ -63,7 +63,7 @@ struct ExerciseTrackingView: View {
             .padding()
             
         }
-        .modifier(NavigationTitleGeneralModifier(text: "Exercise Details"))
+        .modifier(NavigationTitleGeneralModifier(text: "Biking Details"))
     }
 }
 

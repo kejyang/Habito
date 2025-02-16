@@ -28,6 +28,7 @@ struct ProfileView: View {
                     Text("Delete account")
                 })
                 Button("Log out") {
+                    accountViewModel.habitTab = 0
                     accountViewModel.isLoggedIn = false
                     accountViewModel.account = nil
                 }

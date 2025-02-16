@@ -256,4 +256,35 @@ extension DBManager{
             return false
         }
     }
+    
+    
+    func deleteHabitDailyTaskByHabitId(habitId: Int) -> Bool {
+        var stmt: OpaquePointer?
+        let query = "DELETE FROM habit_daily_tasks WHERE habit_id = ?"
+        
+        if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
+            print("Error preparing delete query: \(String(cString: sqlite3_errmsg(db)!))")
+            return false
+        }
+        
+        // Bind the id parameter to the statement
+        if sqlite3_bind_int(stmt, 1, Int32(habitId)) != SQLITE_OK {
+            print("Error binding id parameter: \(String(cString: sqlite3_errmsg(db)!))")
+            return false
+        }
+        
+        if sqlite3_step(stmt) == SQLITE_DONE {
+            // Successfully deleted
+            if sqlite3_finalize(stmt) != SQLITE_OK {
+                let err = String(cString: sqlite3_errmsg(db)!)
+                print("Error finalizing delete query: \(err)")
+            }
+            return true
+        } else {
+            print("Error deleting habit tasks: \(String(cString: sqlite3_errmsg(db)!))")
+            sqlite3_finalize(stmt)
+            return false
+        }
+    }
+    
 }
