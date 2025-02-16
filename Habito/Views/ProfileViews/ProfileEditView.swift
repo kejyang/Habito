@@ -10,7 +10,7 @@ import SwiftUI
 struct ProfileEditView: View {
     @EnvironmentObject var accountViewModel: AccountViewModel
     @EnvironmentObject var googleSignInHelper: GoogleSignInHelper
-    @State var profileImageString : String = "sleepingWoman"
+    @State var profileImageString : String = "default-picture.png"
     @State var username = ""
     @State var email = ""
     @State var usernameTextFieldText = ""

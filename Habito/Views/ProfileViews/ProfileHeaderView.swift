@@ -19,7 +19,7 @@ struct ProfileHeaderView: View {
     var body: some View {
         VStack {
             
-            if profileImage != "default-picture.png" && profileImage != "N/A" {
+            if profileImage == "default-picture.png" || profileImage == "N/A" {
                 Image(systemName: "person.crop.circle")
                     .resizable()
                     .frame(width: 120, height: 120)
