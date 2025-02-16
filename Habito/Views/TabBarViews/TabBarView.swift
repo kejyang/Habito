@@ -13,8 +13,15 @@ struct TabBarView: View {
     var body: some View {
         
             ZStack {
-                TabContentView(selectedTab: $selectedTab)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                VStack {
+                    TabContentView(selectedTab: $selectedTab)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    
+                    // Prevent bottom items from being unreachable under tab bar
+                    Spacer()
+                        .frame(height: 40, alignment: .bottom)
+                }
                 
                 // Ensure the tab bar sticks to the bottom
                 VStack {
