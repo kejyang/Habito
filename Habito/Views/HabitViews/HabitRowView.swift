@@ -9,20 +9,22 @@ import SwiftUI
 
 struct HabitRowView: View {
     var habit: HabitModel
-    var img: String = "sleepingWoman"
-    
+    @State var img: String = "circle.fill"
+    @State var imgColor = Color.brandBlack
     @State var backgroundColor = Color.brandBackgroundGradientGreen
     @State var isCompleted: Bool = false
     
     var body: some View {
         
             HStack {
-                Image(img)
+                Image(systemName: img)
                     .resizable()
                     .frame(width: 70, height: 70)
-                    .scaledToFit()
+                    .scaledToFill()
+                    //.foregroundColor(imgColor)
+                    .padding()
                 
-                VStack(alignment: .center, spacing: 8) {
+                VStack(alignment: .leading, spacing: 8) {
                     Spacer()
                     
                     Text(habit.title)
@@ -38,7 +40,8 @@ struct HabitRowView: View {
                     
                     Spacer()
                 }
-                .frame(maxWidth: .infinity, alignment: .center)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.trailing)
             }
             .frame(width: SizeStandards.widthGeneral)
             .background(LinearGradient(gradient: Gradient(colors: [backgroundColor, Color.brandBackgroundGradientEnd]), startPoint: .leading, endPoint: .trailing))
@@ -47,12 +50,20 @@ struct HabitRowView: View {
             .onAppear {
                 switch habit.activityType {
                 case ActivityType.sleep.rawValue:
+                    img = "moon.zzz.fill"
+                    imgColor = Color.brandBlack
                     backgroundColor = Color.brandBackgroundGradientGray
                 case ActivityType.drinkingWater.rawValue:
+                    img = "waterbottle.fill"
+                    imgColor = Color.teal
                     backgroundColor = Color.brandBackgroundGradientGreen
                 case ActivityType.biking.rawValue:
+                    img = "figure.outdoor.cycle"
+                    imgColor = Color.brandPrimary
                     backgroundColor = Color.brandBackgroundGradientBlue
                 case ActivityType.running.rawValue:
+                    img = "figure.run"
+                    imgColor = Color.blue
                     backgroundColor = Color.brandBackgroundGradientYellow
                 default:
                     break
