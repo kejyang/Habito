@@ -119,6 +119,15 @@ struct SignUpView: View {
                 //NavigationLink(destination: HabitView(), tag: true, selection: $isSignupSuccess, label: {
                 Button("Sign Up") {
                     if signup() {
+                        isEmailEmpty = false
+                        isEmailSpace = false
+                        isEmailWrongFormat = false
+                        isEmailUsed = false
+                        isPasswordShort = false
+                        isPasswordNoNumber = false
+                        isPasswordNoCapital = false
+                        isPasswordNoSpecial = false
+                        isPasswordNoMatch = false
                         accountViewModel.isLoggedIn = true
                     }
                 }
