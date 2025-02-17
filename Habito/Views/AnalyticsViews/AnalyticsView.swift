@@ -86,6 +86,7 @@ struct AnalyticsView: View {
             .padding(.horizontal, 16)
         }
         .frame(maxWidth: .infinity)
+        .modifier(NavigationTitleGeneralModifier(text: "Data Analytics"))
     }
 }
 
