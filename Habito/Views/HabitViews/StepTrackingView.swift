@@ -31,14 +31,19 @@ struct StepTrackingView: View {
             
             ZStack {
                 
-                Image("sleepingWoman")
+                Image("sneaker")
                     .resizable()
-                    .frame(width: 250, height: 250)
-                    .clipShape(Circle())
+                    .frame(width: 280, height: 280)
+                    //.clipShape(Circle())
                 
-                Text("\(Int(stepsValue)) steps")
-                    .font(.title)
-                
+                HStack {
+                    Text("\(Int(stepsValue))K")
+                        .font(.title)
+                        .bold()
+                    Text("Steps")
+                        .font(.body)
+                        .opacity(0.7)
+                }
             }
             
             Spacer()
@@ -46,7 +51,7 @@ struct StepTrackingView: View {
             Slider(value: $stepsValue, in: 0...10, step: 1) {
                 
             }
-            .frame(height: 100)
+            .frame(width: SizeStandards.widthGeneral, height: 100)
             .tint(Color.brandPrimary)
             .onChange(of: stepsValue) {
                 let text = habitDailyTaskViewModel.getHabitTaskEditorStrings(progress: Int(stepsValue), maxVal: 10)

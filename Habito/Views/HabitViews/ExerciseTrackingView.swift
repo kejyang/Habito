@@ -29,16 +29,23 @@ struct ExerciseTrackingView: View {
             
             Spacer()
             
-            ZStack {
+            VStack {
                 
-                Image("sleepingWoman")
+                Image(systemName: "bicycle")
                     .resizable()
-                    .frame(width: 250, height: 250)
-                    .clipShape(Circle())
+                    .frame(width: 250, height: 220)
+                    .foregroundColor(Color.brandPrimary)
+                    //.clipShape(Circle())
+                    .padding(.bottom)
                 
-                Text("\(Int(minutesValue)) minute\(Int(minutesValue) == 1 ? "" : "s")")
-                    .font(.title)
-                
+                HStack {
+                    Text("\(Int(minutesValue))")
+                        .font(.title)
+                        .bold()
+                    Text(Int(minutesValue) == 1 ? "minute" : "minutes")
+                        .font(.body)
+                        .opacity(0.7)
+                }
             }
             
             Spacer()
