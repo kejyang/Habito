@@ -44,7 +44,7 @@ struct HabitTaskView: View {
                 
                 ForEach(items) { habitTask in
 
-                    HabitTaskRowView(habitDailyTask: habitTask, img: "sleepingWoman")
+                    HabitTaskRowView(habitDailyTask: habitTask)
                         .disabled(dayIndex < 2 || dayIndex == 4)
                         .opacity(dayIndex < 2 || dayIndex == 4 ? 0.6 : 1)
                         .padding()

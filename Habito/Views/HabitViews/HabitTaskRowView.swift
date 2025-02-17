@@ -17,7 +17,7 @@ struct HabitTaskRowView: View {
     @State var progress = 0.0
     var habitDailyTask: HabitDailyTaskModel
     @State var habitModel: HabitModel? = nil
-    var img: String
+    @State var img: String = "circle.fill"
     @State var backgroundColor = Color.brandBackgroundGradientGreen
     
     @State var isCompleted: Bool = false
@@ -27,12 +27,14 @@ struct HabitTaskRowView: View {
             HabitContentView()
         }, label: {*/
             HStack {
-                Image(img)
+                Image(systemName: img)
                     .resizable()
-                    .frame(width: 80, height: 80)
-                    .scaledToFit()
+                    .frame(width: 70, height: 70)
+                    .scaledToFill()
+                    .padding()
+                    .offset(x: 10)
                 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading) {
                     Spacer()
                     
                     Text(title)
@@ -48,12 +50,13 @@ struct HabitTaskRowView: View {
                     Spacer()
 
                 }
-                .frame(maxWidth: .infinity, alignment: .center)
+               // .frame(maxWidth: .infinity, alignment: .leading)
                 
 
                 Image(systemName: isCompleted ? "checkmark.circle" : "circle")
-                            //.frame(alignment: .trailing)
+                    //.frame(width: 80, height: 80)
                             .scaleEffect(2)
+                            .offset(x: -10)
                             .foregroundColor(isCompleted ? Color.brandPrimary : Color.brandSecondary)
                             .padding()
                     
@@ -81,12 +84,16 @@ struct HabitTaskRowView: View {
                         habitModel = habit
                         switch habit.activityType {
                         case ActivityType.sleep.rawValue:
+                            img = "moon.zzz.fill"
                             backgroundColor = Color.brandBackgroundGradientGray
                         case ActivityType.drinkingWater.rawValue:
+                            img = "waterbottle.fill"
                             backgroundColor = Color.brandBackgroundGradientGreen
                         case ActivityType.biking.rawValue:
+                            img = "figure.outdoor.cycle"
                             backgroundColor = Color.brandBackgroundGradientBlue
                         case ActivityType.running.rawValue:
+                            img = "figure.run"
                             backgroundColor = Color.brandBackgroundGradientYellow
                         default:
                             break
