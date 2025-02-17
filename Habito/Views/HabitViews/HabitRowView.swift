@@ -59,6 +59,7 @@ struct HabitRowView: View {
                 }
             
         }
+            .background(NavigationLink("", destination: HabitEditDescriptionView(habit: habit)).opacity(0))
         .foregroundColor(Color.brandBlack)
     }
 }

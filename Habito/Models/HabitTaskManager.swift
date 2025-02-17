@@ -125,6 +125,22 @@ class HabitTaskManager {
         DBManager.dbhelper.updateHabitDailyTaskById(completionValue: completionValue, completed: isCompleted, taskId: taskId)
     }
     
+    func getTimeOfDayFromString(time: String) -> TimeOfDay {
+        switch time {
+        case TimeOfDay.Morning.rawValue:
+            return TimeOfDay.Morning
+        case TimeOfDay.Evening.rawValue:
+            return TimeOfDay.Evening
+        case TimeOfDay.Afternoon.rawValue:
+            return TimeOfDay.Afternoon
+        case TimeOfDay.Night.rawValue:
+            return TimeOfDay.Night
+        case TimeOfDay.Anytime.rawValue:
+            return TimeOfDay.Anytime
+        default:
+            return TimeOfDay.Morning
+        }
+    }
     
     func getTaskProgressDescription(progress: Int, activityType: String) -> String {
         let maxVal = getActivityTypeMaxValue(activityType: activityType) ?? 0
