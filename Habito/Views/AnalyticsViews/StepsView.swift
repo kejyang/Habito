@@ -20,7 +20,7 @@ struct StepsView: View {
             Text("Steps")
                 .font(.title)
                 .bold()
-            Text("\(dailyProgressViewModel.stepsWeekProgress ?? 0)")
+            Text("\(dailyProgressViewModel.stepsWeekProgress ?? 0)K")
                 .font(.title)
                 .bold()
         }
