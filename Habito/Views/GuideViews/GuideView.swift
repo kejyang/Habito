@@ -32,6 +32,7 @@ struct GuideView: View {
             .listStyle(PlainListStyle())
             .scrollContentBackground(.hidden)
         }
+        .modifier(NavigationTitleGeneralModifier(text: "Guides and Resources"))
     }
 }
 
