@@ -57,35 +57,16 @@ struct AddHabitView: View {
             Spacer()
             
             Button("Create") {
-                addHabit()
-                
+                if let accountId = accountViewModel.account?.id {
+                    habitViewModel.attemptAddHabit(habitTitle: habitTitle, habitDetails: habitDetails, selectedActivityType: selectedActivityType, selectedTimeOfDay: selectedTimeOfDay, accountId: accountId)
+                }
+                presentationMode.wrappedValue.dismiss()
             }
             .frame(width: SizeStandards.widthGeneral, height: SizeStandards.actionButtonHeight)
             .modifier(ActionButtonModifier())
         }
         .frame(maxHeight: .infinity)
         .modifier(NavigationTitleGeneralModifier(text: "Create New Habit"))
-    }
-    
-    func addHabit() {
-        if let accountId = accountViewModel.account?.id {
-            habitViewModel.addHabit(
-                title: habitTitle,
-                habitDetails: habitDetails,
-                activityType: selectedActivityType.rawValue,
-                timeOfTheDay: selectedTimeOfDay.rawValue,
-                accountId: Int(accountId)
-            )
-            habitViewModel.accountHabits = habitViewModel.getHabitsByAccountId(id: Int(accountId))
-            if let newHabit = habitViewModel.accountHabits.last {
-                if let habitId = newHabit.id {
-                    habitDailyTaskViewModel.generateHabitDailyTasksByHabitId(habitId: habitId)
-                }
-            }
-            presentationMode.wrappedValue.dismiss()
-        } else {
-            print("Error: Account ID is nil.")
-        }
     }
 }
 
