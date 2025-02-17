@@ -7,6 +7,7 @@
 
 import SwiftUI
 import GoogleSignIn
+import AuthenticationServices
 
 struct LoginView: View {
     @EnvironmentObject var accountViewModel: AccountViewModel
@@ -14,6 +15,7 @@ struct LoginView: View {
     @EnvironmentObject var dailyTaskViewModel: HabitDailyTaskViewModel
     @EnvironmentObject var googleSignInHelper: GoogleSignInHelper
     @EnvironmentObject var dailyProgressViewModel: DailyProgressViewModel
+    @EnvironmentObject var appleSignInHelper: AppleSignInHelper
     
     @State var emailTextFieldText: String = ""
     @State var passwordTextFieldText: String = ""
@@ -111,44 +113,65 @@ struct LoginView: View {
                     .font(.headline)
                     .padding(.bottom)
                 
-                Button(action: {
-                    // Call the updated signIn method with a completion handler
-                    googleSignInHelper.signIn { user, error in
-                        if let error = error {
-                            // Handle the error
-                            print("Google Sign-In failed: \(error.localizedDescription)")
-                            isError = true
-                            return
-                        }
-                        if let user = user {
-                            // Update the accountViewModel with Google user data
-                            if let email = user.profile?.email, let name = user.profile?.name {
-                                accountViewModel.handleGoogleSignIn(username: name, email: email)
-                                accountViewModel.isLoggedIn = true
+                HStack{
+                    Button(action: {
+                        // Call the updated signIn method with a completion handler
+                        googleSignInHelper.signIn { user, error in
+                            if let error = error {
+                                // Handle the error
+                                print("Google Sign-In failed: \(error.localizedDescription)")
+                                isError = true
+                                return
+                            }
+                            if let user = user {
+                                // Update the accountViewModel with Google user data
+                                if let email = user.profile?.email, let name = user.profile?.name {
+                                    accountViewModel.handleGoogleSignIn(username: name, email: email)
+                                    accountViewModel.isLoggedIn = true
+                                }
                             }
                         }
+                    }) {
+                        Image("googleLogo") // Replace with the name of your Google logo asset
+                            .resizable() // Make the image resizable
+                            .scaledToFit() // Maintain the aspect ratio
+                            .frame(width: 30, height: 30) // Set the desired size
+                            .overlay {
+                                Circle()
+                                 .stroke(style: StrokeStyle(lineWidth: SizeStandards.borderWidthGeneral))
+                                 .frame(width: 50, height: 50)
+                                 .foregroundColor(Color.brandPrimary)
+                            }
                     }
-                }) {
-                    Image("googleLogo") // Replace with the name of your Google logo asset
-                        .resizable() // Make the image resizable
-                        .scaledToFit() // Maintain the aspect ratio
-                        .frame(width: 30, height: 30) // Set the desired size
-                        .overlay {
-                            Circle()
-                             .stroke(style: StrokeStyle(lineWidth: SizeStandards.borderWidthGeneral))
-                             .frame(width: 50, height: 50)
-                             .foregroundColor(Color.brandPrimary)
-                        }
-                }
-                .padding()
-                
-                /*if !googleSignInHelper.errorMessage.isEmpty {
-                    Text(googleSignInHelper.errorMessage)
-                        .foregroundColor(.red)
-                        .font(.subheadline)
-                        .padding()
+                    .padding()
+                    
+                    /*if !googleSignInHelper.errorMessage.isEmpty {
+                        Text(googleSignInHelper.errorMessage)
+                            .foregroundColor(.red)
+                            .font(.subheadline)
+                            .padding()
 
-                }*/
+                    }*/
+                    Button(action: {
+                        appleSignInHelper.signInWithApple()
+                    }) {
+                        Image(systemName: "applelogo") // Apple logo system image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(.black)
+                            .overlay(
+                                Circle()
+                                    .stroke(style: StrokeStyle(lineWidth: SizeStandards.borderWidthGeneral))
+                                    .frame(width: 50, height: 50)
+                                    .foregroundColor(Color.brandPrimary)
+                            )
+                    }
+                    .padding()
+                }
+                
+                
+                
                 Spacer()
             }
             .onAppear(perform: getRememberedData)
@@ -182,6 +205,7 @@ struct LoginView: View {
         isError = true
         return false
     }
+    
 }
 
 #Preview {

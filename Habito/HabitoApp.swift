@@ -21,6 +21,7 @@ struct HabitoApp: App {
             .environmentObject(HabitDailyTaskViewModel())
             .environmentObject(DailyProgressViewModel())
             .environmentObject(GoogleSignInHelper())
+            .environmentObject(AppleSignInHelper())
         }
     }
 }
