@@ -22,9 +22,11 @@ struct ProfileEditView: View {
         VStack {
             ProfileHeaderView(profileImage: profileImageString, username: username, email: email)
             TextFieldGeneralView(heading: "Username", textFieldText: $usernameTextFieldText)
+                .disabled(true)
             TextFieldGeneralView(heading: "E-mail", textFieldText: $emailTextFieldText)
-            SecureFieldGeneralView(heading: "Password", textFieldText: $passwordTextFieldText)
-            SecureFieldGeneralView(heading: "Confirm Password", textFieldText: $confirmPasswordTextFieldText)
+                .disabled(true)
+            //SecureFieldGeneralView(heading: "Password", textFieldText: $passwordTextFieldText)
+            //SecureFieldGeneralView(heading: "Confirm Password", textFieldText: $confirmPasswordTextFieldText)
             Spacer()
         }
         .onAppear {

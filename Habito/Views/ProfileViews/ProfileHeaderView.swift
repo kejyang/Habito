@@ -23,6 +23,7 @@ struct ProfileHeaderView: View {
                 Image(systemName: "person.crop.circle")
                     .resizable()
                     .frame(width: 120, height: 120)
+                    //.foregroundColor(Color.brandSecondary)
                     .clipShape(Circle())
             } else {
                 Image(profileImage)
