@@ -29,13 +29,18 @@ struct WaterTrackingView: View {
             Spacer()
             
             ZStack {
-                Image("sleepingWoman")
+                Image("water_circle")
                     .resizable()
                     .frame(width: 250, height: 250)
                     .clipShape(Circle())
                 
-                Text("\(value)")
-                    .font(.largeTitle.bold())
+                HStack {
+                    Text("\(value)")
+                        .font(.largeTitle.bold())
+                    Text("Glasses")
+                        .font(.body)
+                        .opacity(0.7)
+                }
             }
             
             Spacer()

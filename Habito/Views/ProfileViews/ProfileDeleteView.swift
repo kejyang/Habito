@@ -31,7 +31,7 @@ struct ProfileDeleteView: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding()
             
-            SecureFieldGeneralView(heading: "Password", textFieldText: $passwordText)
+            SecureFieldGeneralView(heading: "Password", textFieldText: $passwordText, isRed: isInvalidAttempt)
             
             if isInvalidAttempt {
                 Text("Incorrect Password")

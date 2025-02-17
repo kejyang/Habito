@@ -28,14 +28,19 @@ struct SleepTrackingView: View {
             
             Spacer()
             
-            ZStack {
-                Image("sleepingWoman")
+            VStack {
+                Image("sleep")
                     .resizable()
                     .frame(width: 250, height: 250)
-                    .clipShape(Circle())
+                    //.clipShape(Circle())
                 
-                Text("\(value)")
-                    .font(.largeTitle.bold())
+                HStack {
+                    Text("\(value)")
+                        .font(.largeTitle.bold())
+                    Text(value == 1 ? "Hour" : "Hours")
+                        .font(.body)
+                        .opacity(0.7)
+                }
             }
             
             Spacer()
