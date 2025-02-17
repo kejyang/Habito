@@ -66,7 +66,13 @@ struct LoginView: View {
                 }
                 
                 Button("Login") {
-                    if login() {
+                    
+                    if accountViewModel.attemptLogin(email: emailTextFieldText, password: passwordTextFieldText) {
+                        accountViewModel.rememberEmail(email: emailTextFieldText, isRememberMe: isRememberMe)
+                        if let id = accountViewModel.account?.id {
+                            habitViewModel.accountHabits = habitViewModel.getHabitsByAccountId(id: Int(id))
+                        }
+                        
                         accountViewModel.isLoggedIn = true
                         let today = Date()
                         let weekday = String(Calendar.current.component(.weekday, from: today)) // Numeric weekday (1-7)
@@ -97,6 +103,9 @@ struct LoginView: View {
                         print(calendarDay)
                         print("Todays daily tasks  \(dailyTaskViewModel.todaysDailyTasks)")
                         isError = false
+                    }
+                    else {
+                        isError = true
                     }
                 }
                 .frame(width: SizeStandards.widthGeneral, height: SizeStandards.actionButtonHeight, alignment: .center)
@@ -175,36 +184,22 @@ struct LoginView: View {
                 
                 Spacer()
             }
-            .onAppear(perform: getRememberedData)
+            .onAppear {
+                let email = accountViewModel.getRememberedEmail()
+                if !email.isEmpty {
+                    emailTextFieldText = email
+                    passwordTextFieldText = accountViewModel.getPasswordFromKeyChain(email: email)
+                    isRememberMe = true
+                } else {
+                    isRememberMe = false
+                }
+            }
             .onChange(of: googleSignInHelper.isLoggedIn) { isLoggedIn in
                 if isLoggedIn {
                     accountViewModel.isLoggedIn = true
                 }
             }
         }
-    }
-    
-    func getRememberedData() {
-        let email = accountViewModel.getRememberedEmail()
-        if !email.isEmpty {
-            emailTextFieldText = email
-            passwordTextFieldText = accountViewModel.getPasswordFromKeyChain(email: email)
-            isRememberMe = true
-        } else {
-            isRememberMe = false
-        }
-    }
-    
-    func login() -> Bool {
-        if accountViewModel.attemptLogin(email: emailTextFieldText, password: passwordTextFieldText) {
-            accountViewModel.rememberEmail(email: emailTextFieldText, isRememberMe: isRememberMe)
-            if let id = accountViewModel.account?.id {
-                habitViewModel.accountHabits = habitViewModel.getHabitsByAccountId(id: Int(id))
-            }
-            return true
-        }
-        isError = true
-        return false
     }
     
 }
