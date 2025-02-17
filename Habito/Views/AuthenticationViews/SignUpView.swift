@@ -118,7 +118,21 @@ struct SignUpView: View {
                 
                 //NavigationLink(destination: HabitView(), tag: true, selection: $isSignupSuccess, label: {
                 Button("Sign Up") {
-                    if signup() {
+                    
+                    let responses = accountViewModel.attemptSignup(username: usernameTextFieldText, email: emailTextFieldText, password: passwordTextFieldText, confirmPassword: confirmPasswordTextFieldText)
+                    
+                    isEmailEmpty = responses[AccountViewModel.ValidationResponse.emailEmpty] ?? false
+                    isEmailSpace = responses[AccountViewModel.ValidationResponse.emailContainsSpace] ?? false
+                    isEmailWrongFormat = responses[AccountViewModel.ValidationResponse.invalidEmailFormat] ?? false
+                    isEmailUsed = responses[AccountViewModel.ValidationResponse.emailInUse] ?? false
+                    isPasswordShort = responses[AccountViewModel.ValidationResponse.passwordNotLong] ?? false
+                    isPasswordNoNumber = responses[AccountViewModel.ValidationResponse.passwordNoNumber] ?? false
+                    isPasswordNoCapital = responses[AccountViewModel.ValidationResponse.passwordNoCapital] ?? false
+                    isPasswordNoSpecial = responses[AccountViewModel.ValidationResponse.passwordNoSpecialCharacter] ?? false
+                    
+                    isPasswordNoMatch = responses[AccountViewModel.ValidationResponse.passwordNotMatching] ?? false
+                    
+                    if responses[AccountViewModel.ValidationResponse.valid] ?? false {
                         isEmailEmpty = false
                         isEmailSpace = false
                         isEmailWrongFormat = false
@@ -138,26 +152,6 @@ struct SignUpView: View {
             }
         }
     }
-    
-    func signup() -> Bool {
-        //let responses = accountViewModel.signupAccount(username: usernameTextFieldText, email: emailTextFieldText, password: passwordTextFieldText)
-        let responses = accountViewModel.attemptSignup(username: usernameTextFieldText, email: emailTextFieldText, password: passwordTextFieldText, confirmPassword: confirmPasswordTextFieldText)
-        
-        isEmailEmpty = responses[AccountViewModel.ValidationResponse.emailEmpty] ?? false
-        isEmailSpace = responses[AccountViewModel.ValidationResponse.emailContainsSpace] ?? false
-        isEmailWrongFormat = responses[AccountViewModel.ValidationResponse.invalidEmailFormat] ?? false
-        isEmailUsed = responses[AccountViewModel.ValidationResponse.emailInUse] ?? false
-        isPasswordShort = responses[AccountViewModel.ValidationResponse.passwordNotLong] ?? false
-        isPasswordNoNumber = responses[AccountViewModel.ValidationResponse.passwordNoNumber] ?? false
-        isPasswordNoCapital = responses[AccountViewModel.ValidationResponse.passwordNoCapital] ?? false
-        isPasswordNoSpecial = responses[AccountViewModel.ValidationResponse.passwordNoSpecialCharacter] ?? false
-        
-        isPasswordNoMatch = responses[AccountViewModel.ValidationResponse.passwordNotMatching] ?? false
-        
-        return responses[AccountViewModel.ValidationResponse.valid] ?? false
-        //presentationMode.
-    }
-    
 }
 
 #Preview {
