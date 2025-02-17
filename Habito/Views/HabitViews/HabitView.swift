@@ -45,6 +45,10 @@ struct HabitView: View {
                             .padding()
                     }
                     .onDelete(perform: habitViewModel.deleteHabit)
+                    Color.clear
+                        .frame(height: 100) // Adjust the height to match the obscuring shape
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
                 }
                 .listStyle(PlainListStyle())
                 .listRowSeparator(.hidden)

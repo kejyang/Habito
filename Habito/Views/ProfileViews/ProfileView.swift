@@ -21,13 +21,13 @@ struct ProfileView: View {
             ProfileHeaderView(profileImage: profileImageString, username: username, email: email)
             
             List {
-                NavigationLink(destination: ProfileEditView(), label: {
+                /*NavigationLink(destination: ProfileEditView(), label: {
                     HStack {
                         Image(systemName: "person")
                         Text("Personal data")
                     }
                 })
-                .frame(height: SizeStandards.actionButtonHeight)
+                .frame(height: SizeStandards.actionButtonHeight)*/
                 
                 NavigationLink(destination: ProfileHelpView(), label: {
                     HStack {
