@@ -71,6 +71,15 @@ class HabitViewModel: ObservableObject {
     func getActivityTypeMaxValues(activityType: String) -> Int? {
         return HabitTaskManager.shared.getActivityTypeMaxValue(activityType: activityType)
     }
+    
+    func getTimeOfDayFromString(time: String) -> TimeOfDay {
+        return HabitTaskManager.shared.getTimeOfDayFromString(time: time)
+    }
+    
+    func updateHabitById(title: String, details: String, timeOfDay: String, habitId: Int) {
+        dbHelper.updateHabitTitleDescriptionTimeById(title: title, details: details, timeOfDay: timeOfDay, habitId: habitId)
+    }
+    
 }
 
 enum HabitError: Error {

@@ -259,4 +259,45 @@ extension DBManager{
             return false
         }
     }
+    
+    
+    func updateHabitTitleDescriptionTimeById(title: String, details: String, timeOfDay: String, habitId: Int) {
+        var stmt : OpaquePointer?
+        let query = "UPDATE habits SET title = ?, habit_details = ?, time_of_the_day = ? WHERE id = ?"
+        if sqlite3_prepare_v2(db, query, -1, &stmt, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("An error occurred: \(err)")
+        }
+        
+        if sqlite3_bind_text(stmt, 1, (title as NSString).utf8String, -1, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("There is an error binding the title: \(err)")
+            return
+        }
+        
+        if sqlite3_bind_text(stmt, 2, (details as NSString).utf8String, -1, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("There is an error binding the details: \(err)")
+            return
+        }
+        
+        if sqlite3_bind_text(stmt, 3, (timeOfDay as NSString).utf8String, -1, nil) != SQLITE_OK {
+            let err = String(cString: sqlite3_errmsg(db)!)
+            print("There is an error binding time of the day: \(err)")
+            return
+        }
+        
+        if sqlite3_bind_int(stmt, 4, Int32(habitId)) != SQLITE_OK {
+            print("Error binding id parameter: \(String(cString: sqlite3_errmsg(db)!))")
+            return
+        }
+        
+        if sqlite3_step(stmt) == SQLITE_DONE {
+            print("Habit updated")
+        } else {
+            print("Failed to update habit")
+        }
+        
+        sqlite3_finalize(stmt)
+    }
 }

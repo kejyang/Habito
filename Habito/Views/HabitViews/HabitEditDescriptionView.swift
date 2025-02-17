@@ -1,17 +1,17 @@
 //
-//  AddGoalView.swift
+//  HabitEditDescriptionView.swift
 //  Habito
 //
-//  Created by Kenneth Yang on 2/6/25.
+//  Created by admin on 2/16/25.
 //
 
 import SwiftUI
 
-struct AddHabitView: View {
+struct HabitEditDescriptionView: View {
     @Environment(\.presentationMode) var presentationMode
+    @State var habit: HabitModel
     @State var habitTitle: String = ""
     @State var habitDetails: String = ""
-    @State var selectedActivityType: ActivityType = .sleep // Use the enum
     @State var selectedTimeOfDay: TimeOfDay = .Morning
     @EnvironmentObject var accountViewModel: AccountViewModel
     @EnvironmentObject var habitViewModel: HabitViewModel
@@ -36,16 +36,9 @@ struct AddHabitView: View {
                 .cornerRadius(SizeStandards.cornerRadiusGeneral)
                 .padding()
             }
-            .frame(height: 200, alignment: .center)
+            .frame(alignment: .center)
             .shadow(color: Color.black.opacity(0.2), radius: 5)
             .padding(.bottom)
-            
-            Text("Choose an Activity")
-                .font(.headline)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
-            
-            ActivityTypeSelectorView(selectedActivityType: $selectedActivityType) // Pass the binding
 
             Text("Choose Time in a Day")
                 .font(.headline)
@@ -56,42 +49,22 @@ struct AddHabitView: View {
             
             Spacer()
             
-            Button("Create") {
-                addHabit()
-                
+            Button("Update") {
+                if let habitId = habit.id {
+                    habitViewModel.updateHabitById(title: habitTitle, details: habitDetails, timeOfDay: selectedTimeOfDay.rawValue, habitId: habitId)
+                }
+                presentationMode.wrappedValue.dismiss()
             }
             .frame(width: SizeStandards.widthGeneral, height: SizeStandards.actionButtonHeight)
             .modifier(ActionButtonModifier())
+            .padding()
+        }
+        .onAppear {
+            habitTitle = habit.title
+            habitDetails = habit.habitDetails
+            selectedTimeOfDay = habitViewModel.getTimeOfDayFromString(time: habit.timeOfTheDay)
         }
         .frame(maxHeight: .infinity)
         .modifier(NavigationTitleGeneralModifier(text: "Create New Habit"))
     }
-    
-    func addHabit() {
-        if let accountId = accountViewModel.account?.id {
-            habitViewModel.addHabit(
-                title: habitTitle,
-                habitDetails: habitDetails,
-                activityType: selectedActivityType.rawValue,
-                timeOfTheDay: selectedTimeOfDay.rawValue,
-                accountId: Int(accountId)
-            )
-            habitViewModel.accountHabits = habitViewModel.getHabitsByAccountId(id: Int(accountId))
-            if let newHabit = habitViewModel.accountHabits.last {
-                if let habitId = newHabit.id {
-                    habitDailyTaskViewModel.generateHabitDailyTasksByHabitId(habitId: habitId)
-                }
-            }
-            presentationMode.wrappedValue.dismiss()
-        } else {
-            print("Error: Account ID is nil.")
-        }
-    }
-}
-
-#Preview {
-    NavigationView {
-        AddHabitView()
-    }
-    .environmentObject(TimeOfDayViewModel())
 }
