@@ -13,8 +13,8 @@ struct GuideRowView: View {
     var img: String
     
     var body: some View {
-        NavigationLink(destination: GuideContentView(title: title, description: description, img: img))
-        {
+        ZStack {
+            // Main content of the row
             VStack(alignment: .leading, spacing: 8) {
                 Text(title)
                     .font(.title2)
@@ -37,6 +37,13 @@ struct GuideRowView: View {
             .cornerRadius(SizeStandards.cornerRadiusGeneral)
             .shadow(color: Color.black.opacity(0.2), radius: 5)
             .padding(.horizontal)
+            
+            // Invisible NavigationLink on top
+            NavigationLink(destination: GuideContentView(title: title, description: description, img: img)) {
+                EmptyView()
+            }
+            .buttonStyle(PlainButtonStyle()) // Remove default button styling
+            .opacity(0) // Hide the actual NavigationLink
         }
     }
 }

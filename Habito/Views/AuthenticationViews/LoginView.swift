@@ -142,13 +142,13 @@ struct LoginView: View {
                 }
                 .padding()
                 
-                if !googleSignInHelper.errorMessage.isEmpty {
+                /*if !googleSignInHelper.errorMessage.isEmpty {
                     Text(googleSignInHelper.errorMessage)
                         .foregroundColor(.red)
                         .font(.subheadline)
                         .padding()
-                }
-                
+
+                }*/
                 Spacer()
             }
             .onAppear(perform: getRememberedData)

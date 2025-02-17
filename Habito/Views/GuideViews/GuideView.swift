@@ -8,25 +8,31 @@
 import SwiftUI
 
 struct GuideView: View {
-    //let items = Array(1...3)
-
     var body: some View {
-            
-        VStack(spacing: 0) { // Set the spacing to 0 to reduce the space
+        VStack(spacing: 0) {
             Text("Your Guide to Wellness")
                 .font(.title)
                 .bold()
                 .padding(.top, 20)
 
-            List(guides) { item in
-                GuideRowView(title: item.title, description: item.description, img: item.img)
-                    .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
+            // Add an extra hidden item at the end of the list
+            List {
+                ForEach(guides) { item in
+                    GuideRowView(title: item.title, description: item.description, img: item.img)
+                        .listRowInsets(EdgeInsets(top: 15, leading: 0, bottom: 15, trailing: 0))
+                        .listRowSeparator(.hidden)
+                }
+
+                // Add an invisible spacer at the bottom
+                Color.clear
+                    .frame(height: 100) // Adjust the height to match the obscuring shape
+                    .listRowInsets(EdgeInsets())
                     .listRowSeparator(.hidden)
             }
+            .listStyle(PlainListStyle())
             .scrollContentBackground(.hidden)
         }
     }
-    
 }
 
 #Preview {
