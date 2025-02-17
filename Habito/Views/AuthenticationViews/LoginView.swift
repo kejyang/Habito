@@ -125,12 +125,12 @@ struct LoginView: View {
                 }
                 .padding()
                 
-                if !googleSignInHelper.errorMessage.isEmpty {
+                /*if !googleSignInHelper.errorMessage.isEmpty {
                     Text(googleSignInHelper.errorMessage)
                         .foregroundColor(.red)
                         .font(.subheadline)
                         .padding()
-                }
+                }*/
             }
             .onAppear(perform: getRememberedData)
             .onChange(of: googleSignInHelper.isLoggedIn) { isLoggedIn in
