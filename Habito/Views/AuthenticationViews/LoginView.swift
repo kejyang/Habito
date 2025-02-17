@@ -96,7 +96,7 @@ struct LoginView: View {
                         }
                         print(calendarDay)
                         print("Todays daily tasks  \(dailyTaskViewModel.todaysDailyTasks)")
-                        
+                        isError = false
                     }
                 }
                 .frame(width: SizeStandards.widthGeneral, height: SizeStandards.actionButtonHeight, alignment: .center)
@@ -128,6 +128,7 @@ struct LoginView: View {
                                 if let email = user.profile?.email, let name = user.profile?.name {
                                     accountViewModel.handleGoogleSignIn(username: name, email: email)
                                     accountViewModel.isLoggedIn = true
+                                    isError = false
                                 }
                             }
                         }
