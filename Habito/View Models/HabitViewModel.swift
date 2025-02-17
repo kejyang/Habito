@@ -44,6 +44,23 @@ class HabitViewModel: ObservableObject {
     }
     
     
+    func attemptAddHabit(habitTitle: String, habitDetails: String, selectedActivityType: ActivityType, selectedTimeOfDay: TimeOfDay, accountId: Int32) {
+        addHabit(
+            title: habitTitle,
+            habitDetails: habitDetails,
+            activityType: selectedActivityType.rawValue,
+            timeOfTheDay: selectedTimeOfDay.rawValue,
+            accountId: Int(accountId)
+        )
+        accountHabits = getHabitsByAccountId(id: Int(accountId))
+        if let newHabit = accountHabits.last {
+            if let habitId = newHabit.id {
+                HabitTaskManager.shared.generateHabitDailyTasksByHabitId(id: habitId)
+            }
+        }
+    }
+    
+    
     func deleteHabit(indexSet: IndexSet) {
         indexSet.sorted(by: > ).forEach{ (i) in
             if let id = accountHabits[i].id {
