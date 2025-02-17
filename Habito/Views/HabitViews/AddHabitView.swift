@@ -94,4 +94,6 @@ struct AddHabitView: View {
         AddHabitView()
     }
     .environmentObject(TimeOfDayViewModel())
+    .environmentObject(HabitViewModel())
+    .environmentObject(HabitDailyTaskViewModel())
 }
