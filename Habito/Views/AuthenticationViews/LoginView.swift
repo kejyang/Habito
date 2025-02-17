@@ -26,19 +26,26 @@ struct LoginView: View {
                 .transition(.move(edge: .leading))
         } else {
             VStack {
+                Image("habito_icon")
+                    .resizable()
+                    .frame(width: 200, height: 200)
+                    .scaledToFit()
+                    .padding(.bottom, 0)
+                
                 Text("Welcome Back!")
                     .font(.headline)
                     .padding()
+                    .padding(.top, 0)
                 
                 Text("Log in to continue building your healthy habits")
                     .foregroundColor(Color.brandPrimary)
                     .font(.subheadline.bold())
                     .padding(.bottom)
                 
-                TextFieldGeneralView(heading: "E-mail", textFieldText: $emailTextFieldText)
+                TextFieldGeneralView(heading: "E-mail", textFieldText: $emailTextFieldText, isRed: isError)
                     .padding(.bottom)
                 
-                SecureFieldGeneralView(heading: "Password", textFieldText: $passwordTextFieldText)
+                SecureFieldGeneralView(heading: "Password", textFieldText: $passwordTextFieldText, isRed: isError)
                 
                 HStack {
                     Toggle("", isOn: $isRememberMe)
@@ -100,6 +107,10 @@ struct LoginView: View {
                 }
                 .padding()
                 
+                Text("Or login with")
+                    .font(.headline)
+                    .padding(.bottom)
+                
                 Button(action: {
                     // Call the updated signIn method with a completion handler
                     googleSignInHelper.signIn { user, error in
@@ -122,6 +133,12 @@ struct LoginView: View {
                         .resizable() // Make the image resizable
                         .scaledToFit() // Maintain the aspect ratio
                         .frame(width: 30, height: 30) // Set the desired size
+                        .overlay {
+                            Circle()
+                             .stroke(style: StrokeStyle(lineWidth: SizeStandards.borderWidthGeneral))
+                             .frame(width: 50, height: 50)
+                             .foregroundColor(Color.brandPrimary)
+                        }
                 }
                 .padding()
                 
@@ -130,7 +147,9 @@ struct LoginView: View {
                         .foregroundColor(.red)
                         .font(.subheadline)
                         .padding()
+
                 }*/
+                Spacer()
             }
             .onAppear(perform: getRememberedData)
             .onChange(of: googleSignInHelper.isLoggedIn) { isLoggedIn in

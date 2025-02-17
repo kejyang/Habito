@@ -37,6 +37,11 @@ class AccountKeyChain {
         
     }
     
+    func clearRememberAccount() {
+        userDefault.set("", forKey: "email")
+        userDefault.set(false, forKey: "remember")
+    }
+    
     
     func saveKey(email: String, password: String) {
         let attributes: [String: Any] = [

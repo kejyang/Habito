@@ -129,4 +129,28 @@ class AccountViewModel: ObservableObject {
         }
         
     }
+    
+    func deleteAccount() {
+        if let acc = account {
+            let rememberedEmail = getRememberedEmail()
+            if rememberedEmail == acc.email {
+                AccountKeyChain.shared.clearRememberAccount()
+            }
+            AccountDAO.shared.deleteAccountByID(id: acc.id)
+            AccountKeyChain.shared.deleteKey(email: acc.email)
+            
+            let habits = DBManager.dbhelper.fetchHabitsByAccountId(id: Int(acc.id))
+            for habit in habits {
+                if let id = habit.id {
+                    let success = DBManager.dbhelper.deleteHabitById(id: id)
+                    if success {
+                        if DBManager.dbhelper.deleteHabitDailyTaskByHabitId(habitId: id) {
+                            print("Habit deleted")
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
 }
