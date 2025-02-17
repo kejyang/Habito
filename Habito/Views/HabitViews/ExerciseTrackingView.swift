@@ -33,7 +33,7 @@ struct ExerciseTrackingView: View {
                 
                 Image(systemName: "bicycle")
                     .resizable()
-                    .frame(width: 250, height: 220)
+                    .frame(width: 325, height: 220)
                     .foregroundColor(Color.brandPrimary)
                     //.clipShape(Circle())
                     .padding(.bottom)

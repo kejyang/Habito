@@ -49,6 +49,10 @@ struct HabitTaskView: View {
                         .opacity(dayIndex < 2 || dayIndex == 4 ? 0.6 : 1)
                         .padding()
                 }
+                Color.clear
+                    .frame(height: 100) // Adjust the height to match the obscuring shape
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
                 
             }
             .listStyle(PlainListStyle())
