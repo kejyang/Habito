@@ -12,7 +12,8 @@ struct HabitoApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                LoginView()
+                OnboardingContentView()
+                //LoginView()
             }
             .environmentObject(CalendarDayViewModel())
             .environmentObject(TimeOfDayViewModel())
