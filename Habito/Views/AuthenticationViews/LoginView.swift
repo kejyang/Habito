@@ -28,16 +28,15 @@ struct LoginView: View {
                 .transition(.move(edge: .leading))
         } else {
             VStack {
-                Image("habito_icon")
+                Image("habithelper")
                     .resizable()
-                    .frame(width: 200, height: 200)
-                    .scaledToFit()
-                    .padding(.bottom, 0)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: SizeStandards.widthGeneral)
+                    .padding()
                 
                 Text("Welcome Back!")
                     .font(.headline)
                     .padding()
-                    .padding(.top, 0)
                 
                 Text("Log in to continue building your healthy habits")
                     .foregroundColor(Color.brandPrimary)
@@ -129,7 +128,7 @@ struct LoginView: View {
                             if let error = error {
                                 // Handle the error
                                 print("Google Sign-In failed: \(error.localizedDescription)")
-                                isError = true
+                                //isError = true
                                 return
                             }
                             if let user = user {
@@ -185,6 +184,7 @@ struct LoginView: View {
                 Spacer()
             }
             .onAppear {
+                isError = false
                 let email = accountViewModel.getRememberedEmail()
                 if !email.isEmpty {
                     emailTextFieldText = email

@@ -8,44 +8,51 @@
 import SwiftUI
 
 struct OnboardingThreeView: View {
+    @Binding var tab: Int
+    
     var body: some View {
         VStack {
             
             Image("habithelper")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: SizeStandards.widthGeneral)
+                .padding()
+            
+            Spacer()
+            
+            HStack {
+                Text("Welcome to ")
+                + Text("HabitHelper")
+                    .foregroundColor(Color.brandPrimary)
+            }
+            .font(.title)
+            
+            
+            Text("Build healthy habits, track your progress, and stay motivated every day")
+                .frame(width: SizeStandards.widthGeneral)
+                .opacity(0.7)
+                .bold()
+                .multilineTextAlignment(.center)
+                .padding()
+            
             
             Image("onboarding_3")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: SizeStandards.widthGeneral)
             
-            Spacer()
-            
-            HStack {
-                Text("Start a")
-                 //   .padding(0)
-                 + Text(" healthy life ")
-                    .foregroundColor(Color.brandPrimary)
-                 //   .padding(0)
-                + Text("today!")
-                //    .padding(0)
-            }
-            .font(.headline)
-            .padding()
-            
-            Text("Track your habits")
-                .opacity(0.7)
-                .padding()
             
             Spacer()
+            
             
             Button("Get Started") {
-                
+                tab += 1
             }
+            .frame(width: SizeStandards.widthGeneral, height: SizeStandards.actionButtonHeight)
+            .modifier(ActionButtonModifier())
+            
         }
         .toolbar(.hidden)
     }
-}
-
-#Preview {
-    OnboardingThreeView()
 }

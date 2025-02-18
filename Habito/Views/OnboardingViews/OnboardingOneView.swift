@@ -8,18 +8,22 @@
 import SwiftUI
 
 struct OnboardingOneView: View {
+    @Binding var tab: Int
+    
     var body: some View {
         VStack {
             
             HStack {
                 Spacer()
-                NavigationLink(destination: OnboardingTwoView(), label: {
-                    Text("Skip")
-                        .frame(width: 70, height: 30)
-                        .foregroundColor(Color.brandWhite)
-                        .background(Color.brandBlack)
-                        .cornerRadius(SizeStandards.cornerRadiusGeneral)
-                })
+                
+                Text("Skip")
+                    .frame(width: 70, height: 30)
+                    .foregroundColor(Color.brandWhite)
+                    .background(Color.brandBlack)
+                    .cornerRadius(SizeStandards.cornerRadiusGeneral)
+                    .onTapGesture {
+                        tab = 3
+                    }
             }
             .padding(30)
             
@@ -44,6 +48,7 @@ struct OnboardingOneView: View {
             
             Text("Track your habits")
                 .opacity(0.7)
+                .bold()
                 .padding()
             
             Spacer()
@@ -64,22 +69,19 @@ struct OnboardingOneView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: OnboardingTwoView(), label: {
-                    Image(systemName: "arrow.forward.circle.fill")
-                        .resizable()
-                        .frame(width: 70, height: 70)
-                        .foregroundColor(Color.brandBlack)
-                })
+                
+                Image(systemName: "arrow.forward.circle.fill")
+                    .resizable()
+                    .frame(width: 70, height: 70)
+                    .foregroundColor(Color.brandBlack)
+                    .onTapGesture {
+                        tab += 1
+                    }
+                
                 
             }
             .padding(30)
         }
         .toolbar(.hidden)
-    }
-}
-
-#Preview {
-    NavigationView {
-        OnboardingOneView()
     }
 }

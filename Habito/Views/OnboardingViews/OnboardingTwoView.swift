@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct OnboardingTwoView: View {
+    @Binding var tab: Int
+    
     var body: some View {
         VStack {
             
@@ -27,7 +29,8 @@ struct OnboardingTwoView: View {
             .font(.headline)
             .padding()
             
-            Text("We give you simple tools to track your habits and analyze your health progress" )
+            Text("\"We give you simple tools to track your habits and analyze your health progress\"")
+                .frame(width: SizeStandards.widthGeneral)
                 .opacity(0.7)
                 .bold()
                 .multilineTextAlignment(.center)
@@ -51,20 +54,17 @@ struct OnboardingTwoView: View {
                 
                 Spacer()
                 
-                NavigationLink(destination: OnboardingThreeView(), label: {
                     Image(systemName: "arrow.forward.circle.fill")
                         .resizable()
                         .frame(width: 70, height: 70)
                         .foregroundColor(Color.brandBlack)
-                })
+                        .onTapGesture {
+                            tab += 1
+                        }
                 
             }
             .padding(30)
         }
         .toolbar(.hidden)
     }
-}
-
-#Preview {
-    OnboardingTwoView()
 }

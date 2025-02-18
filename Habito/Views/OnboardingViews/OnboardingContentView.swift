@@ -8,11 +8,18 @@
 import SwiftUI
 
 struct OnboardingContentView: View {
+    @State var tab = 0
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        switch tab {
+        case 0:
+            OnboardingOneView(tab: $tab)
+        case 1:
+            OnboardingTwoView(tab: $tab)
+        case 2:
+            OnboardingThreeView(tab: $tab)
+        default:
+            LoginView()
+        }
     }
-}
-
-#Preview {
-    OnboardingContentView()
 }
