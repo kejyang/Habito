@@ -27,8 +27,14 @@ class AccountViewModel: ObservableObject {
     }
     
     init() {
-        AccountDAO.shared.createDatabase()
-        AccountDAO.shared.createAccountTable()
+        let isUITesting = ProcessInfo.processInfo.arguments.contains("UI_TESTING")
+        if isUITesting{
+            DBManager.dbhelper.createDatabase(inMemory: true)
+        }
+        else{
+            AccountDAO.shared.createDatabase()
+            AccountDAO.shared.createAccountTable()
+        }
     }
     
     func validateLogin(email: String, password: String) -> Bool {
