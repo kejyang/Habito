@@ -14,9 +14,16 @@ class HabitDailyTaskViewModel: ObservableObject {
     let dbHelper = DBManager.dbhelper
     
     init() {
-        dbHelper.createDatabase()
-        dbHelper.createHabitDailyTaskTable()
-        print(dbHelper.fetchHabitDailyTasks())
+        let isUITesting = ProcessInfo.processInfo.arguments.contains("UI_TESTING")
+        if isUITesting{
+            DBManager.dbhelper.createDatabase(inMemory: true)
+            dbHelper.createHabitDailyTaskTable()
+        }
+        else{
+            dbHelper.createDatabase()
+            dbHelper.createHabitDailyTaskTable()
+            print(dbHelper.fetchHabitDailyTasks())
+        }
     }
     
     func addHabitDailyTask(day: String, month: String, year: String, completionValue: Int, completed: Bool, habitId: Int) {

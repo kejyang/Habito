@@ -24,6 +24,7 @@ struct OnboardingOneView: View {
                     .onTapGesture {
                         tab = 3
                     }
+                    .accessibilityIdentifier("skipOnboardingText")
             }
             .padding(30)
             

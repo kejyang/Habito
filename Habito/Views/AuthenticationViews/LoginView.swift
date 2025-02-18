@@ -45,8 +45,10 @@ struct LoginView: View {
                 
                 TextFieldGeneralView(heading: "E-mail", textFieldText: $emailTextFieldText, isRed: isError)
                     .padding(.bottom)
+                    .accessibilityIdentifier("loginEmailTextfield")
                 
                 SecureFieldGeneralView(heading: "Password", textFieldText: $passwordTextFieldText, isRed: isError)
+                    .accessibilityIdentifier("loginPasswordTextfield")
                 
                 HStack {
                     Toggle("", isOn: $isRememberMe)
@@ -109,11 +111,13 @@ struct LoginView: View {
                 }
                 .frame(width: SizeStandards.widthGeneral, height: SizeStandards.actionButtonHeight, alignment: .center)
                 .modifier(ActionButtonModifier())
+                .accessibilityIdentifier("loginButton")
                 
                 HStack {
                     Text("Don't have an account?")
                     NavigationLink("Sign up here!", destination: SignUpView())
                         .foregroundColor(Color.brandPrimary)
+                        .accessibilityIdentifier("signUpButton")
                 }
                 .padding()
                 

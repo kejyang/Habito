@@ -59,6 +59,15 @@ final class HabitDailyTaskTableTests: XCTestCase {
         XCTAssertEqual(false, dailyHabitTasks[0].completed)
     }
     
+    func testFethcDailyHabitTaskById() {
+        let habitId = fetchFirstHabitId()
+        insertDailyTask(day: "12", month: "Feb", year: "2025", completionValue: 0, completed: false, habitId: habitId)
+        let dailyHabitTask = dbManager.fetchHabitDailyTaskByHabitId(id: habitId)
+        let taskIdToFetch = dailyHabitTask[0].id!
+        let fetchedTask = dbManager.fetchHabitDailyTaskById(id: taskIdToFetch)
+        XCTAssertEqual(fetchedTask?.day, "12")
+    }
+    
     func testUpdateDailyHabitTaskById() {
         let habitId = fetchFirstHabitId()
         insertDailyTask(day: "12", month: "Feb", year: "2025", completionValue: 0, completed: false, habitId: habitId)
