@@ -13,7 +13,12 @@ class AccountKeyChain {
     
     private init() {}
     
-    let userDefault = UserDefaults.standard
+    var userDefault = UserDefaults.standard
+    
+    // Dependency Injection
+    init (userDefault: UserDefaults) {
+        self.userDefault = userDefault
+    }
     
     func saveRememberAccount(email: String, isRememberMe: Bool) {
         if isRememberMe {
