@@ -18,7 +18,7 @@ struct TabBarItemsView: View {
             TabBarItemView(iconName: "house.fill", iconNameNotSelected: "house", label: "Home", index: 0, selectedTab: $selectedTab)
 
             // Second Tab Button
-            TabBarItemView(iconName: "book.fill", iconNameNotSelected: "book", label: "Guides", index: 1, selectedTab: $selectedTab)
+            TabBarItemView(iconName: "book.fill", iconNameNotSelected: "book", label: "Recipes", index: 1, selectedTab: $selectedTab)
 
             Spacer().frame(width: 110)
 
