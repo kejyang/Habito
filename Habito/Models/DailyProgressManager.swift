@@ -19,6 +19,10 @@ class DailyProgressManager {
         case running = "Running"
     }
     
+    func testGetAllHabits() -> [HabitModel]{
+        return dbHelper.fetchHabits()
+    }
+    
     func getDailyProgress(accountId: Int) -> Double {
         let today = Date()
         let calendarDay = createCalendarDay(from: today)
