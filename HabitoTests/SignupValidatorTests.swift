@@ -18,7 +18,8 @@ final class SignupValidatorTests: XCTestCase {
 
     private var responseEnum = SignupValidator.ValidationResponse.self
     
-    func setup() {
+    override func setUp() {
+        super.setUp()
         username = "This is a test username"
         email = "testusername777145@xyz.com"
         password = "Abc123!"
@@ -56,7 +57,7 @@ final class SignupValidatorTests: XCTestCase {
     }
     
     func testValidate_Unsuccessful_PasswordNoCapital() {
-        password = "A1!"
+        password = "a1!"
         let response = SignupValidator.shared.validate(username: username, email: email, password: password, confirmPassword: confirmPassword)
         XCTAssertTrue(response.contains(responseEnum.passwordNoCapital))
     }
