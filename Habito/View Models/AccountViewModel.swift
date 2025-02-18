@@ -30,6 +30,7 @@ class AccountViewModel: ObservableObject {
         let isUITesting = ProcessInfo.processInfo.arguments.contains("UI_TESTING")
         if isUITesting{
             DBManager.dbhelper.createDatabase(inMemory: true)
+            DBManager.dbhelper.createAccountTable()
         }
         else{
             AccountDAO.shared.createDatabase()

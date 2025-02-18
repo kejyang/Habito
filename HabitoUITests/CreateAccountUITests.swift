@@ -28,12 +28,37 @@ final class CreateAccountUITests: XCTestCase {
         skipText.tap()
     }
 
+    //This is not done
     func testLoginNoAccount() throws {
         skipOnboarding()
         let emailTextfield = app.textFields["loginEmailTextfield"]
+        emailTextfield.tap()
+        emailTextfield.typeText("NewUsername")
         let passwordTextField = app.textFields["loginPasswordTextfield"]
         let loginButton = app.buttons["loginButton"]
         emailTextfield.tap()
+        loginButton.tap()
+    }
+    
+    func testSignUp() throws {
+        skipOnboarding()
+        let signUpButton = app.buttons["signUpButton"]
+        signUpButton.tap()
+        let usernameTextfield = app.textFields["signUpUsernameTextField"]
+        let emailTextfield = app.textFields["signUpEmailTextField"]
+        let passwordTextfield = app.secureTextFields["signUpPasswordTextField"]
+        let confirmPasswordTextfield = app.secureTextFields["signUpConfirmPasswordTextField"]
+        let signUpButton2 = app.buttons["signUpButton2"]
+        usernameTextfield.tap()
+        usernameTextfield.typeText("test1")
+        emailTextfield.tap()
+        emailTextfield.typeText("test1@gmail.com")
+        passwordTextfield.tap()
+        passwordTextfield.typeText("TestPass1")
+        confirmPasswordTextfield.tap()
+        confirmPasswordTextfield.typeText("TestPass1")
+        signUpButton2.tap()
+        
     }
 
 }

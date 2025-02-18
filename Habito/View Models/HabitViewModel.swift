@@ -12,11 +12,19 @@ class HabitViewModel: ObservableObject {
     @Published var accountHabits : [HabitModel] = []
     let dbHelper = DBManager.dbhelper
     
-    init() {
-        dbHelper.createDatabase()
-        dbHelper.createHabitTable()
-        dbHelper.appendCreationDateToHabitTable()
-        print(dbHelper.fetchHabits())
+    init(isUnitTesting: Bool = false) {
+        let isUITesting = ProcessInfo.processInfo.arguments.contains("UI_TESTING")
+        if isUITesting || isUnitTesting{
+            dbHelper.createDatabase(inMemory: true)
+            dbHelper.createHabitTable()
+            dbHelper.appendCreationDateToHabitTable()
+        }
+        else{
+            dbHelper.createDatabase()
+            dbHelper.createHabitTable()
+            dbHelper.appendCreationDateToHabitTable()
+            print(dbHelper.fetchHabits())
+        }
     }
     
     func addHabit(title: String, habitDetails: String, activityType: String, timeOfTheDay: String, accountId: Int) {

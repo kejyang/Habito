@@ -48,10 +48,11 @@ struct SignUpView: View {
                 
                 TextFieldGeneralView(heading: "Username", textFieldText: $usernameTextFieldText)
                     .padding(.bottom)
+                    .accessibilityIdentifier("signUpUsernameTextField")
                 
                 TextFieldGeneralView(heading: "E-mail", textFieldText: $emailTextFieldText, isRed: isEmailUsed || isEmailEmpty || isEmailSpace || isEmailWrongFormat)
                     .padding(.bottom)
-                
+                    .accessibilityIdentifier("signUpEmailTextField")
                 VStack (alignment: .leading) {
                     if isEmailUsed {
                         Text("An account already exists with this email")
@@ -73,6 +74,7 @@ struct SignUpView: View {
                 
                 SecureFieldGeneralView(heading: "Password", textFieldText: $passwordTextFieldText, isRed: isPasswordShort || isPasswordNoNumber || isPasswordNoCapital || isPasswordNoSpecial)
                     .padding(.bottom)
+                    .accessibilityIdentifier("signUpPasswordTextField")
                 
                 VStack (alignment: .leading) {
                     if isPasswordShort {
@@ -93,6 +95,7 @@ struct SignUpView: View {
                 .font(.subheadline)
                 
                 SecureFieldGeneralView(heading: "Confirm Password", textFieldText: $confirmPasswordTextFieldText, isRed: isPasswordNoMatch)
+                    .accessibilityIdentifier("signUpConfirmPasswordTextField")
                 
                 VStack (alignment: .leading) {
                     if isPasswordNoMatch {
@@ -147,6 +150,7 @@ struct SignUpView: View {
                 }
                 .frame(width: SizeStandards.widthGeneral, height: SizeStandards.actionButtonHeight, alignment: .center)
                 .modifier(ActionButtonModifier())
+                .accessibilityIdentifier("signUpButton2")
                 //})
                 
             }

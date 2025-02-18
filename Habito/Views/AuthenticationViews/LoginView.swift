@@ -117,6 +117,7 @@ struct LoginView: View {
                     Text("Don't have an account?")
                     NavigationLink("Sign up here!", destination: SignUpView())
                         .foregroundColor(Color.brandPrimary)
+                        .accessibilityIdentifier("signUpButton")
                 }
                 .padding()
                 
