@@ -42,4 +42,5 @@ final class HabitTableTests: XCTestCase {
         XCTAssertEqual(habits[0].timeOfTheDay, timeOfTheDay)
         XCTAssertEqual(habits[0].accountId, accountId)
     }
+    
 }
