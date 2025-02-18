@@ -17,7 +17,8 @@ struct TabContentView: View {
         case 0:
             HabitView()
         case 1:
-            GuideView()
+            //GuideView()
+            RecipeView()
         case 2:
             AnalyticsView()
         default:
