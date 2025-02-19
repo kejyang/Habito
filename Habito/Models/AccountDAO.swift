@@ -13,7 +13,24 @@ class AccountDAO {
     private var db: OpaquePointer?
     private var accountList = [AccountModel]()
     
-    private init() {}
+    init() {}
+    
+    func createDatabase(inMemory: Bool = false) {
+        let fPath: URL
+        
+        if inMemory {
+            // Use in-memory database for testing
+            fPath = URL(string: "file::memory:")!
+        } else {
+            // Use the actual database file
+            fPath = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false).appendingPathComponent("habito.sqlite")
+        }
+        
+        print("path is ", fPath)
+        if sqlite3_open(fPath.path, &db) != SQLITE_OK {
+            print("can not open database")
+        }
+    }
     
     func createDatabase() {
         

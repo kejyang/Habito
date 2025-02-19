@@ -13,6 +13,9 @@ class AccountViewModel: ObservableObject {
     @Published var isLoggedIn = false
     @Published var habitTab: Int = 0
     
+    var accountDB = AccountDAO.shared
+    var dbhelper = DBManager.dbhelper
+    
     enum ValidationResponse {
         case valid
         case emailEmpty
@@ -26,15 +29,15 @@ class AccountViewModel: ObservableObject {
         case passwordNoCapital
     }
     
-    init() {
+    init(isUnitTesting: Bool = false) {
         let isUITesting = ProcessInfo.processInfo.arguments.contains("UI_TESTING")
-        if isUITesting{
-            DBManager.dbhelper.createDatabase(inMemory: true)
-            DBManager.dbhelper.createAccountTable()
+        if isUITesting || isUnitTesting {
+            dbhelper.createDatabase(inMemory: true)
+            dbhelper.createAccountTable()
         }
         else{
-            AccountDAO.shared.createDatabase()
-            AccountDAO.shared.createAccountTable()
+            accountDB.createDatabase()
+            accountDB.createAccountTable()
         }
     }
     
@@ -46,7 +49,7 @@ class AccountViewModel: ObservableObject {
     }
     
     func attemptLogin(email: String, password: String) -> Bool {
-        if let account = AccountDAO.shared.fetchAccountByEmailAndPassword(email: email.lowercased() as NSString, password: password as NSString) {
+        if let account = accountDB.fetchAccountByEmailAndPassword(email: email.lowercased() as NSString, password: password as NSString) {
             setSignedInAccount(accountModel: account)
             return true
         }
@@ -61,8 +64,8 @@ class AccountViewModel: ObservableObject {
     }
     
     func signupAccount(username: String, email: String, password: String) -> AccountModel? {
-        AccountDAO.shared.insertAccount(username: username as NSString, email: email.lowercased() as NSString, password: password as NSString)
-        return AccountDAO.shared.fetchAccountByEmail(email: email.lowercased() as NSString)
+        accountDB.insertAccount(username: username as NSString, email: email.lowercased() as NSString, password: password as NSString)
+        return accountDB.fetchAccountByEmail(email: email.lowercased() as NSString)
     }
     
     func attemptSignup(username: String, email: String, password: String, confirmPassword: String) -> Dictionary<ValidationResponse,Bool> {
@@ -129,8 +132,8 @@ class AccountViewModel: ObservableObject {
             setSignedInAccount(accountModel: account)
         }
         else{
-            AccountDAO.shared.insertAccount(username: username as NSString, email: email.lowercased() as NSString, password: "g" as NSString)
-            if let googleAccount = AccountDAO.shared.fetchAccountByEmail(email: email as NSString){
+            accountDB.insertAccount(username: username as NSString, email: email.lowercased() as NSString, password: "g" as NSString)
+            if let googleAccount = accountDB.fetchAccountByEmail(email: email as NSString){
                 setSignedInAccount(accountModel: googleAccount)
             }
         }
@@ -143,15 +146,15 @@ class AccountViewModel: ObservableObject {
             if rememberedEmail == acc.email {
                 AccountKeyChain.shared.clearRememberAccount()
             }
-            AccountDAO.shared.deleteAccountByID(id: acc.id)
+            accountDB.deleteAccountByID(id: acc.id)
             AccountKeyChain.shared.deleteKey(email: acc.email)
             
-            let habits = DBManager.dbhelper.fetchHabitsByAccountId(id: Int(acc.id))
+            let habits = dbhelper.fetchHabitsByAccountId(id: Int(acc.id))
             for habit in habits {
                 if let id = habit.id {
-                    let success = DBManager.dbhelper.deleteHabitById(id: id)
+                    let success = dbhelper.deleteHabitById(id: id)
                     if success {
-                        if DBManager.dbhelper.deleteHabitDailyTaskByHabitId(habitId: id) {
+                        if dbhelper.deleteHabitDailyTaskByHabitId(habitId: id) {
                             print("Habit deleted")
                         }
                     }
