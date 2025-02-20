@@ -40,11 +40,20 @@ struct HabitView: View {
                 //  ScrollView(.vertical, content: {
                 
                 List {
-                    ForEach(habitViewModel.accountHabits) { habit in
-                        HabitRowView(habit: habit)
+                    if habitViewModel.accountHabits.isEmpty {
+                        Text("Looks like you don't have any habits!\nAdd a new habit with the plus button")
+                            .frame(maxWidth: .infinity, alignment: .center)
                             .padding()
+                            .font(.title3)
+                            .foregroundColor(.gray)
+                    } else {
+                        ForEach(habitViewModel.accountHabits) { habit in
+                            HabitRowView(habit: habit)
+                                .padding()
+                        }
+                        .onDelete(perform: habitViewModel.deleteHabit)
                     }
-                    .onDelete(perform: habitViewModel.deleteHabit)
+                    
                     Color.clear
                         .frame(height: 100) // Adjust the height to match the obscuring shape
                         .listRowInsets(EdgeInsets())

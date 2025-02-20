@@ -42,12 +42,21 @@ struct HabitTaskView: View {
             
             List {
                 
-                ForEach(items) { habitTask in
-
-                    HabitTaskRowView(habitDailyTask: habitTask)
-                        .disabled(dayIndex < 2 || dayIndex == 4)
-                        .opacity(dayIndex < 2 || dayIndex == 4 ? 0.6 : 1)
+                if habitViewModel.accountHabits.isEmpty {
+                    Text("Looks like you don't have any habits!\nAdd a new habit with the plus button")
+                        .frame(maxWidth: .infinity, alignment: .center)
                         .padding()
+                        .font(.title3)
+                        .foregroundColor(.gray)
+                }
+                else{
+                    ForEach(items) { habitTask in
+
+                        HabitTaskRowView(habitDailyTask: habitTask)
+                            .disabled(dayIndex < 2 || dayIndex == 4)
+                            .opacity(dayIndex < 2 || dayIndex == 4 ? 0.6 : 1)
+                            .padding()
+                    }
                 }
                 Color.clear
                     .frame(height: 100) // Adjust the height to match the obscuring shape
