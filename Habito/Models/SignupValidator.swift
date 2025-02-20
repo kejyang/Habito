@@ -47,7 +47,7 @@ class SignupValidator {
         }
         
 
-        let acc = AccountDAO.shared.fetchAccountByEmail(email: email as NSString)
+        let acc = AccountDAO.shared.fetchAccountByEmail(email: email.lowercased() as NSString)
         if acc != nil {
             validationResponses.append(ValidationResponse.emailInUse)
         }
